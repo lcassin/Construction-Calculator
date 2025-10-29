@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ConstructionCalculator/Properties/PublishProfiles/FolderProfile.pubxml
+/.vs
+/ConstructionCalculator/.vs/ConstructionCalculator
+/ConstructionCalculator/bin
+/ConstructionCalculator/obj
+/ConstructionCalculator/Properties/PublishProfiles
+/Installer
+/innosetup-6.5.4.exe
+/ConstructionCalculator/README.md
