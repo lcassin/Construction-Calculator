@@ -23,7 +23,21 @@ namespace ConstructionCalculator
             
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            
+            string? savedTheme = LoadThemePreference();
+            if (savedTheme == "DARK")
+            {
+                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            }
+            else if (savedTheme == "SYSTEM")
+            {
+                SetSystemDefaultTheme();
+            }
+            else
+            {
+                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            }
+            
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             
             try
@@ -908,36 +922,50 @@ namespace ConstructionCalculator
             this.Refresh();
             
             BeginInvoke(new Action(ApplyButtonColors));
+            
+            SaveThemePreference(theme == MaterialSkinManager.Themes.DARK ? "DARK" : "LIGHT");
         }
 
         private void SetSystemDefaultTheme()
         {
+            SaveThemePreference("SYSTEM");
+            
             try
             {
                 using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
                 {
+                    var materialSkinManager = MaterialSkinManager.Instance;
+                    
                     if (key != null)
                     {
                         var appsUseLightTheme = key.GetValue("AppsUseLightTheme");
                         if (appsUseLightTheme != null && (int)appsUseLightTheme == 0)
                         {
-                            SetTheme(MaterialSkinManager.Themes.DARK);
+                            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
                         }
                         else
                         {
-                            SetTheme(MaterialSkinManager.Themes.LIGHT);
+                            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
                         }
                     }
                     else
                     {
-                        SetTheme(MaterialSkinManager.Themes.LIGHT);
+                        materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
                     }
+                    
+                    materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
                 }
             }
             catch
             {
-                SetTheme(MaterialSkinManager.Themes.LIGHT);
+                var materialSkinManager = MaterialSkinManager.Instance;
+                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+                materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             }
+            
+            this.Invalidate(true);
+            this.Refresh();
+            BeginInvoke(new Action(ApplyButtonColors));
         }
 
         private void ApplyButtonColors()
@@ -976,6 +1004,48 @@ namespace ConstructionCalculator
                     }
                 }
             }
+        }
+
+        private void SaveThemePreference(string theme)
+        {
+            try
+            {
+                string appDataPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "ConstructionCalculator"
+                );
+                
+                Directory.CreateDirectory(appDataPath);
+                
+                string themeFilePath = Path.Combine(appDataPath, "theme.txt");
+                File.WriteAllText(themeFilePath, theme);
+            }
+            catch
+            {
+            }
+        }
+
+        private string? LoadThemePreference()
+        {
+            try
+            {
+                string appDataPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "ConstructionCalculator"
+                );
+                
+                string themeFilePath = Path.Combine(appDataPath, "theme.txt");
+                
+                if (File.Exists(themeFilePath))
+                {
+                    return File.ReadAllText(themeFilePath).Trim();
+                }
+            }
+            catch
+            {
+            }
+            
+            return null;
         }
     }
 }

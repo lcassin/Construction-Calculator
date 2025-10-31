@@ -36,16 +36,12 @@ namespace ConstructionCalculator
         {
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey800, Primary.BlueGrey900,
-                Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE
-            );
 
             this.Text = "Seating Layout Calculator";
-            this.Size = new Size(500, 800);
+            this.Size = new Size(500, 650);
             this.StartPosition = FormStartPosition.CenterParent;
             this.MaximizeBox = false;
+            this.AutoScroll = true;
             
             calculationResults = new StringBuilder();
 

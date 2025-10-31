@@ -60,7 +60,8 @@ namespace ConstructionCalculator
                 Text = "°",
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
                 BackColor = Color.FromArgb(255, 200, 100),
-                UseVisualStyleBackColor = false
+                UseVisualStyleBackColor = false,
+                TabStop = false
             };
             degreeButton.Click += (s, e) => InsertSymbol("°");
             this.Controls.Add(degreeButton);
@@ -72,7 +73,8 @@ namespace ConstructionCalculator
                 Text = "'",
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
                 BackColor = Color.FromArgb(255, 200, 100),
-                UseVisualStyleBackColor = false
+                UseVisualStyleBackColor = false,
+                TabStop = false
             };
             minuteButton.Click += (s, e) => InsertSymbol("'");
             this.Controls.Add(minuteButton);
@@ -84,7 +86,8 @@ namespace ConstructionCalculator
                 Text = "\"",
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
                 BackColor = Color.FromArgb(255, 200, 100),
-                UseVisualStyleBackColor = false
+                UseVisualStyleBackColor = false,
+                TabStop = false
             };
             secondButton.Click += (s, e) => InsertSymbol("\"");
             this.Controls.Add(secondButton);
