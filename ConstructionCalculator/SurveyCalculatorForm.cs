@@ -403,7 +403,7 @@ namespace ConstructionCalculator
             }
             
             string numberPart = bearing[1..^1];
-            numberPart = numberPart.Replace("°", "").Replace("'", "").Replace("\"", "").Trim();
+            numberPart = numberPart.Replace("°", " ").Replace("'", " ").Replace("\"", " ").Trim();
             
             string[] parts = numberPart.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             
