@@ -449,7 +449,7 @@ namespace ConstructionCalculator
 	            {
 	                bool calculationPerformed = false;
                 
-	                if (storedValue != null && !shouldClearDisplay && !string.IsNullOrEmpty(currentOperation))
+	                if (storedValue != null && !string.IsNullOrEmpty(displayTextBox.Text.Trim()) && !string.IsNullOrEmpty(currentOperation))
 	                {
 	                    PerformCalculation();
 	                    calculationPerformed = true;
