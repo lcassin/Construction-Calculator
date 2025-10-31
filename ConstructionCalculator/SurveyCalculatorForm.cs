@@ -119,7 +119,6 @@ namespace ConstructionCalculator
                 PlaceholderText = "e.g., N 45° 30' E or N45°30'E"
             };
             bearingTextBox.Enter += (s, e) => focusedTextBox = bearingTextBox;
-            bearingTextBox.Leave += (s, e) => { if (focusedTextBox == bearingTextBox) focusedTextBox = null; };
             this.Controls.Add(bearingTextBox);
 
             Label azimuthLabel = new Label
@@ -139,7 +138,6 @@ namespace ConstructionCalculator
                 PlaceholderText = "e.g., 045° 30' or 45.5"
             };
             azimuthTextBox.Enter += (s, e) => focusedTextBox = azimuthTextBox;
-            azimuthTextBox.Leave += (s, e) => { if (focusedTextBox == azimuthTextBox) focusedTextBox = null; };
             this.Controls.Add(azimuthTextBox);
 
             Button bearingToAzimuthButton = new Button
@@ -212,7 +210,6 @@ namespace ConstructionCalculator
                 PlaceholderText = "e.g., 5000.00"
             };
             startNorthingTextBox.Enter += (s, e) => focusedTextBox = startNorthingTextBox;
-            startNorthingTextBox.Leave += (s, e) => { if (focusedTextBox == startNorthingTextBox) focusedTextBox = null; };
             this.Controls.Add(startNorthingTextBox);
 
             Label startEastingLabel = new Label
@@ -232,7 +229,6 @@ namespace ConstructionCalculator
                 PlaceholderText = "e.g., 2000.00"
             };
             startEastingTextBox.Enter += (s, e) => focusedTextBox = startEastingTextBox;
-            startEastingTextBox.Leave += (s, e) => { if (focusedTextBox == startEastingTextBox) focusedTextBox = null; };
             this.Controls.Add(startEastingTextBox);
 
             Label distanceLabel = new Label
@@ -252,7 +248,6 @@ namespace ConstructionCalculator
                 PlaceholderText = "e.g., 100' or 100.5 (feet)"
             };
             distanceTextBox.Enter += (s, e) => focusedTextBox = distanceTextBox;
-            distanceTextBox.Leave += (s, e) => { if (focusedTextBox == distanceTextBox) focusedTextBox = null; };
             this.Controls.Add(distanceTextBox);
 
             Label directionLabel = new Label
@@ -272,7 +267,6 @@ namespace ConstructionCalculator
                 PlaceholderText = "e.g., 045° or N45°E"
             };
             directionTextBox.Enter += (s, e) => focusedTextBox = directionTextBox;
-            directionTextBox.Leave += (s, e) => { if (focusedTextBox == directionTextBox) focusedTextBox = null; };
             this.Controls.Add(directionTextBox);
 
             Button calculatePointButton = new Button

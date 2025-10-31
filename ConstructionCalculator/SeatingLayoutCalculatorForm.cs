@@ -38,10 +38,9 @@ namespace ConstructionCalculator
             materialSkinManager.AddFormToManage(this);
 
             this.Text = "Seating Layout Calculator";
-            this.Size = new Size(500, 650);
+            this.Size = new Size(850, 550);
             this.StartPosition = FormStartPosition.CenterParent;
             this.MaximizeBox = false;
-            this.AutoScroll = true;
             
             calculationResults = new StringBuilder();
 
@@ -58,16 +57,23 @@ namespace ConstructionCalculator
 
         private void InitializeComponents()
         {
-            int yPos = 80;
-            int labelX = 20;
-            int textBoxX = 200;
-            int width = 260;
+            int leftX = 20;
+            int leftLabelWidth = 170;
+            int leftTextBoxX = 200;
+            int leftTextBoxWidth = 180;
+            
+            int rightX = 430;
+            int rightLabelWidth = 170;
+            int rightTextBoxX = 610;
+            int rightTextBoxWidth = 180;
+            
             int spacing = 35;
+            int yPos = 80;
 
             Label rowConfigLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(450, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(380, 25),
                 Text = "Row Configuration",
                 Font = new Font("Segoe UI", 12, FontStyle.Bold),
                 ForeColor = Color.White
@@ -77,8 +83,8 @@ namespace ConstructionCalculator
 
             Label numberOfRowsLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(leftLabelWidth, 25),
                 Text = "Number of Rows:",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White
@@ -87,8 +93,8 @@ namespace ConstructionCalculator
 
             numberOfRowsTextBox = new TextBox
             {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
+                Location = new Point(leftTextBoxX, yPos),
+                Size = new Size(leftTextBoxWidth, 25),
                 Font = new Font("Segoe UI", 10),
                 Text = "10"
             };
@@ -97,8 +103,8 @@ namespace ConstructionCalculator
 
             Label startingRadiusLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(leftLabelWidth, 25),
                 Text = "Starting Radius (ft):",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White
@@ -107,8 +113,8 @@ namespace ConstructionCalculator
 
             startingRadiusTextBox = new TextBox
             {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
+                Location = new Point(leftTextBoxX, yPos),
+                Size = new Size(leftTextBoxWidth, 25),
                 Font = new Font("Segoe UI", 10),
                 Text = "20"
             };
@@ -117,8 +123,8 @@ namespace ConstructionCalculator
 
             Label rowSpacingLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(leftLabelWidth, 25),
                 Text = "Row Spacing (ft):",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White
@@ -127,8 +133,8 @@ namespace ConstructionCalculator
 
             rowSpacingTextBox = new TextBox
             {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
+                Location = new Point(leftTextBoxX, yPos),
+                Size = new Size(leftTextBoxWidth, 25),
                 Font = new Font("Segoe UI", 10),
                 Text = "3"
             };
@@ -137,8 +143,8 @@ namespace ConstructionCalculator
 
             Label arcSpanLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(leftLabelWidth, 25),
                 Text = "Arc Span (degrees):",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White
@@ -147,8 +153,8 @@ namespace ConstructionCalculator
 
             arcSpanTextBox = new TextBox
             {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
+                Location = new Point(leftTextBoxX, yPos),
+                Size = new Size(leftTextBoxWidth, 25),
                 Font = new Font("Segoe UI", 10),
                 Text = "180"
             };
@@ -157,8 +163,8 @@ namespace ConstructionCalculator
 
             Label centerNorthingLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(leftLabelWidth, 25),
                 Text = "Center Northing:",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White
@@ -167,8 +173,8 @@ namespace ConstructionCalculator
 
             centerNorthingTextBox = new TextBox
             {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
+                Location = new Point(leftTextBoxX, yPos),
+                Size = new Size(leftTextBoxWidth, 25),
                 Font = new Font("Segoe UI", 10),
                 Text = "0"
             };
@@ -177,8 +183,8 @@ namespace ConstructionCalculator
 
             Label centerEastingLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(leftLabelWidth, 25),
                 Text = "Center Easting:",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White
@@ -187,182 +193,18 @@ namespace ConstructionCalculator
 
             centerEastingTextBox = new TextBox
             {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
+                Location = new Point(leftTextBoxX, yPos),
+                Size = new Size(leftTextBoxWidth, 25),
                 Font = new Font("Segoe UI", 10),
                 Text = "0"
             };
             this.Controls.Add(centerEastingTextBox);
+
             yPos += spacing + 10;
-
-            Label chairSpecLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(450, 25),
-                Text = "Chair Specifications",
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(chairSpecLabel);
-            yPos += spacing;
-
-            Label chairAWidthLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
-                Text = "Type A Width (in):",
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(chairAWidthLabel);
-
-            chairAWidthTextBox = new TextBox
-            {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
-                Font = new Font("Segoe UI", 10),
-                Text = "24"
-            };
-            this.Controls.Add(chairAWidthTextBox);
-            yPos += spacing;
-
-            Label chairADepthLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
-                Text = "Type A Depth (in):",
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(chairADepthLabel);
-
-            chairADepthTextBox = new TextBox
-            {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
-                Font = new Font("Segoe UI", 10),
-                Text = "20"
-            };
-            this.Controls.Add(chairADepthTextBox);
-            yPos += spacing;
-
-            Label chairBWidthLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
-                Text = "Type B Width (in):",
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(chairBWidthLabel);
-
-            chairBWidthTextBox = new TextBox
-            {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
-                Font = new Font("Segoe UI", 10),
-                Text = "20"
-            };
-            this.Controls.Add(chairBWidthTextBox);
-            yPos += spacing;
-
-            Label chairBDepthLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
-                Text = "Type B Depth (in):",
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(chairBDepthLabel);
-
-            chairBDepthTextBox = new TextBox
-            {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
-                Font = new Font("Segoe UI", 10),
-                Text = "20"
-            };
-            this.Controls.Add(chairBDepthTextBox);
-            yPos += spacing + 10;
-
-            Label aisleConfigLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(450, 25),
-                Text = "Aisle Configuration",
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(aisleConfigLabel);
-            yPos += spacing;
-
-            Label numberOfAislesLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
-                Text = "Number of Aisles:",
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(numberOfAislesLabel);
-
-            numberOfAislesTextBox = new TextBox
-            {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
-                Font = new Font("Segoe UI", 10),
-                Text = "2"
-            };
-            this.Controls.Add(numberOfAislesTextBox);
-            yPos += spacing;
-
-            Label aisleWidthLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
-                Text = "Aisle Width (in):",
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(aisleWidthLabel);
-
-            aisleWidthTextBox = new TextBox
-            {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
-                Font = new Font("Segoe UI", 10),
-                Text = "36"
-            };
-            this.Controls.Add(aisleWidthTextBox);
-            yPos += spacing;
-
-            Label aisleSpacingLabel = new Label
-            {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
-                Text = "Aisle Spacing:",
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.White
-            };
-            this.Controls.Add(aisleSpacingLabel);
-
-            aisleSpacingComboBox = new ComboBox
-            {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
-                Font = new Font("Segoe UI", 10),
-                DropDownStyle = ComboBoxStyle.DropDownList
-            };
-            aisleSpacingComboBox.Items.AddRange(new object[] { "Evenly Spaced", "Custom Positions" });
-            aisleSpacingComboBox.SelectedIndex = 0;
-            this.Controls.Add(aisleSpacingComboBox);
-            yPos += spacing + 10;
-
             Label codeComplianceLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(450, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(380, 25),
                 Text = "Code Compliance",
                 Font = new Font("Segoe UI", 12, FontStyle.Bold),
                 ForeColor = Color.White
@@ -372,8 +214,8 @@ namespace ConstructionCalculator
 
             Label minAisleWidthLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(leftLabelWidth, 25),
                 Text = "Min Aisle Width (in):",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White
@@ -382,8 +224,8 @@ namespace ConstructionCalculator
 
             minAisleWidthTextBox = new TextBox
             {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
+                Location = new Point(leftTextBoxX, yPos),
+                Size = new Size(leftTextBoxWidth, 25),
                 Font = new Font("Segoe UI", 10),
                 Text = "36"
             };
@@ -392,8 +234,8 @@ namespace ConstructionCalculator
 
             Label maxSeatsLabel = new Label
             {
-                Location = new Point(labelX, yPos),
-                Size = new Size(170, 25),
+                Location = new Point(leftX, yPos),
+                Size = new Size(leftLabelWidth, 25),
                 Text = "Max Seats/Aisle:",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White
@@ -402,17 +244,181 @@ namespace ConstructionCalculator
 
             maxSeatsTextBox = new TextBox
             {
-                Location = new Point(textBoxX, yPos),
-                Size = new Size(width, 25),
+                Location = new Point(leftTextBoxX, yPos),
+                Size = new Size(leftTextBoxWidth, 25),
                 Font = new Font("Segoe UI", 10),
                 Text = "14"
             };
             this.Controls.Add(maxSeatsTextBox);
-            yPos += spacing + 10;
 
+            yPos = 80;
+            Label chairSpecLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(380, 25),
+                Text = "Chair Specifications",
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(chairSpecLabel);
+            yPos += spacing;
+
+            Label chairAWidthLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(rightLabelWidth, 25),
+                Text = "Type A Width (in):",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(chairAWidthLabel);
+
+            chairAWidthTextBox = new TextBox
+            {
+                Location = new Point(rightTextBoxX, yPos),
+                Size = new Size(rightTextBoxWidth, 25),
+                Font = new Font("Segoe UI", 10),
+                Text = "24"
+            };
+            this.Controls.Add(chairAWidthTextBox);
+            yPos += spacing;
+
+            Label chairADepthLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(rightLabelWidth, 25),
+                Text = "Type A Depth (in):",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(chairADepthLabel);
+
+            chairADepthTextBox = new TextBox
+            {
+                Location = new Point(rightTextBoxX, yPos),
+                Size = new Size(rightTextBoxWidth, 25),
+                Font = new Font("Segoe UI", 10),
+                Text = "20"
+            };
+            this.Controls.Add(chairADepthTextBox);
+            yPos += spacing;
+
+            Label chairBWidthLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(rightLabelWidth, 25),
+                Text = "Type B Width (in):",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(chairBWidthLabel);
+
+            chairBWidthTextBox = new TextBox
+            {
+                Location = new Point(rightTextBoxX, yPos),
+                Size = new Size(rightTextBoxWidth, 25),
+                Font = new Font("Segoe UI", 10),
+                Text = "20"
+            };
+            this.Controls.Add(chairBWidthTextBox);
+            yPos += spacing;
+
+            Label chairBDepthLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(rightLabelWidth, 25),
+                Text = "Type B Depth (in):",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(chairBDepthLabel);
+
+            chairBDepthTextBox = new TextBox
+            {
+                Location = new Point(rightTextBoxX, yPos),
+                Size = new Size(rightTextBoxWidth, 25),
+                Font = new Font("Segoe UI", 10),
+                Text = "20"
+            };
+            this.Controls.Add(chairBDepthTextBox);
+
+            yPos += spacing + 10;
+            Label aisleConfigLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(380, 25),
+                Text = "Aisle Configuration",
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(aisleConfigLabel);
+            yPos += spacing;
+
+            Label numberOfAislesLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(rightLabelWidth, 25),
+                Text = "Number of Aisles:",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(numberOfAislesLabel);
+
+            numberOfAislesTextBox = new TextBox
+            {
+                Location = new Point(rightTextBoxX, yPos),
+                Size = new Size(rightTextBoxWidth, 25),
+                Font = new Font("Segoe UI", 10),
+                Text = "2"
+            };
+            this.Controls.Add(numberOfAislesTextBox);
+            yPos += spacing;
+
+            Label aisleWidthLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(rightLabelWidth, 25),
+                Text = "Aisle Width (in):",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(aisleWidthLabel);
+
+            aisleWidthTextBox = new TextBox
+            {
+                Location = new Point(rightTextBoxX, yPos),
+                Size = new Size(rightTextBoxWidth, 25),
+                Font = new Font("Segoe UI", 10),
+                Text = "36"
+            };
+            this.Controls.Add(aisleWidthTextBox);
+            yPos += spacing;
+
+            Label aisleSpacingLabel = new Label
+            {
+                Location = new Point(rightX, yPos),
+                Size = new Size(rightLabelWidth, 25),
+                Text = "Aisle Spacing:",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.White
+            };
+            this.Controls.Add(aisleSpacingLabel);
+
+            aisleSpacingComboBox = new ComboBox
+            {
+                Location = new Point(rightTextBoxX, yPos),
+                Size = new Size(rightTextBoxWidth, 25),
+                Font = new Font("Segoe UI", 10),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            aisleSpacingComboBox.Items.AddRange(new object[] { "Evenly Spaced", "Custom Positions" });
+            aisleSpacingComboBox.SelectedIndex = 0;
+            this.Controls.Add(aisleSpacingComboBox);
+
+            yPos = 420;
             Button calculateButton = new Button
             {
-                Location = new Point(40, yPos),
+                Location = new Point(220, yPos),
                 Size = new Size(180, 40),
                 Text = "Calculate Layout",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
@@ -424,7 +430,7 @@ namespace ConstructionCalculator
 
             Button exportButton = new Button
             {
-                Location = new Point(240, yPos),
+                Location = new Point(420, yPos),
                 Size = new Size(180, 40),
                 Text = "Export to CSV",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
@@ -438,7 +444,7 @@ namespace ConstructionCalculator
             resultLabel = new Label
             {
                 Location = new Point(20, yPos),
-                Size = new Size(450, 60),
+                Size = new Size(800, 60),
                 Font = new Font("Segoe UI", 9, FontStyle.Regular),
                 TextAlign = ContentAlignment.TopLeft,
                 BackColor = Color.White,
