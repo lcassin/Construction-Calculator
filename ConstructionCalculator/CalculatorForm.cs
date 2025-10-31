@@ -443,44 +443,51 @@ namespace ConstructionCalculator
             }
         }
 
-        private void SetOperation(string operation)
-        {
-            try
-            {
-                if (storedValue != null && !shouldClearDisplay && !string.IsNullOrEmpty(currentOperation))
-                {
-                    PerformCalculation();
-                }
+	        private void SetOperation(string operation)
+	        {
+	            try
+	            {
+	                bool calculationPerformed = false;
+                
+	                if (storedValue != null && !shouldClearDisplay && !string.IsNullOrEmpty(currentOperation))
+	                {
+	                    PerformCalculation();
+	                    calculationPerformed = true;
+	                }
 
-                Measurement currentValue = ParseCurrentDisplay();
-                string displayText = displayTextBox.Text.Trim();
+	                Measurement currentValue = ParseCurrentDisplay();
+	                string displayText = displayTextBox.Text.Trim();
                 
-                if (storedValue == null || calculationChain.Count == 0)
-                {
-                    calculationChain.Add(displayText);
-                }
-                else if (!shouldClearDisplay)
-                {
-                    calculationChain.Add(displayText);
-                }
+	                if (storedValue == null || calculationChain.Count == 0)
+	                {
+	                    calculationChain.Add(displayText);
+	                }
+	                else if (!shouldClearDisplay)
+	                {
+	                    calculationChain.Add(displayText);
+	                }
                 
-                calculationChain.Add(operation);
-                UpdateChainDisplay();
+	                calculationChain.Add(operation);
+	                UpdateChainDisplay();
 
-                storedValue = currentValue;
-                currentOperation = operation;
-                shouldClearDisplay = true;
-                displayTextBox.Text = "";
+	                if (!calculationPerformed)
+	                {
+	                    storedValue = currentValue;
+	                }
                 
-                displayTextBox.Focus();
+	                currentOperation = operation;
+	                shouldClearDisplay = true;
+	                displayTextBox.Text = "";
+                
+	                displayTextBox.Focus();
 				displayTextBox.SelectAll();
 			}
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error parsing value: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Clear();
-            }
-        }
+	            catch (Exception ex)
+	            {
+	                MessageBox.Show($"Error parsing value: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+	                Clear();
+	            }
+	        }
 
         private void PerformCalculation()
         {
