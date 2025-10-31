@@ -26,6 +26,14 @@ namespace ConstructionCalculator
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             
+            try
+            {
+                this.Icon = new Icon("Assets/SmallTile.scale-100.ico");
+            }
+            catch
+            {
+            }
+            
             SetupCalculator();
         }
 

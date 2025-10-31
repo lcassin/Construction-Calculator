@@ -20,6 +20,14 @@ namespace ConstructionCalculator
             
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
+            
+            try
+            {
+                this.Icon = new Icon("Assets/SmallTile.scale-100.ico");
+            }
+            catch
+            {
+            }
         }
 
         private void InitializeComponent()

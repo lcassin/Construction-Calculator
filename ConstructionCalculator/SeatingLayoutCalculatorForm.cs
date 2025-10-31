@@ -50,6 +50,14 @@ namespace ConstructionCalculator
             calculationResults = new StringBuilder();
 
             InitializeComponents();
+            
+            try
+            {
+                this.Icon = new Icon("Assets/SmallTile.scale-100.ico");
+            }
+            catch
+            {
+            }
         }
 
         private void InitializeComponents()
