@@ -38,7 +38,7 @@ namespace ConstructionCalculator
             materialSkinManager.AddFormToManage(this);
 
             this.Text = "Seating Layout Calculator";
-            this.Size = new Size(850, 550);
+            this.Size = new Size(850, 650);
             this.StartPosition = FormStartPosition.CenterParent;
             this.MaximizeBox = false;
             
@@ -415,7 +415,7 @@ namespace ConstructionCalculator
             aisleSpacingComboBox.SelectedIndex = 0;
             this.Controls.Add(aisleSpacingComboBox);
 
-            yPos = 420;
+            yPos = 445;
             Button calculateButton = new Button
             {
                 Location = new Point(220, yPos),
@@ -444,7 +444,7 @@ namespace ConstructionCalculator
             resultLabel = new Label
             {
                 Location = new Point(20, yPos),
-                Size = new Size(800, 60),
+                Size = new Size(800, 100),
                 Font = new Font("Segoe UI", 9, FontStyle.Regular),
                 TextAlign = ContentAlignment.TopLeft,
                 BackColor = Color.White,
