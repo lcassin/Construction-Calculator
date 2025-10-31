@@ -394,8 +394,6 @@ namespace ConstructionCalculator
 
         private double ParseBearingToAzimuth(string bearing)
         {
-            bearing = bearing.Replace(" ", "").Replace("°", "").Replace("'", "").Replace("\"", "");
-            
             char firstDir = bearing[0];
             char lastDir = bearing[^1];
             
@@ -405,7 +403,24 @@ namespace ConstructionCalculator
             }
             
             string numberPart = bearing[1..^1];
-            double angle = double.Parse(numberPart);
+            numberPart = numberPart.Replace("°", "").Replace("'", "").Replace("\"", "").Trim();
+            
+            string[] parts = numberPart.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            
+            double degrees = double.Parse(parts[0]);
+            double minutes = 0;
+            double seconds = 0;
+            
+            if (parts.Length > 1)
+            {
+                minutes = double.Parse(parts[1]);
+            }
+            if (parts.Length > 2)
+            {
+                seconds = double.Parse(parts[2]);
+            }
+            
+            double angle = degrees + (minutes / 60.0) + (seconds / 3600.0);
             
             if (angle < 0 || angle > 90)
             {
