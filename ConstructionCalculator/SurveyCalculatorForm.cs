@@ -17,6 +17,8 @@ namespace ConstructionCalculator
         private TextBox distanceTextBox;
         private TextBox directionTextBox;
         private Label coordinateResultLabel;
+        
+        private TextBox? focusedTextBox;
 
         public SurveyCalculatorForm()
         {
@@ -34,9 +36,54 @@ namespace ConstructionCalculator
             this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterParent;
 
+            Label symbolLabel = new Label
+            {
+                Location = new Point(20, 78),
+                Size = new Size(100, 20),
+                Text = "Insert Symbol:",
+                Font = new Font("Segoe UI", 9)
+            };
+            this.Controls.Add(symbolLabel);
+
+            Button degreeButton = new Button
+            {
+                Location = new Point(130, 75),
+                Size = new Size(30, 25),
+                Text = "°",
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                BackColor = Color.FromArgb(255, 200, 100),
+                UseVisualStyleBackColor = false
+            };
+            degreeButton.Click += (s, e) => InsertSymbol("°");
+            this.Controls.Add(degreeButton);
+
+            Button minuteButton = new Button
+            {
+                Location = new Point(165, 75),
+                Size = new Size(30, 25),
+                Text = "'",
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                BackColor = Color.FromArgb(255, 200, 100),
+                UseVisualStyleBackColor = false
+            };
+            minuteButton.Click += (s, e) => InsertSymbol("'");
+            this.Controls.Add(minuteButton);
+
+            Button secondButton = new Button
+            {
+                Location = new Point(200, 75),
+                Size = new Size(30, 25),
+                Text = "\"",
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                BackColor = Color.FromArgb(255, 200, 100),
+                UseVisualStyleBackColor = false
+            };
+            secondButton.Click += (s, e) => InsertSymbol("\"");
+            this.Controls.Add(secondButton);
+
             Label section1Label = new Label
             {
-                Location = new Point(20, 80),
+                Location = new Point(20, 110),
                 Size = new Size(410, 25),
                 Text = "Bearing / Azimuth Converter",
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
@@ -46,7 +93,7 @@ namespace ConstructionCalculator
 
             Label bearingLabel = new Label
             {
-                Location = new Point(20, 115),
+                Location = new Point(20, 145),
                 Size = new Size(100, 25),
                 Text = "Bearing:",
                 Font = new Font("Segoe UI", 10)
@@ -55,16 +102,18 @@ namespace ConstructionCalculator
 
             bearingTextBox = new TextBox
             {
-                Location = new Point(130, 115),
+                Location = new Point(130, 145),
                 Size = new Size(290, 25),
                 Font = new Font("Segoe UI", 10),
                 PlaceholderText = "e.g., N 45° 30' E or N45°30'E"
             };
+            bearingTextBox.Enter += (s, e) => focusedTextBox = bearingTextBox;
+            bearingTextBox.Leave += (s, e) => { if (focusedTextBox == bearingTextBox) focusedTextBox = null; };
             this.Controls.Add(bearingTextBox);
 
             Label azimuthLabel = new Label
             {
-                Location = new Point(20, 155),
+                Location = new Point(20, 185),
                 Size = new Size(100, 25),
                 Text = "Azimuth:",
                 Font = new Font("Segoe UI", 10)
@@ -73,16 +122,18 @@ namespace ConstructionCalculator
 
             azimuthTextBox = new TextBox
             {
-                Location = new Point(130, 155),
+                Location = new Point(130, 185),
                 Size = new Size(290, 25),
                 Font = new Font("Segoe UI", 10),
                 PlaceholderText = "e.g., 045° 30' or 45.5"
             };
+            azimuthTextBox.Enter += (s, e) => focusedTextBox = azimuthTextBox;
+            azimuthTextBox.Leave += (s, e) => { if (focusedTextBox == azimuthTextBox) focusedTextBox = null; };
             this.Controls.Add(azimuthTextBox);
 
             Button bearingToAzimuthButton = new Button
             {
-                Location = new Point(130, 195),
+                Location = new Point(130, 225),
                 Size = new Size(135, 30),
                 Text = "Bearing → Azimuth",
                 Font = new Font("Segoe UI", 9),
@@ -94,7 +145,7 @@ namespace ConstructionCalculator
 
             Button azimuthToBearingButton = new Button
             {
-                Location = new Point(275, 195),
+                Location = new Point(275, 225),
                 Size = new Size(145, 30),
                 Text = "Azimuth → Bearing",
                 Font = new Font("Segoe UI", 9),
@@ -106,7 +157,7 @@ namespace ConstructionCalculator
 
             conversionResultLabel = new Label
             {
-                Location = new Point(20, 235),
+                Location = new Point(20, 265),
                 Size = new Size(410, 40),
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -117,7 +168,7 @@ namespace ConstructionCalculator
 
             Label separatorLabel = new Label
             {
-                Location = new Point(20, 290),
+                Location = new Point(20, 320),
                 Size = new Size(410, 2),
                 BackColor = Color.FromArgb(200, 200, 200)
             };
@@ -125,7 +176,7 @@ namespace ConstructionCalculator
 
             Label section2Label = new Label
             {
-                Location = new Point(20, 305),
+                Location = new Point(20, 335),
                 Size = new Size(410, 25),
                 Text = "Coordinate Geometry",
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
@@ -135,7 +186,7 @@ namespace ConstructionCalculator
 
             Label startNorthingLabel = new Label
             {
-                Location = new Point(20, 340),
+                Location = new Point(20, 370),
                 Size = new Size(130, 25),
                 Text = "Start Northing:",
                 Font = new Font("Segoe UI", 10)
@@ -144,16 +195,18 @@ namespace ConstructionCalculator
 
             startNorthingTextBox = new TextBox
             {
-                Location = new Point(160, 340),
+                Location = new Point(160, 370),
                 Size = new Size(260, 25),
                 Font = new Font("Segoe UI", 10),
                 PlaceholderText = "e.g., 5000.00"
             };
+            startNorthingTextBox.Enter += (s, e) => focusedTextBox = startNorthingTextBox;
+            startNorthingTextBox.Leave += (s, e) => { if (focusedTextBox == startNorthingTextBox) focusedTextBox = null; };
             this.Controls.Add(startNorthingTextBox);
 
             Label startEastingLabel = new Label
             {
-                Location = new Point(20, 375),
+                Location = new Point(20, 405),
                 Size = new Size(130, 25),
                 Text = "Start Easting:",
                 Font = new Font("Segoe UI", 10)
@@ -162,16 +215,18 @@ namespace ConstructionCalculator
 
             startEastingTextBox = new TextBox
             {
-                Location = new Point(160, 375),
+                Location = new Point(160, 405),
                 Size = new Size(260, 25),
                 Font = new Font("Segoe UI", 10),
                 PlaceholderText = "e.g., 2000.00"
             };
+            startEastingTextBox.Enter += (s, e) => focusedTextBox = startEastingTextBox;
+            startEastingTextBox.Leave += (s, e) => { if (focusedTextBox == startEastingTextBox) focusedTextBox = null; };
             this.Controls.Add(startEastingTextBox);
 
             Label distanceLabel = new Label
             {
-                Location = new Point(20, 410),
+                Location = new Point(20, 440),
                 Size = new Size(130, 25),
                 Text = "Distance:",
                 Font = new Font("Segoe UI", 10)
@@ -180,16 +235,18 @@ namespace ConstructionCalculator
 
             distanceTextBox = new TextBox
             {
-                Location = new Point(160, 410),
+                Location = new Point(160, 440),
                 Size = new Size(260, 25),
                 Font = new Font("Segoe UI", 10),
                 PlaceholderText = "e.g., 100' or 100.5 (feet)"
             };
+            distanceTextBox.Enter += (s, e) => focusedTextBox = distanceTextBox;
+            distanceTextBox.Leave += (s, e) => { if (focusedTextBox == distanceTextBox) focusedTextBox = null; };
             this.Controls.Add(distanceTextBox);
 
             Label directionLabel = new Label
             {
-                Location = new Point(20, 445),
+                Location = new Point(20, 475),
                 Size = new Size(130, 25),
                 Text = "Azimuth/Bearing:",
                 Font = new Font("Segoe UI", 10)
@@ -198,16 +255,18 @@ namespace ConstructionCalculator
 
             directionTextBox = new TextBox
             {
-                Location = new Point(160, 445),
+                Location = new Point(160, 475),
                 Size = new Size(260, 25),
                 Font = new Font("Segoe UI", 10),
                 PlaceholderText = "e.g., 045° or N45°E"
             };
+            directionTextBox.Enter += (s, e) => focusedTextBox = directionTextBox;
+            directionTextBox.Leave += (s, e) => { if (focusedTextBox == directionTextBox) focusedTextBox = null; };
             this.Controls.Add(directionTextBox);
 
             Button calculatePointButton = new Button
             {
-                Location = new Point(160, 485),
+                Location = new Point(160, 515),
                 Size = new Size(260, 35),
                 Text = "Calculate End Point",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
@@ -219,7 +278,7 @@ namespace ConstructionCalculator
 
             coordinateResultLabel = new Label
             {
-                Location = new Point(20, 535),
+                Location = new Point(20, 565),
                 Size = new Size(410, 60),
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter,
@@ -227,6 +286,23 @@ namespace ConstructionCalculator
                 BorderStyle = BorderStyle.FixedSingle
             };
             this.Controls.Add(coordinateResultLabel);
+        }
+
+        private void InsertSymbol(string symbol)
+        {
+            if (focusedTextBox == null)
+            {
+                MessageBox.Show("Please click in a text field first to position the cursor.", "No Field Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            int cursorPosition = focusedTextBox.SelectionStart;
+            string currentText = focusedTextBox.Text;
+            
+            focusedTextBox.Text = currentText.Insert(cursorPosition, symbol);
+            
+            focusedTextBox.SelectionStart = cursorPosition + symbol.Length;
+            focusedTextBox.Focus();
         }
 
         private void ConvertBearingToAzimuth(object? sender, EventArgs e)
