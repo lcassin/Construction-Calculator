@@ -48,6 +48,10 @@ namespace ConstructionCalculator
             surveyCalcMenuItem.Click += (s, e) => ShowSurveyCalculator();
             toolsMenu.DropDownItems.Add(surveyCalcMenuItem);
             
+            ToolStripMenuItem seatingLayoutMenuItem = new("Seating Layout Calculator");
+            seatingLayoutMenuItem.Click += (s, e) => ShowSeatingLayoutCalculator();
+            toolsMenu.DropDownItems.Add(seatingLayoutMenuItem);
+            
             toolsMenu.DropDownItems.Add(new ToolStripSeparator());
             
             ToolStripMenuItem themeMenu = new("Theme");
@@ -865,6 +869,15 @@ namespace ConstructionCalculator
             using (var surveyCalc = new SurveyCalculatorForm())
             {
                 surveyCalc.ShowDialog(this);
+				BeginInvoke(new Action(ApplyButtonColors));
+			}
+        }
+
+        private void ShowSeatingLayoutCalculator()
+        {
+            using (var seatingCalc = new SeatingLayoutCalculatorForm())
+            {
+                seatingCalc.ShowDialog(this);
 				BeginInvoke(new Action(ApplyButtonColors));
 			}
         }
