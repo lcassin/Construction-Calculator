@@ -15,7 +15,7 @@ namespace ConstructionCalculator
         private string currentOperation = "";
         private Measurement? storedValue = null;
         private bool shouldClearDisplay = false;
-        private System.Collections.Generic.List<string> calculationChain = new System.Collections.Generic.List<string>();
+		private readonly List<string> calculationChain = [];
 
         public CalculatorForm()
         {
@@ -33,30 +33,30 @@ namespace ConstructionCalculator
         {
             this.SuspendLayout();
             
-            MenuStrip menuStrip = new MenuStrip();
-            ToolStripMenuItem toolsMenu = new ToolStripMenuItem("Tools");
+            MenuStrip menuStrip = new();
+            ToolStripMenuItem toolsMenu = new("Tools");
             
-            ToolStripMenuItem angleCalcMenuItem = new ToolStripMenuItem("Angle Calculator");
+            ToolStripMenuItem angleCalcMenuItem = new("Angle Calculator");
             angleCalcMenuItem.Click += (s, e) => ShowAngleCalculator();
             toolsMenu.DropDownItems.Add(angleCalcMenuItem);
             
-            ToolStripMenuItem stairCalcMenuItem = new ToolStripMenuItem("Stair Calculator");
+            ToolStripMenuItem stairCalcMenuItem = new("Stair Calculator");
             stairCalcMenuItem.Click += (s, e) => ShowStairCalculator();
             toolsMenu.DropDownItems.Add(stairCalcMenuItem);
             
             toolsMenu.DropDownItems.Add(new ToolStripSeparator());
             
-            ToolStripMenuItem themeMenu = new ToolStripMenuItem("Theme");
+            ToolStripMenuItem themeMenu = new("Theme");
             
-            ToolStripMenuItem lightThemeMenuItem = new ToolStripMenuItem("Light");
+            ToolStripMenuItem lightThemeMenuItem = new ("Light");
             lightThemeMenuItem.Click += (s, e) => SetTheme(MaterialSkinManager.Themes.LIGHT);
             themeMenu.DropDownItems.Add(lightThemeMenuItem);
             
-            ToolStripMenuItem darkThemeMenuItem = new ToolStripMenuItem("Dark");
+            ToolStripMenuItem darkThemeMenuItem = new("Dark");
             darkThemeMenuItem.Click += (s, e) => SetTheme(MaterialSkinManager.Themes.DARK);
             themeMenu.DropDownItems.Add(darkThemeMenuItem);
             
-            ToolStripMenuItem systemDefaultMenuItem = new ToolStripMenuItem("System Default");
+            ToolStripMenuItem systemDefaultMenuItem = new("System Default");
             systemDefaultMenuItem.Click += (s, e) => SetSystemDefaultTheme();
             themeMenu.DropDownItems.Add(systemDefaultMenuItem);
             
@@ -121,14 +121,14 @@ namespace ConstructionCalculator
             displayTextBox.KeyDown += DisplayTextBox_KeyDown;
             this.Controls.Add(displayTextBox);
 
-            string[] buttonLabels = new string[]
-            {
-                "7", "8", "9", "/",
+            string[] buttonLabels =
+			[
+				"7", "8", "9", "/",
                 "4", "5", "6", "*",
                 "1", "2", "3", "-",
                 "0", ".", "=", "+",
                 "C", "CE", "Copy", "Mode"
-            };
+            ];
 
             int buttonWidth = 80;
             int buttonHeight = 60;
@@ -141,8 +141,8 @@ namespace ConstructionCalculator
                 int row = i / 4;
                 int col = i % 4;
 
-                Button btn = new Button
-                {
+                Button btn = new()
+				{
                     Location = new Point(startX + col * (buttonWidth + padding), startY + row * (buttonHeight + padding)),
                     Size = new Size(buttonWidth, buttonHeight),
                     Text = buttonLabels[i],
@@ -156,8 +156,8 @@ namespace ConstructionCalculator
 
             ApplyButtonColors();
 
-            Label instructionLabel = new Label
-            {
+            Label instructionLabel = new()
+			{
                 Location = new Point(20, 600),
                 Size = new Size(360, 60),
                 Font = new Font("Segoe UI", 8, FontStyle.Regular),
@@ -168,9 +168,11 @@ namespace ConstructionCalculator
             this.Controls.Add(instructionLabel);
             
             displayTextBox.Focus();
-        }
+			displayTextBox.SelectAll();
+		}
 
-        private void CalculatorForm_KeyPress(object sender, KeyPressEventArgs e)
+        // Update the event handler signature to explicitly allow nullable sender
+        private void CalculatorForm_KeyPress(object? sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Return)
             {
@@ -182,7 +184,7 @@ namespace ConstructionCalculator
             }
         }
 
-        private void DisplayTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void DisplayTextBox_KeyPress(object? sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Return)
             {
@@ -191,7 +193,7 @@ namespace ConstructionCalculator
             }
         }
 
-        private void DisplayTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void DisplayTextBox_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
             {
@@ -201,7 +203,7 @@ namespace ConstructionCalculator
             }
         }
 
-        private void CalculatorForm_KeyDown(object sender, KeyEventArgs e)
+        private void CalculatorForm_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.C && !e.Shift && !e.Alt)
             {
@@ -276,8 +278,8 @@ namespace ConstructionCalculator
                 {
                     PerformCalculation();
                     displayTextBox.Focus();
-                    displayTextBox.SelectionStart = displayTextBox.Text.Length;
-                }
+					displayTextBox.SelectAll();
+				}
                 else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "/")
                 {
                     SetOperation(buttonText);
@@ -304,8 +306,8 @@ namespace ConstructionCalculator
             UpdateChainDisplay();
             
             displayTextBox.Focus();
-            displayTextBox.SelectionStart = displayTextBox.Text.Length;
-        }
+			displayTextBox.SelectAll();
+		}
 
         private void ClearEntry()
         {
@@ -379,16 +381,16 @@ namespace ConstructionCalculator
                         switch (currentOperation)
                         {
                             case "+":
-                                storedValue = storedValue + value;
+                                storedValue += value;
                                 break;
                             case "-":
-                                storedValue = storedValue - value;
+                                storedValue -= value;
                                 break;
                             case "*":
-                                storedValue = storedValue * value.ToTotalInches();
+                                storedValue *= value.ToTotalInches();
                                 break;
                             case "/":
-                                storedValue = storedValue / value.ToTotalInches();
+                                storedValue /= value.ToTotalInches();
                                 break;
                         }
                         currentOperation = "";
@@ -471,8 +473,8 @@ namespace ConstructionCalculator
                 displayTextBox.Text = "";
                 
                 displayTextBox.Focus();
-                displayTextBox.SelectionStart = displayTextBox.Text.Length;
-            }
+				displayTextBox.SelectAll();
+			}
             catch (Exception ex)
             {
                 MessageBox.Show($"Error parsing value: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -498,18 +500,18 @@ namespace ConstructionCalculator
                 Measurement current = ParseCurrentDisplay();
                 
                 if (!shouldClearDisplay && calculationChain.Count > 0 && 
-                    calculationChain[calculationChain.Count - 1] != "+" && 
-                    calculationChain[calculationChain.Count - 1] != "-" && 
-                    calculationChain[calculationChain.Count - 1] != "*" && 
-                    calculationChain[calculationChain.Count - 1] != "/")
+                    calculationChain[^1] != "+" && 
+                    calculationChain[^1] != "-" && 
+                    calculationChain[^1] != "*" && 
+                    calculationChain[^1] != "/")
                 {
                     calculationChain.Add(displayText);
                 }
                 else if (calculationChain.Count > 0 && 
-                         (calculationChain[calculationChain.Count - 1] == "+" || 
-                          calculationChain[calculationChain.Count - 1] == "-" || 
-                          calculationChain[calculationChain.Count - 1] == "*" || 
-                          calculationChain[calculationChain.Count - 1] == "/"))
+                         (calculationChain[^1] == "+" || 
+                          calculationChain[^1] == "-" || 
+                          calculationChain[^1] == "*" || 
+                          calculationChain[^1] == "/"))
                 {
                     calculationChain.Add(displayText);
                 }
@@ -547,8 +549,8 @@ namespace ConstructionCalculator
                 shouldClearDisplay = true;
                 
                 displayTextBox.Focus();
-                displayTextBox.SelectionStart = displayTextBox.Text.Length;
-            }
+				displayTextBox.SelectAll();
+			}
             catch (Exception ex)
             {
                 MessageBox.Show($"Calculation error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -820,12 +822,12 @@ namespace ConstructionCalculator
                 shouldClearDisplay = true;
                 
                 displayTextBox.Focus();
-                displayTextBox.SelectionStart = displayTextBox.Text.Length;
-            }
-            catch (Exception ex)
+				displayTextBox.SelectAll();
+			}
+            catch (Exception)
             {
-                MessageBox.Show($"Error evaluating expression: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Clear();
+                //MessageBox.Show($"Error evaluating expression: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ClearEntry();
             }
         }
 
@@ -834,7 +836,8 @@ namespace ConstructionCalculator
             using (var angleCalc = new AngleCalculatorForm())
             {
                 angleCalc.ShowDialog(this);
-            }
+				BeginInvoke(new Action(ApplyButtonColors));
+			}
         }
 
         private void ShowStairCalculator()
@@ -842,7 +845,8 @@ namespace ConstructionCalculator
             using (var stairCalc = new StairCalculatorForm())
             {
                 stairCalc.ShowDialog(this);
-            }
+				BeginInvoke(new Action(ApplyButtonColors));
+			}
         }
 
         private void SetTheme(MaterialSkinManager.Themes theme)
