@@ -10,13 +10,13 @@ namespace ConstructionCalculator
     {
         private TextBox bearingTextBox;
         private TextBox azimuthTextBox;
-        private Label conversionResultLabel;
+        private TextBox conversionResultLabel;
         
         private TextBox startNorthingTextBox;
         private TextBox startEastingTextBox;
         private TextBox distanceTextBox;
         private TextBox directionTextBox;
-        private Label coordinateResultLabel;
+        private TextBox coordinateResultLabel;
         
         private TextBox? focusedTextBox;
 
@@ -164,14 +164,17 @@ namespace ConstructionCalculator
             azimuthToBearingButton.Click += ConvertAzimuthToBearing;
             this.Controls.Add(azimuthToBearingButton);
 
-            conversionResultLabel = new Label
+            conversionResultLabel = new TextBox
             {
                 Location = new Point(20, 265),
                 Size = new Size(410, 40),
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                TextAlign = ContentAlignment.MiddleCenter,
+                TextAlign = HorizontalAlignment.Center,
                 BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.FixedSingle,
+                ReadOnly = true,
+                Multiline = true,
+                TabStop = false
             };
             this.Controls.Add(conversionResultLabel);
 
@@ -281,14 +284,17 @@ namespace ConstructionCalculator
             calculatePointButton.Click += CalculateEndPoint;
             this.Controls.Add(calculatePointButton);
 
-            coordinateResultLabel = new Label
+            coordinateResultLabel = new TextBox
             {
                 Location = new Point(20, 565),
                 Size = new Size(410, 60),
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                TextAlign = ContentAlignment.MiddleCenter,
+                TextAlign = HorizontalAlignment.Center,
                 BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.FixedSingle,
+                ReadOnly = true,
+                Multiline = true,
+                TabStop = false
             };
             this.Controls.Add(coordinateResultLabel);
         }
