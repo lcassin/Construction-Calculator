@@ -44,6 +44,10 @@ namespace ConstructionCalculator
             stairCalcMenuItem.Click += (s, e) => ShowStairCalculator();
             toolsMenu.DropDownItems.Add(stairCalcMenuItem);
             
+            ToolStripMenuItem surveyCalcMenuItem = new("Survey Calculator");
+            surveyCalcMenuItem.Click += (s, e) => ShowSurveyCalculator();
+            toolsMenu.DropDownItems.Add(surveyCalcMenuItem);
+            
             toolsMenu.DropDownItems.Add(new ToolStripSeparator());
             
             ToolStripMenuItem themeMenu = new("Theme");
@@ -852,6 +856,15 @@ namespace ConstructionCalculator
             using (var stairCalc = new StairCalculatorForm())
             {
                 stairCalc.ShowDialog(this);
+				BeginInvoke(new Action(ApplyButtonColors));
+			}
+        }
+
+        private void ShowSurveyCalculator()
+        {
+            using (var surveyCalc = new SurveyCalculatorForm())
+            {
+                surveyCalc.ShowDialog(this);
 				BeginInvoke(new Action(ApplyButtonColors));
 			}
         }

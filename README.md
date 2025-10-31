@@ -230,6 +230,48 @@ Calculate riser heights for stairway construction:
 
 Example: 108" total rise with 15 steps = 7.2" risers (within code)
 
+### Survey Calculator
+Professional surveying and coordinate geometry tools for CAD drafters:
+
+#### Bearing / Azimuth Converter
+Convert between bearing notation (surveying) and azimuth notation (CAD/civil engineering):
+- **Bearing to Azimuth**: Convert bearing format (e.g., "N 45° 30' E") to azimuth format (e.g., "045° 30' 00"")
+- **Azimuth to Bearing**: Convert azimuth format (e.g., "045° 30'") to bearing format (e.g., "N 45° 30' 00" E")
+- Supports all quadrants: NE, SE, SW, NW
+- Accepts multiple input formats:
+  - Bearing: "N 45° 30' E", "N45°30'E", "N45.5E"
+  - Azimuth: "045° 30'", "45.5" (decimal degrees)
+
+**Conversion Rules:**
+- NE quadrant (0-90°): Azimuth = Bearing
+- SE quadrant (90-180°): Azimuth = 180° - Bearing
+- SW quadrant (180-270°): Azimuth = 180° + Bearing
+- NW quadrant (270-360°): Azimuth = 360° - Bearing
+
+**Example:** Bearing "N 45° 30' E" converts to Azimuth "045° 30' 00""
+
+#### Coordinate Geometry
+Calculate endpoint coordinates from starting point, distance, and direction (for traverse calculations and plotting survey points):
+- Enter starting coordinates (Northing, Easting)
+- Enter distance (supports feet-inches format like "100' 6"" or decimal feet like "100.5")
+- Enter direction (azimuth like "045°" or bearing like "N45°E")
+- Calculate endpoint coordinates automatically
+
+**Calculation Method:**
+- ΔNorthing = Distance × cos(azimuth)
+- ΔEasting = Distance × sin(azimuth)
+- End Northing = Start Northing + ΔNorthing
+- End Easting = Start Easting + ΔEasting
+
+**Example:** Starting at (5000.00 N, 2000.00 E), traveling 100.5' at azimuth 045° results in endpoint (5071.07 N, 2071.07 E)
+
+**Benefits for CAD Drafters:**
+- No need to know trigonometry formulas (sin/cos/tan)
+- Quick bearing/azimuth conversions for civil drawings
+- Accurate coordinate calculations for survey point locations
+- All calculations formatted properly for civil engineering work
+- Integrated with Construction Calculator's measurement system
+
 ## License
 
 Free to use for any purpose.
