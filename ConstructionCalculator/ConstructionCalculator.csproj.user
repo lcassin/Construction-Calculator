@@ -10,7 +10,13 @@
     <Compile Update="CalculatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="SeatingLayoutCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="StairCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SurveyCalculatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

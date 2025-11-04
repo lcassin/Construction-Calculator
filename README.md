@@ -230,6 +230,132 @@ Calculate riser heights for stairway construction:
 
 Example: 108" total rise with 15 steps = 7.2" risers (within code)
 
+### Survey Calculator
+Professional surveying and coordinate geometry tools for CAD drafters:
+
+#### Bearing / Azimuth Converter
+Convert between bearing notation (surveying) and azimuth notation (CAD/civil engineering):
+- **Bearing to Azimuth**: Convert bearing format (e.g., "N 45° 30' E") to azimuth format (e.g., "045° 30' 00"")
+- **Azimuth to Bearing**: Convert azimuth format (e.g., "045° 30'") to bearing format (e.g., "N 45° 30' 00" E")
+- Supports all quadrants: NE, SE, SW, NW
+- Accepts multiple input formats:
+  - Bearing: "N 45° 30' E", "N45°30'E", "N45.5E"
+  - Azimuth: "045° 30'", "45.5" (decimal degrees)
+
+**Conversion Rules:**
+- NE quadrant (0-90°): Azimuth = Bearing
+- SE quadrant (90-180°): Azimuth = 180° - Bearing
+- SW quadrant (180-270°): Azimuth = 180° + Bearing
+- NW quadrant (270-360°): Azimuth = 360° - Bearing
+
+**Example:** Bearing "N 45° 30' E" converts to Azimuth "045° 30' 00""
+
+#### Coordinate Geometry
+Calculate endpoint coordinates from starting point, distance, and direction (for traverse calculations and plotting survey points):
+- Enter starting coordinates (Northing, Easting)
+- Enter distance (supports feet-inches format like "100' 6"" or decimal feet like "100.5")
+- Enter direction (azimuth like "045°" or bearing like "N45°E")
+- Calculate endpoint coordinates automatically
+
+**Calculation Method:**
+- ΔNorthing = Distance × cos(azimuth)
+- ΔEasting = Distance × sin(azimuth)
+- End Northing = Start Northing + ΔNorthing
+- End Easting = Start Easting + ΔEasting
+
+**Example:** Starting at (5000.00 N, 2000.00 E), traveling 100.5' at azimuth 045° results in endpoint (5071.07 N, 2071.07 E)
+
+**Benefits for CAD Drafters:**
+- No need to know trigonometry formulas (sin/cos/tan)
+- Quick bearing/azimuth conversions for civil drawings
+- Accurate coordinate calculations for survey point locations
+- All calculations formatted properly for civil engineering work
+- Integrated with Construction Calculator's measurement system
+
+### Seating Layout Calculator
+Professional auditorium seating layout tool for radial seating arrangements with complex constraints:
+
+#### Overview
+Calculate precise chair positions for auditorium-style radial seating with A-B alternation pattern (chairs with/without arms) and code-compliant aisle spacing. Generates CAD-ready coordinate data for accurate construction drawings.
+
+#### Features
+- **Radial Geometry**: Calculates chair positions along curved rows at specified radii
+- **A-B Pattern**: Alternates between Type A chairs (with arms) and Type B chairs (without arms)
+- **Aisle Constraints**: Ensures aisle seats always have arms for safety compliance
+- **Code Compliance**: Validates aisle width and maximum seats between aisles
+- **CSV Export**: Generates coordinate data ready for CAD import
+
+#### Input Parameters
+
+**Row Configuration:**
+- Number of Rows: Total rows in the seating layout
+- Starting Radius (ft): Radius of the first row from center point
+- Row Spacing (ft): Distance between consecutive rows
+- Arc Span (degrees): Total angular coverage of seating area (e.g., 180° for semicircle)
+- Center Point: Northing and Easting coordinates of the arc center
+
+**Chair Specifications:**
+- Type A Width (inches): Width of chairs with arms (typically 24")
+- Type A Depth (inches): Depth of chairs with arms (typically 20")
+- Type B Width (inches): Width of chairs without arms (typically 20")
+- Type B Depth (inches): Depth of chairs without arms (typically 20")
+
+**Aisle Configuration:**
+- Number of Aisles: How many aisles divide the seating sections
+- Aisle Width (inches): Width of each aisle (typically 36" minimum)
+- Aisle Spacing: Evenly Spaced or Custom Positions
+
+**Code Compliance:**
+- Min Aisle Width (inches): Minimum allowed aisle width (building code requirement)
+- Max Seats/Aisle: Maximum seats between aisles (typically 14 for exits)
+
+#### Calculation Method
+
+1. **Arc Geometry**: `Arc Length = radius × arc_span_radians`
+2. **Available Width**: `Arc Length - (Number of Aisles × Aisle Width)`
+3. **Chair Pattern Generation**:
+   - Start each section with Type A (arms) at aisle
+   - Alternate A-B-A-B through middle of section
+   - End each section with Type A (arms) at aisle
+   - Verify maximum seats per section not exceeded
+4. **Coordinate Calculation**:
+   - Angular position: `θ = cumulative_width / radius`
+   - X coordinate: `Center_X + radius × cos(θ)`
+   - Y coordinate: `Center_Y + radius × sin(θ)`
+   - Rotation angle: `θ + 90°` (chairs face center)
+
+#### Output Format (CSV)
+```
+Row,Seat,Type,X_Coordinate,Y_Coordinate,Rotation_Angle,Notes
+1,1,A,100.234,50.123,45.00,Aisle seat
+1,2,B,100.456,50.345,46.50,
+1,3,A,100.678,50.567,48.00,
+...
+```
+
+#### Benefits for CAD Drafters
+- **Time Savings**: Eliminates manual calculation of hundreds of chair positions
+- **Accuracy**: Precise coordinates ensure perfect radial alignment
+- **Code Compliance**: Built-in validation prevents non-compliant layouts
+- **Flexibility**: Adjustable parameters for different venue requirements
+- **Export Ready**: CSV format imports directly into AutoCAD, Revit, etc.
+- **Documentation**: Complete record of layout decisions and measurements
+
+#### Example Usage
+**Small Theater (10 rows, 180° arc):**
+- Starting Radius: 20 ft
+- Row Spacing: 3 ft
+- Chair A Width: 24", Chair B Width: 20"
+- 2 Aisles at 36" width
+- Result: ~200 seats with optimal sightlines and code-compliant aisles
+
+**Large Auditorium (20 rows, 120° arc):**
+- Starting Radius: 30 ft
+- Row Spacing: 3.5 ft
+- Chair A Width: 24", Chair B Width: 20"
+- 3 Aisles at 42" width
+- Result: ~400 seats with multiple exit paths
+
 ## License
 
 Free to use for any purpose.

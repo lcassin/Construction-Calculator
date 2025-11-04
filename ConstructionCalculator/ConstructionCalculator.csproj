@@ -13,4 +13,8 @@
     <PackageReference Include="MaterialSkin.2" Version="2.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\Assets\SmallTile.scale-100.ico" Link="Assets\SmallTile.scale-100.ico" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
