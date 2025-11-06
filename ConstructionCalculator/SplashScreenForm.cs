@@ -79,7 +79,7 @@ namespace ConstructionCalculator
 
             closeTimer = new System.Windows.Forms.Timer
             {
-                Interval = 2000
+                Interval = 3500
             };
             closeTimer.Tick += (s, e) =>
             {
