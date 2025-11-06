@@ -11,7 +11,15 @@ namespace ConstructionCalculator
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CalculatorForm());
+            
+            SplashScreenForm splash = new SplashScreenForm();
+            splash.Show();
+            Application.DoEvents();
+            
+            CalculatorForm mainForm = new CalculatorForm();
+            splash.Close();
+            
+            Application.Run(mainForm);
         }
     }
 }

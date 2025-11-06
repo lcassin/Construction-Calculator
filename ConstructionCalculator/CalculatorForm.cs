@@ -92,6 +92,12 @@ namespace ConstructionCalculator
             
             toolsMenu.DropDownItems.Add(themeMenu);
             
+            toolsMenu.DropDownItems.Add(new ToolStripSeparator());
+            
+            ToolStripMenuItem aboutMenuItem = new("About");
+            aboutMenuItem.Click += (s, e) => ShowAbout();
+            toolsMenu.DropDownItems.Add(aboutMenuItem);
+            
             menuStrip.Items.Add(toolsMenu);
             this.MainMenuStrip = menuStrip;
             this.Controls.Add(menuStrip);
@@ -902,6 +908,15 @@ namespace ConstructionCalculator
                 seatingCalc.ShowDialog(this);
 				BeginInvoke(new Action(ApplyButtonColors));
 			}
+        }
+
+        private void ShowAbout()
+        {
+            using (var aboutDialog = new AboutForm())
+            {
+                aboutDialog.ShowDialog(this);
+                BeginInvoke(new Action(ApplyButtonColors));
+            }
         }
 
         private void SetTheme(MaterialSkinManager.Themes theme)
