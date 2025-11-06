@@ -12,14 +12,12 @@ namespace ConstructionCalculator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            SplashScreenForm splash = new SplashScreenForm();
-            splash.Show();
-            Application.DoEvents();
+            using (SplashScreenForm splash = new SplashScreenForm())
+            {
+                splash.ShowDialog();
+            }
             
-            CalculatorForm mainForm = new CalculatorForm();
-            splash.Close();
-            
-            Application.Run(mainForm);
+            Application.Run(new CalculatorForm());
         }
     }
 }
