@@ -45,6 +45,11 @@
 
     <FlyoutItem Title="Settings">
         <ShellContent
+            Title="Settings"
+            ContentTemplate="{DataTemplate pages:SettingsPage}"
+            Route="Settings" />
+        
+        <ShellContent
             Title="About"
             ContentTemplate="{DataTemplate pages:AboutPage}"
             Route="About" />
