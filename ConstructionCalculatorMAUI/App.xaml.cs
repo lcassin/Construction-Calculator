@@ -11,7 +11,7 @@ public partial class App : Application
 
         RequestedThemeChanged += (s, e) => ApplyThemeResources(e.RequestedTheme);
 
-        MainPage = new AppShell();
+        MainPage = new Pages.SplashPage();
     }
 
     private void LoadThemePreference()
