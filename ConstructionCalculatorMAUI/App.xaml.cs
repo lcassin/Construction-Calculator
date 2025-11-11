@@ -12,6 +12,12 @@ public partial class App : Application
         RequestedThemeChanged += (s, e) => ApplyThemeResources(e.RequestedTheme);
 
         MainPage = new Pages.SplashPage();
+        
+        Dispatcher.Dispatch(async () =>
+        {
+            await Task.Delay(1200); // Show splash for 1.2 seconds
+            MainPage = new AppShell();
+        });
     }
 
     private void LoadThemePreference()
