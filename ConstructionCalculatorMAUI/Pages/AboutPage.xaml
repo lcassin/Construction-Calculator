@@ -12,6 +12,19 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
             
+            <Image WidthRequest="200"
+                   HeightRequest="200"
+                   HorizontalOptions="Center"
+                   Aspect="AspectFit"
+                   Margin="0,20,0,10">
+                <Image.Source>
+                    <OnPlatform x:TypeArguments="ImageSource">
+                        <On Platform="WinUI">splashlogo.png</On>
+                        <On Platform="Android,iOS,MacCatalyst">splashlogo</On>
+                    </OnPlatform>
+                </Image.Source>
+            </Image>
+            
             <Label Text="Construction Calculator"
                    FontSize="28"
                    FontAttributes="Bold"
