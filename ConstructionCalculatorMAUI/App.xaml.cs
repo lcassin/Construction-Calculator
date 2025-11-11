@@ -7,6 +7,9 @@ public partial class App : Application
         InitializeComponent();
 
         LoadThemePreference();
+        ApplyThemeResources(RequestedTheme);
+
+        RequestedThemeChanged += (s, e) => ApplyThemeResources(e.RequestedTheme);
 
         MainPage = new AppShell();
     }
@@ -44,6 +47,24 @@ public partial class App : Application
             default:
                 Current!.UserAppTheme = AppTheme.Unspecified;
                 break;
+        }
+    }
+
+    private static void ApplyThemeResources(AppTheme theme)
+    {
+        var rd = Current!.Resources;
+        
+        if (theme == AppTheme.Dark)
+        {
+            rd["DisplayBackgroundColor"] = Color.FromArgb("#1E1E1E");
+            rd["OperatorButtonColor"] = Color.FromArgb("#FF9800");
+            rd["SecondaryTextColor"] = Color.FromArgb("#B0B0B0");
+        }
+        else
+        {
+            rd["DisplayBackgroundColor"] = Color.FromArgb("#F5F5F5");
+            rd["OperatorButtonColor"] = Color.FromArgb("#FFC864");
+            rd["SecondaryTextColor"] = Color.FromArgb("#757575");
         }
     }
 }
