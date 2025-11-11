@@ -110,7 +110,7 @@ public partial class MainPage : ContentPage
             case Windows.System.VirtualKey.Space:
                 AppendToDisplay(" ");
                 break;
-            case Windows.System.VirtualKey.Oem7: // Quote key for ' and "
+            case (Windows.System.VirtualKey)222: // Quote key for ' and "
                 {
                     var shift = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift);
                     var leftShift = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.LeftShift);
