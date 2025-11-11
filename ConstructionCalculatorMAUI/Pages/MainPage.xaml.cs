@@ -15,6 +15,138 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        
+#if WINDOWS
+        var window = this.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
+        if (window != null)
+        {
+            window.Content.KeyDown += OnWindowKeyDown;
+        }
+#endif
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        
+#if WINDOWS
+        var window = this.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
+        if (window != null)
+        {
+            window.Content.KeyDown -= OnWindowKeyDown;
+        }
+#endif
+    }
+
+#if WINDOWS
+    private void OnWindowKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+    {
+        var key = e.Key;
+        bool handled = true;
+
+        switch (key)
+        {
+            case Windows.System.VirtualKey.Number0:
+            case Windows.System.VirtualKey.NumberPad0:
+                AppendToDisplay("0");
+                break;
+            case Windows.System.VirtualKey.Number1:
+            case Windows.System.VirtualKey.NumberPad1:
+                AppendToDisplay("1");
+                break;
+            case Windows.System.VirtualKey.Number2:
+            case Windows.System.VirtualKey.NumberPad2:
+                AppendToDisplay("2");
+                break;
+            case Windows.System.VirtualKey.Number3:
+            case Windows.System.VirtualKey.NumberPad3:
+                AppendToDisplay("3");
+                break;
+            case Windows.System.VirtualKey.Number4:
+            case Windows.System.VirtualKey.NumberPad4:
+                AppendToDisplay("4");
+                break;
+            case Windows.System.VirtualKey.Number5:
+            case Windows.System.VirtualKey.NumberPad5:
+                AppendToDisplay("5");
+                break;
+            case Windows.System.VirtualKey.Number6:
+            case Windows.System.VirtualKey.NumberPad6:
+                AppendToDisplay("6");
+                break;
+            case Windows.System.VirtualKey.Number7:
+            case Windows.System.VirtualKey.NumberPad7:
+                AppendToDisplay("7");
+                break;
+            case Windows.System.VirtualKey.Number8:
+            case Windows.System.VirtualKey.NumberPad8:
+                AppendToDisplay("8");
+                break;
+            case Windows.System.VirtualKey.Number9:
+            case Windows.System.VirtualKey.NumberPad9:
+                AppendToDisplay("9");
+                break;
+
+            case Windows.System.VirtualKey.Add:
+                SetOperation("+");
+                break;
+            case Windows.System.VirtualKey.Subtract:
+                SetOperation("-");
+                break;
+            case Windows.System.VirtualKey.Multiply:
+                SetOperation("*");
+                break;
+            case Windows.System.VirtualKey.Divide:
+                SetOperation("/");
+                break;
+
+            case Windows.System.VirtualKey.Decimal:
+            case (Windows.System.VirtualKey)190: // Period key
+                AppendToDisplay(".");
+                break;
+            case Windows.System.VirtualKey.Space:
+                AppendToDisplay(" ");
+                break;
+            case (Windows.System.VirtualKey)222: // Quote key for ' and "
+                if ((Microsoft.UI.Xaml.Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift) & 
+                     Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down)
+                {
+                    AppendToDisplay("\"");
+                }
+                else
+                {
+                    AppendToDisplay("'");
+                }
+                break;
+            case (Windows.System.VirtualKey)191: // Forward slash key
+                AppendToDisplay("/");
+                break;
+
+            case Windows.System.VirtualKey.Enter:
+                PerformCalculation();
+                DisplayEntry.Focus();
+                DisplayEntry.CursorPosition = 0;
+                DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+                break;
+            case Windows.System.VirtualKey.Escape:
+                Clear();
+                break;
+            case Windows.System.VirtualKey.Back:
+                ClearEntry();
+                break;
+
+            default:
+                handled = false;
+                break;
+        }
+
+        e.Handled = handled;
+    }
+#endif
+
     private void OnNumberClicked(object sender, EventArgs e)
     {
         if (sender is Button button)
@@ -27,8 +159,14 @@ public partial class MainPage : ContentPage
     {
         if (sender is Button button)
         {
-            SetOperation(button.Text);
+            string operation = button.CommandParameter?.ToString() ?? button.Text;
+            SetOperation(operation);
         }
+    }
+
+    private void OnSpaceClicked(object sender, EventArgs e)
+    {
+        AppendToDisplay(" ");
     }
 
     private void OnEqualsClicked(object sender, EventArgs e)
