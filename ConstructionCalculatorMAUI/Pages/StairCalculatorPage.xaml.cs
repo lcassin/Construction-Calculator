@@ -42,6 +42,11 @@ public partial class StairCalculatorPage : ContentPage
         }
     }
 
+    private void OnIncludeLandingLabelTapped(object sender, EventArgs e)
+    {
+        IncludeLandingCheckBox.IsChecked = !IncludeLandingCheckBox.IsChecked;
+    }
+
     private void OnLandingDepthChanged(object sender, TextChangedEventArgs e)
     {
         if (IncludeLandingCheckBox.IsChecked)
