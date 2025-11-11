@@ -36,6 +36,7 @@
   <!-- Windows MSIX packaging for Release builds -->
   <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)'=='Release'">
     <WindowsPackageType>MSIX</WindowsPackageType>
+    <AppxManifest>Platforms\Windows\Package.appxmanifest</AppxManifest>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <AppxBundle>Always</AppxBundle>
     <AppxPackageDir>$(MSBuildProjectDirectory)\AppPackages\</AppxPackageDir>
