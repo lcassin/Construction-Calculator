@@ -63,7 +63,7 @@
             </Style>
 
             <Style TargetType="ScrollView">
-                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#121212}" />
             </Style>
 
             <Style TargetType="VerticalStackLayout">
