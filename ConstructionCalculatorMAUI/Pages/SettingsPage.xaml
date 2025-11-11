@@ -4,6 +4,31 @@
              x:Class="ConstructionCalculatorMAUI.Pages.SettingsPage"
              Title="Settings">
 
+    <ContentPage.Resources>
+        <ControlTemplate x:Key="ThemedRadioTemplate">
+            <Grid ColumnDefinitions="Auto,*" Padding="0,8">
+                <Grid WidthRequest="20" HeightRequest="20" VerticalOptions="Center" HorizontalOptions="Start">
+                    <Ellipse Stroke="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
+                             StrokeThickness="2"
+                             Fill="Transparent" />
+                    <Ellipse WidthRequest="10" HeightRequest="10"
+                             Fill="{AppThemeBinding Light=#000000, Dark=#FFFFFF}">
+                        <Ellipse.Triggers>
+                            <DataTrigger TargetType="Ellipse"
+                                         Binding="{Binding IsChecked, Source={RelativeSource TemplatedParent}}"
+                                         Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Ellipse.Triggers>
+                    </Ellipse>
+                </Grid>
+                <ContentPresenter Grid.Column="1"
+                                  VerticalOptions="Center"
+                                  Margin="10,0,0,0" />
+            </Grid>
+        </ControlTemplate>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
             
@@ -28,16 +53,19 @@
                 <RadioButton x:Name="LightThemeRadio"
                              Content="Light"
                              GroupName="Theme"
+                             ControlTemplate="{StaticResource ThemedRadioTemplate}"
                              CheckedChanged="OnThemeChanged" />
                 
                 <RadioButton x:Name="DarkThemeRadio"
                              Content="Dark"
                              GroupName="Theme"
+                             ControlTemplate="{StaticResource ThemedRadioTemplate}"
                              CheckedChanged="OnThemeChanged" />
                 
                 <RadioButton x:Name="SystemThemeRadio"
                              Content="System Default"
                              GroupName="Theme"
+                             ControlTemplate="{StaticResource ThemedRadioTemplate}"
                              CheckedChanged="OnThemeChanged" />
             </VerticalStackLayout>
 
