@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.MainPage"
+             Title="Construction Calculator">
+
+    <!-- 
+    Main Calculator Page
+    Provides feet-inches-fractions arithmetic with decimal mode toggle.
+    Supports calculation chains and keyboard shortcuts.
+    -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            
+            <!-- Mode Display -->
+            <Label x:Name="ModeLabel"
+                   Text="Mode: Fractions (1/16&quot;)"
+                   FontSize="14"
+                   HorizontalOptions="Start" />
+
+            <!-- Calculation Chain Display -->
+            <Label x:Name="ChainLabel"
+                   Text=""
+                   FontSize="12"
+                   TextColor="{DynamicResource SecondaryTextColor}"
+                   HorizontalOptions="End"
+                   MinimumHeightRequest="30" />
+
+            <!-- Display Entry -->
+            <Entry x:Name="DisplayEntry"
+                   Text="0&quot;"
+                   FontSize="24"
+                   FontFamily="Courier"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="End"
+                   BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                   Keyboard="Text"
+                   Completed="OnDisplayCompleted"
+                   Focused="OnDisplayFocused"
+                   HeightRequest="60" />
+
+            <!-- Calculator Buttons Grid -->
+            <Grid RowDefinitions="60,60,60,60,60"
+                  ColumnDefinitions="*,*,*,*"
+                  RowSpacing="10"
+                  ColumnSpacing="10"
+                  Margin="0,20,0,0">
+
+                <!-- Row 0: 7, 8, 9, / -->
+                <Button Text="7" Grid.Row="0" Grid.Column="0" Clicked="OnNumberClicked" />
+                <Button Text="8" Grid.Row="0" Grid.Column="1" Clicked="OnNumberClicked" />
+                <Button Text="9" Grid.Row="0" Grid.Column="2" Clicked="OnNumberClicked" />
+                <Button Text="/" Grid.Row="0" Grid.Column="3" Clicked="OnOperatorClicked" Style="{StaticResource OperatorButton}" />
+
+                <!-- Row 1: 4, 5, 6, * -->
+                <Button Text="4" Grid.Row="1" Grid.Column="0" Clicked="OnNumberClicked" />
+                <Button Text="5" Grid.Row="1" Grid.Column="1" Clicked="OnNumberClicked" />
+                <Button Text="6" Grid.Row="1" Grid.Column="2" Clicked="OnNumberClicked" />
+                <Button Text="*" Grid.Row="1" Grid.Column="3" Clicked="OnOperatorClicked" Style="{StaticResource OperatorButton}" />
+
+                <!-- Row 2: 1, 2, 3, - -->
+                <Button Text="1" Grid.Row="2" Grid.Column="0" Clicked="OnNumberClicked" />
+                <Button Text="2" Grid.Row="2" Grid.Column="1" Clicked="OnNumberClicked" />
+                <Button Text="3" Grid.Row="2" Grid.Column="2" Clicked="OnNumberClicked" />
+                <Button Text="-" Grid.Row="2" Grid.Column="3" Clicked="OnOperatorClicked" Style="{StaticResource OperatorButton}" />
+
+                <!-- Row 3: 0, ., =, + -->
+                <Button Text="0" Grid.Row="3" Grid.Column="0" Clicked="OnNumberClicked" />
+                <Button Text="." Grid.Row="3" Grid.Column="1" Clicked="OnNumberClicked" />
+                <Button Text="=" Grid.Row="3" Grid.Column="2" Clicked="OnEqualsClicked" Style="{StaticResource OperatorButton}" />
+                <Button Text="+" Grid.Row="3" Grid.Column="3" Clicked="OnOperatorClicked" Style="{StaticResource OperatorButton}" />
+
+                <!-- Row 4: C, CE, Copy, Mode -->
+                <Button Text="C" Grid.Row="4" Grid.Column="0" Clicked="OnClearClicked" />
+                <Button Text="CE" Grid.Row="4" Grid.Column="1" Clicked="OnClearEntryClicked" />
+                <Button Text="Copy" Grid.Row="4" Grid.Column="2" Clicked="OnCopyClicked" />
+                <Button Text="Mode" Grid.Row="4" Grid.Column="3" Clicked="OnModeClicked" />
+            </Grid>
+
+            <!-- Instructions -->
+            <Label FontSize="10"
+                   TextColor="{DynamicResource SecondaryTextColor}"
+                   Margin="0,20,0,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Enter measurements: 23' 6 1/2&quot; or 6 1/2&quot; or 1/2&quot;&#x0a;" />
+                        <Span Text="Tap = to calculate, C to clear, CE to undo last entry&#x0a;" />
+                        <Span Text="Mode toggles between fractions and decimal inches" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

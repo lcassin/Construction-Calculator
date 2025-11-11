@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.StairCalculatorPage"
+             Title="Stair Calculator">
+
+    <!-- 
+    Stair Calculator Page
+    Calculates riser height, tread depth, and total run from total rise and number of steps.
+    Includes building code compliance checking and optional landing calculations.
+    Uses the 2R + T = 25" rule for comfortable stairs.
+    -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Input Section -->
+            <Label Text="Total Rise:" FontSize="14" />
+            <Entry x:Name="TotalRiseEntry"
+                   Placeholder="e.g., 9' or 108&quot;"
+                   FontSize="14"
+                   Completed="OnTotalRiseCompleted" />
+
+            <Label Text="Number of Steps:" FontSize="14" />
+            <Stepper x:Name="NumberOfStepsStepper"
+                     Minimum="1"
+                     Maximum="100"
+                     Value="15"
+                     Increment="1"
+                     ValueChanged="OnStepsChanged" />
+            <Label x:Name="StepsLabel"
+                   Text="15 steps"
+                   FontSize="14"
+                   HorizontalOptions="Center" />
+
+            <!-- Action Buttons -->
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                <Button Text="Auto-Calculate Steps"
+                        Clicked="OnAutoCalculateClicked"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        BackgroundColor="{DynamicResource OperatorButtonColor}"
+                        TextColor="#000000"
+                        HorizontalOptions="FillAndExpand" />
+                <Button Text="Calculate"
+                        Clicked="OnCalculateClicked"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        BackgroundColor="{DynamicResource OperatorButtonColor}"
+                        TextColor="#000000"
+                        HorizontalOptions="FillAndExpand" />
+            </HorizontalStackLayout>
+
+            <!-- Results Section -->
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10"
+                    Margin="0,10,0,0">
+                <Label x:Name="RiserHeightLabel"
+                       Text="Riser Height: --"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" />
+            </Border>
+
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10">
+                <Label x:Name="TreadDepthLabel"
+                       Text="Tread Depth: --"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" />
+            </Border>
+
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10">
+                <Label x:Name="RunWidthLabel"
+                       Text="Total Run Width: --"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" />
+            </Border>
+
+            <!-- Compliance Label -->
+            <Label x:Name="ComplianceLabel"
+                   Text=""
+                   FontSize="12"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,10,0,0" />
+
+            <!-- Landing Section -->
+            <CheckBox x:Name="IncludeLandingCheckBox"
+                      IsChecked="False"
+                      CheckedChanged="OnIncludeLandingChanged">
+                <CheckBox.Content>
+                    <Label Text="Include Landing"
+                           FontSize="14"
+                           FontAttributes="Bold" />
+                </CheckBox.Content>
+            </CheckBox>
+
+            <VerticalStackLayout x:Name="LandingSection"
+                                 Spacing="10"
+                                 IsVisible="False">
+                <Label Text="Landing Depth:" FontSize="14" />
+                <Entry x:Name="LandingDepthEntry"
+                       Placeholder="e.g., 3' or 36&quot; (min 36&quot;)"
+                       FontSize="14"
+                       TextChanged="OnLandingDepthChanged" />
+
+                <Label Text="Steps Before Landing:" FontSize="14" />
+                <Stepper x:Name="StepsBeforeLandingStepper"
+                         Minimum="1"
+                         Maximum="50"
+                         Value="8"
+                         Increment="1"
+                         ValueChanged="OnStepsBeforeLandingChanged" />
+                <Label x:Name="StepsBeforeLandingLabel"
+                       Text="8 steps"
+                       FontSize="14"
+                       HorizontalOptions="Center" />
+
+                <Border Stroke="{DynamicResource TextColor}"
+                        StrokeThickness="1"
+                        BackgroundColor="#FFFACD"
+                        Padding="10">
+                    <Label x:Name="StepsAfterLandingLabel"
+                           Text="Steps After Landing: --"
+                           FontSize="14"
+                           HorizontalTextAlignment="Center" />
+                </Border>
+
+                <Border Stroke="{DynamicResource TextColor}"
+                        StrokeThickness="1"
+                        BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                        Padding="10">
+                    <Label x:Name="TotalRunWithLandingLabel"
+                           Text="Total Run with Landing: --"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Visual Diagram Section -->
+            <Label Text="Visual Stair Profile:"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   Margin="0,20,0,0" />
+
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10">
+                <ScrollView HeightRequest="250">
+                    <Label x:Name="VisualDiagramLabel"
+                           Text=""
+                           FontFamily="Courier"
+                           FontSize="10"
+                           LineBreakMode="NoWrap" />
+                </ScrollView>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.AboutPage"
+             Title="About">
+
+    <!-- 
+    About Page
+    Displays application information, version, and features.
+    -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
+            
+            <Label Text="Construction Calculator"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{DynamicResource Primary}" />
+
+            <Label Text="Version 2.0 (MAUI)"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <BoxView HeightRequest="2"
+                     Color="{DynamicResource SecondaryTextColor}"
+                     Margin="40,10,40,10" />
+
+            <Label FontSize="14"
+                   HorizontalTextAlignment="Center"
+                   Margin="20,0,20,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="A professional calculator for construction measurements&#x0a;" />
+                        <Span Text="with feet-inches support and fractions to 1/16&quot; precision.&#x0a;&#x0a;" />
+                        <Span Text="Features include:&#x0a;" FontAttributes="Bold" />
+                        <Span Text="• Basic calculations with chainable operations&#x0a;" />
+                        <Span Text="• Angle Calculator with trigonometry solver&#x0a;" />
+                        <Span Text="• Stair Calculator with code compliance&#x0a;" />
+                        <Span Text="• Survey Calculator for bearing/azimuth&#x0a;" />
+                        <Span Text="• Seating Layout Calculator for auditoriums&#x0a;" />
+                        <Span Text="• Area Calculator for complex floor plans" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <BoxView HeightRequest="2"
+                     Color="{DynamicResource SecondaryTextColor}"
+                     Margin="40,10,40,10" />
+
+            <Label Text="Developed for construction professionals"
+                   FontSize="12"
+                   FontAttributes="Italic"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Label Text="Cross-platform support: Windows, macOS, iOS, Android"
+                   FontSize="12"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{DynamicResource SecondaryTextColor}"
+                   Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

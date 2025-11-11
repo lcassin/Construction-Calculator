@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.SeatingLayoutCalculatorPage"
+             Title="Seating Layout Calculator">
+
+    <!-- 
+    Seating Layout Calculator Page
+    Calculates curved seating arrangements with aisles.
+    Generates coordinates for each seat in a radial layout.
+    Supports code compliance checking and CSV export.
+    -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Row Configuration Section -->
+            <Label Text="Row Configuration"
+                   FontSize="16"
+                   FontAttributes="Bold" />
+
+            <Label Text="Number of Rows:" FontSize="14" />
+            <Entry x:Name="NumberOfRowsEntry"
+                   Text="10"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <Label Text="Starting Radius (ft):" FontSize="14" />
+            <Entry x:Name="StartingRadiusEntry"
+                   Text="20"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <Label Text="Row Spacing (ft):" FontSize="14" />
+            <Entry x:Name="RowSpacingEntry"
+                   Text="3"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <Label Text="Arc Span (degrees):" FontSize="14" />
+            <Entry x:Name="ArcSpanEntry"
+                   Text="180"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <Label Text="Center Northing:" FontSize="14" />
+            <Entry x:Name="CenterNorthingEntry"
+                   Text="0"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <Label Text="Center Easting:" FontSize="14" />
+            <Entry x:Name="CenterEastingEntry"
+                   Text="0"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <!-- Chair Specifications Section -->
+            <Label Text="Chair Specifications"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,20,0,0" />
+
+            <Label Text="Type A Width (in):" FontSize="14" />
+            <Entry x:Name="ChairAWidthEntry"
+                   Text="24"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <Label Text="Type B Width (in):" FontSize="14" />
+            <Entry x:Name="ChairBWidthEntry"
+                   Text="20"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <!-- Aisle Configuration Section -->
+            <Label Text="Aisle Configuration"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,20,0,0" />
+
+            <Label Text="Number of Aisles:" FontSize="14" />
+            <Entry x:Name="NumberOfAislesEntry"
+                   Text="2"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <Label Text="Aisle Width (in):" FontSize="14" />
+            <Entry x:Name="AisleWidthEntry"
+                   Text="36"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <!-- Code Compliance Section -->
+            <Label Text="Code Compliance"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,20,0,0" />
+
+            <Label Text="Min Aisle Width (in):" FontSize="14" />
+            <Entry x:Name="MinAisleWidthEntry"
+                   Text="36"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <Label Text="Max Seats per Aisle:" FontSize="14" />
+            <Entry x:Name="MaxSeatsEntry"
+                   Text="14"
+                   FontSize="14"
+                   Keyboard="Numeric" />
+
+            <!-- Action Buttons -->
+            <HorizontalStackLayout Spacing="10" Margin="0,20,0,0">
+                <Button Text="Calculate Layout"
+                        Clicked="OnCalculateLayoutClicked"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        BackgroundColor="{DynamicResource OperatorButtonColor}"
+                        TextColor="#000000"
+                        HorizontalOptions="FillAndExpand" />
+                <Button Text="Export to CSV"
+                        Clicked="OnExportToCSVClicked"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        BackgroundColor="{DynamicResource OperatorButtonColor}"
+                        TextColor="#000000"
+                        HorizontalOptions="FillAndExpand" />
+            </HorizontalStackLayout>
+
+            <!-- Result Display -->
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10"
+                    Margin="0,10,0,20">
+                <Label x:Name="ResultLabel"
+                       Text="Enter parameters and click Calculate Layout"
+                       FontSize="12"
+                       MinimumHeightRequest="100" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

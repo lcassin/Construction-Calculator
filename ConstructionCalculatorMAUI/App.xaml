@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Colors that adapt to Light/Dark theme -->
+            <Color x:Key="Primary">#1976D2</Color>
+            <Color x:Key="PrimaryDark">#90CAF9</Color>
+            <Color x:Key="Secondary">#FFC107</Color>
+            <Color x:Key="Tertiary">#2B0B98</Color>
+            
+            <Color x:Key="PageBackgroundColor">
+                <AppThemeBinding Light="#FFFFFF" Dark="#121212" />
+            </Color>
+            
+            <Color x:Key="TextColor">
+                <AppThemeBinding Light="#000000" Dark="#FFFFFF" />
+            </Color>
+            
+            <Color x:Key="SecondaryTextColor">
+                <AppThemeBinding Light="#666666" Dark="#AAAAAA" />
+            </Color>
+            
+            <Color x:Key="ButtonBackgroundColor">
+                <AppThemeBinding Light="#E0E0E0" Dark="#424242" />
+            </Color>
+            
+            <Color x:Key="OperatorButtonColor">
+                <AppThemeBinding Light="#FFC864" Dark="#FF9800" />
+            </Color>
+            
+            <Color x:Key="DisplayBackgroundColor">
+                <AppThemeBinding Light="#F5F5F5" Dark="#1E1E1E" />
+            </Color>
+
+            <!-- Global Styles -->
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{DynamicResource ButtonBackgroundColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+
+            <Style x:Key="OperatorButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{DynamicResource OperatorButtonColor}" />
+                <Setter Property="TextColor" Value="#000000" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="8" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource DisplayBackgroundColor}" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

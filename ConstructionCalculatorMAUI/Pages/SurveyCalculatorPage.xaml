@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.SurveyCalculatorPage"
+             Title="Survey Calculator">
+
+    <!-- 
+    Survey Calculator Page
+    Converts between bearing and azimuth formats.
+    Calculates end point coordinates from start point, distance, and direction.
+    -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Symbol Insert Buttons -->
+            <Label Text="Insert Symbol:" FontSize="12" />
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="°" Clicked="OnInsertDegreeClicked" WidthRequest="50" HeightRequest="40" FontSize="18" FontAttributes="Bold" BackgroundColor="{DynamicResource OperatorButtonColor}" TextColor="#000000" />
+                <Button Text="'" Clicked="OnInsertMinuteClicked" WidthRequest="50" HeightRequest="40" FontSize="18" FontAttributes="Bold" BackgroundColor="{DynamicResource OperatorButtonColor}" TextColor="#000000" />
+                <Button Text="&quot;" Clicked="OnInsertSecondClicked" WidthRequest="50" HeightRequest="40" FontSize="18" FontAttributes="Bold" BackgroundColor="{DynamicResource OperatorButtonColor}" TextColor="#000000" />
+            </HorizontalStackLayout>
+
+            <!-- Bearing / Azimuth Converter Section -->
+            <Label Text="Bearing / Azimuth Converter"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,20,0,0" />
+
+            <Label Text="Bearing:" FontSize="14" />
+            <Entry x:Name="BearingEntry"
+                   Placeholder="e.g., N 45° 30' E or N45°30'E"
+                   FontSize="14"
+                   Focused="OnBearingFocused" />
+
+            <Label Text="Azimuth:" FontSize="14" />
+            <Entry x:Name="AzimuthEntry"
+                   Placeholder="e.g., 045° 30' or 45.5"
+                   FontSize="14"
+                   Keyboard="Numeric"
+                   Focused="OnAzimuthFocused" />
+
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                <Button Text="Bearing → Azimuth"
+                        Clicked="OnBearingToAzimuthClicked"
+                        FontSize="12"
+                        BackgroundColor="{DynamicResource OperatorButtonColor}"
+                        TextColor="#000000"
+                        HorizontalOptions="FillAndExpand" />
+                <Button Text="Azimuth → Bearing"
+                        Clicked="OnAzimuthToBearingClicked"
+                        FontSize="12"
+                        BackgroundColor="{DynamicResource OperatorButtonColor}"
+                        TextColor="#000000"
+                        HorizontalOptions="FillAndExpand" />
+            </HorizontalStackLayout>
+
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10"
+                    Margin="0,10,0,0">
+                <Label x:Name="ConversionResultLabel"
+                       Text=""
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       MinimumHeightRequest="50" />
+            </Border>
+
+            <!-- Coordinate Geometry Section -->
+            <BoxView HeightRequest="2"
+                     Color="{DynamicResource SecondaryTextColor}"
+                     Margin="0,20,0,0" />
+
+            <Label Text="Coordinate Geometry"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0" />
+
+            <Label Text="Start Northing:" FontSize="14" />
+            <Entry x:Name="StartNorthingEntry"
+                   Placeholder="e.g., 5000.00"
+                   FontSize="14"
+                   Keyboard="Numeric"
+                   Focused="OnStartNorthingFocused" />
+
+            <Label Text="Start Easting:" FontSize="14" />
+            <Entry x:Name="StartEastingEntry"
+                   Placeholder="e.g., 2000.00"
+                   FontSize="14"
+                   Keyboard="Numeric"
+                   Focused="OnStartEastingFocused" />
+
+            <Label Text="Distance:" FontSize="14" />
+            <Entry x:Name="DistanceEntry"
+                   Placeholder="e.g., 100' or 100.5 (feet)"
+                   FontSize="14"
+                   Focused="OnDistanceFocused" />
+
+            <Label Text="Azimuth/Bearing:" FontSize="14" />
+            <Entry x:Name="DirectionEntry"
+                   Placeholder="e.g., 045° or N45°E"
+                   FontSize="14"
+                   Focused="OnDirectionFocused" />
+
+            <Button Text="Calculate End Point"
+                    Clicked="OnCalculateEndPointClicked"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    BackgroundColor="{DynamicResource OperatorButtonColor}"
+                    TextColor="#000000"
+                    HeightRequest="45"
+                    Margin="0,10,0,0" />
+
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10"
+                    Margin="0,10,0,20">
+                <Label x:Name="CoordinateResultLabel"
+                       Text=""
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       MinimumHeightRequest="60" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
