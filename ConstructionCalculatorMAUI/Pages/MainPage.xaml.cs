@@ -110,17 +110,20 @@ public partial class MainPage : ContentPage
             case Windows.System.VirtualKey.Space:
                 AppendToDisplay(" ");
                 break;
-            case (Windows.System.VirtualKey)222: // Quote key for ' and "
-                if ((Microsoft.UI.Xaml.Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift) & 
-                     Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down)
+            case Windows.System.VirtualKey.Oem7: // Quote key for ' and "
                 {
-                    AppendToDisplay("\"");
+                    var shift = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift);
+                    var leftShift = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.LeftShift);
+                    var rightShift = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.RightShift);
+
+                    bool isShiftDown =
+                        shift.HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down) ||
+                        leftShift.HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down) ||
+                        rightShift.HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
+
+                    AppendToDisplay(isShiftDown ? "\"" : "'");
+                    break;
                 }
-                else
-                {
-                    AppendToDisplay("'");
-                }
-                break;
             case (Windows.System.VirtualKey)191: // Forward slash key
                 AppendToDisplay("/");
                 break;
