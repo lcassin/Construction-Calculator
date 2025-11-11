@@ -10,6 +10,17 @@
             <Color x:Key="Secondary">#FFC107</Color>
             <Color x:Key="Tertiary">#2B0B98</Color>
 
+            <!-- Theme-aware color resources -->
+            <Color x:Key="DisplayBackgroundColor">
+                <OnAppTheme x:TypeArguments="Color" Light="#F5F5F5" Dark="#1E1E1E" />
+            </Color>
+            <Color x:Key="OperatorButtonColor">
+                <OnAppTheme x:TypeArguments="Color" Light="#FFC864" Dark="#FF9800" />
+            </Color>
+            <Color x:Key="SecondaryTextColor">
+                <OnAppTheme x:TypeArguments="Color" Light="#757575" Dark="#B0B0B0" />
+            </Color>
+
             <!-- Global Styles with AppThemeBinding for theme-aware colors -->
             <Style TargetType="ContentPage">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#121212}" />
@@ -53,6 +64,7 @@
 
             <Style TargetType="Entry">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light=#7A7A7A, Dark=#B3B3B3}" />
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F5F5F5, Dark=#1E1E1E}" />
             </Style>
 
