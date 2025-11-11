@@ -27,8 +27,8 @@
         DisplayName="Construction Calculator"
         Description="Professional calculator for construction measurements with feet-inches support"
         BackgroundColor="#1E88E5"
-        Square150x150Logo="appicon.png"
-        Square44x44Logo="appicon.png">
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
       </uap:VisualElements>
     </Application>
   </Applications>
