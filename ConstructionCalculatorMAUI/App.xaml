@@ -9,34 +9,26 @@
             <Color x:Key="PrimaryDark">#90CAF9</Color>
             <Color x:Key="Secondary">#FFC107</Color>
             <Color x:Key="Tertiary">#2B0B98</Color>
-            
-            <!-- Theme-aware colors using OnAppTheme -->
-            <OnAppTheme x:Key="PageBackgroundColor" x:TypeArguments="Color" Light="#FFFFFF" Dark="#121212" />
-            <OnAppTheme x:Key="TextColor" x:TypeArguments="Color" Light="#000000" Dark="#FFFFFF" />
-            <OnAppTheme x:Key="SecondaryTextColor" x:TypeArguments="Color" Light="#666666" Dark="#AAAAAA" />
-            <OnAppTheme x:Key="ButtonBackgroundColor" x:TypeArguments="Color" Light="#E0E0E0" Dark="#424242" />
-            <OnAppTheme x:Key="OperatorButtonColor" x:TypeArguments="Color" Light="#FFC864" Dark="#FF9800" />
-            <OnAppTheme x:Key="DisplayBackgroundColor" x:TypeArguments="Color" Light="#F5F5F5" Dark="#1E1E1E" />
 
-            <!-- Global Styles -->
+            <!-- Global Styles with AppThemeBinding for theme-aware colors -->
             <Style TargetType="ContentPage">
-                <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#121212}" />
             </Style>
 
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
             </Style>
 
             <Style TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{DynamicResource ButtonBackgroundColor}" />
-                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#E0E0E0, Dark=#424242}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
                 <Setter Property="FontSize" Value="18" />
                 <Setter Property="CornerRadius" Value="8" />
                 <Setter Property="Padding" Value="10" />
             </Style>
 
             <Style x:Key="OperatorButton" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{DynamicResource OperatorButtonColor}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FFC864, Dark=#FF9800}" />
                 <Setter Property="TextColor" Value="#000000" />
                 <Setter Property="FontSize" Value="20" />
                 <Setter Property="FontAttributes" Value="Bold" />
@@ -44,8 +36,8 @@
             </Style>
 
             <Style TargetType="Entry">
-                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
-                <Setter Property="BackgroundColor" Value="{DynamicResource DisplayBackgroundColor}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F5F5F5, Dark=#1E1E1E}" />
             </Style>
 
         </ResourceDictionary>
