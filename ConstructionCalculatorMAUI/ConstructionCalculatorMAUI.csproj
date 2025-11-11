@@ -28,13 +28,13 @@
 
   <!-- Windows-specific configuration for unpackaged development builds -->
   <!-- Note: These properties only affect Windows builds; other platforms ignore them -->
-  <PropertyGroup Condition="$([MSBuild]::GetTargetFrameworkIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)' == 'Debug'">
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)' == 'Debug'">
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
 
   <!-- Windows MSIX packaging for Release builds -->
-  <PropertyGroup Condition="$([MSBuild]::GetTargetFrameworkIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)'=='Release'">
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)'=='Release'">
     <WindowsPackageType>MSIX</WindowsPackageType>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <AppxBundle>Always</AppxBundle>
