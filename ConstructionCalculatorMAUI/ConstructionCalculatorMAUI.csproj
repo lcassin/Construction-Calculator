@@ -27,7 +27,8 @@
   </PropertyGroup>
 
   <!-- Windows-specific configuration for unpackaged development builds -->
-  <PropertyGroup Condition="'$(TargetPlatformIdentifier)' == 'windows'">
+  <!-- Note: These properties only affect Windows builds; other platforms ignore them -->
+  <PropertyGroup>
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
