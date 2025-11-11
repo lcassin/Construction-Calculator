@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <!-- Windows-specific configuration for unpackaged development builds -->
-  <PropertyGroup Condition="$([MSBuild]::GetTargetFrameworkIdentifier('$(TargetFramework)')) == 'windows'">
+  <PropertyGroup Condition="'$(TargetPlatformIdentifier)' == 'windows'">
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
