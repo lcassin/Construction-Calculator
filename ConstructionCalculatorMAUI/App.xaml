@@ -27,6 +27,22 @@
                 <Setter Property="Padding" Value="10" />
             </Style>
 
+            <Style x:Key="NumberButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#D0D0D0, Dark=#383838}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+
+            <Style x:Key="ActionButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#B3D9FF, Dark=#2C5F8D}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+
             <Style x:Key="OperatorButton" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FFC864, Dark=#FF9800}" />
                 <Setter Property="TextColor" Value="#000000" />
