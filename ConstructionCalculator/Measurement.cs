@@ -33,9 +33,13 @@ namespace ConstructionCalculator
 
         public static Measurement Parse(string input)
         {
-            input = input.Trim().Replace("\"", "").Replace("'", " ");
+            input = input.Trim();
             
-            var feetInchesMatch = Regex.Match(input, @"^(\d+)\s+(\d+)(?:[\s\-]+(\d+)/(\d+))?$");
+            bool hasFeetMarker = input.Contains("'");
+            
+            string cleanInput = input.Replace("\"", "").Replace("'", " ").Trim();
+            
+            var feetInchesMatch = Regex.Match(cleanInput, @"^(\d+)\s+(\d+)(?:[\s\-]+(\d+)/(\d+))?$");
             if (feetInchesMatch.Success)
             {
                 int feet = int.Parse(feetInchesMatch.Groups[1].Value);
@@ -45,16 +49,24 @@ namespace ConstructionCalculator
                 return new Measurement(feet, inches, numerator, denominator);
             }
             
-            var inchesOnlyMatch = Regex.Match(input, @"^(\d+)(?:[\s\-]+(\d+)/(\d+))?$");
-            if (inchesOnlyMatch.Success)
+            var singleNumberMatch = Regex.Match(cleanInput, @"^(\d+)(?:[\s\-]+(\d+)/(\d+))?$");
+            if (singleNumberMatch.Success)
             {
-                int inches = int.Parse(inchesOnlyMatch.Groups[1].Value);
-                int numerator = inchesOnlyMatch.Groups[2].Success ? int.Parse(inchesOnlyMatch.Groups[2].Value) : 0;
-                int denominator = inchesOnlyMatch.Groups[3].Success ? int.Parse(inchesOnlyMatch.Groups[3].Value) : 16;
-                return new Measurement(0, inches, numerator, denominator);
+                int value = int.Parse(singleNumberMatch.Groups[1].Value);
+                int numerator = singleNumberMatch.Groups[2].Success ? int.Parse(singleNumberMatch.Groups[2].Value) : 0;
+                int denominator = singleNumberMatch.Groups[3].Success ? int.Parse(singleNumberMatch.Groups[3].Value) : 16;
+                
+                if (hasFeetMarker)
+                {
+                    return new Measurement(value, 0, numerator, denominator);
+                }
+                else
+                {
+                    return new Measurement(0, value, numerator, denominator);
+                }
             }
             
-            var fractionOnlyMatch = Regex.Match(input, @"^(\d+)/(\d+)$");
+            var fractionOnlyMatch = Regex.Match(cleanInput, @"^(\d+)/(\d+)$");
             if (fractionOnlyMatch.Success)
             {
                 int numerator = int.Parse(fractionOnlyMatch.Groups[1].Value);
@@ -62,7 +74,7 @@ namespace ConstructionCalculator
                 return new Measurement(0, 0, numerator, denominator);
             }
             
-            if (double.TryParse(input, out double decimalValue))
+            if (double.TryParse(cleanInput, out double decimalValue))
             {
                 return FromDecimalInches(decimalValue);
             }

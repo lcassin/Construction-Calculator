@@ -74,6 +74,10 @@ namespace ConstructionCalculator
             seatingLayoutMenuItem.Click += (s, e) => ShowSeatingLayoutCalculator();
             toolsMenu.DropDownItems.Add(seatingLayoutMenuItem);
             
+            ToolStripMenuItem areaCalcMenuItem = new("Area Calculator");
+            areaCalcMenuItem.Click += (s, e) => ShowAreaCalculator();
+            toolsMenu.DropDownItems.Add(areaCalcMenuItem);
+            
             toolsMenu.DropDownItems.Add(new ToolStripSeparator());
             
             ToolStripMenuItem themeMenu = new("Theme");
@@ -91,6 +95,12 @@ namespace ConstructionCalculator
             themeMenu.DropDownItems.Add(systemDefaultMenuItem);
             
             toolsMenu.DropDownItems.Add(themeMenu);
+            
+            toolsMenu.DropDownItems.Add(new ToolStripSeparator());
+            
+            ToolStripMenuItem aboutMenuItem = new("About");
+            aboutMenuItem.Click += (s, e) => ShowAbout();
+            toolsMenu.DropDownItems.Add(aboutMenuItem);
             
             menuStrip.Items.Add(toolsMenu);
             this.MainMenuStrip = menuStrip;
@@ -299,6 +309,8 @@ namespace ConstructionCalculator
                 else if (buttonText == "Copy")
                 {
                     System.Windows.Forms.Clipboard.SetText(displayTextBox.Text);
+                    displayTextBox.Focus();
+                    displayTextBox.SelectAll();
                 }
                 else if (buttonText == "±")
                 {
@@ -371,6 +383,9 @@ namespace ConstructionCalculator
                 displayTextBox.Text = isDecimalMode ? "0" : "0\"";
             }
             shouldClearDisplay = false;
+            
+            displayTextBox.Focus();
+            displayTextBox.SelectAll();
         }
 
         private void UpdateChainDisplay()
@@ -455,6 +470,9 @@ namespace ConstructionCalculator
             {
                 displayTextBox.Text = isDecimalMode ? "0" : "0\"";
             }
+            
+            displayTextBox.Focus();
+            displayTextBox.SelectAll();
         }
 
         private void ToggleSign()
@@ -900,6 +918,24 @@ namespace ConstructionCalculator
             using (var seatingCalc = new SeatingLayoutCalculatorForm())
             {
                 seatingCalc.ShowDialog(this);
+				BeginInvoke(new Action(ApplyButtonColors));
+			}
+        }
+
+        private void ShowAbout()
+        {
+            using (var aboutDialog = new AboutForm())
+            {
+                aboutDialog.ShowDialog(this);
+                BeginInvoke(new Action(ApplyButtonColors));
+            }
+        }
+
+        private void ShowAreaCalculator()
+        {
+            using (var areaCalc = new AreaCalculatorForm())
+            {
+                areaCalc.ShowDialog(this);
 				BeginInvoke(new Action(ApplyButtonColors));
 			}
         }
