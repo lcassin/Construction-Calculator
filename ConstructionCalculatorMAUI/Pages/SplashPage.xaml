@@ -5,7 +5,7 @@
              BackgroundColor="#1E88E5">
     
     <Grid>
-        <Image Source="splash.png"
+        <Image Source="splashlogo"
                WidthRequest="310"
                HeightRequest="310"
                HorizontalOptions="Center"
