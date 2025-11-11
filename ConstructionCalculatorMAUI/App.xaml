@@ -78,6 +78,10 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
             </Style>
 
+            <Style TargetType="RadioButton">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
