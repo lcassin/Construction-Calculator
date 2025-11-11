@@ -4,19 +4,19 @@
              x:Class="ConstructionCalculatorMAUI.App">
     <Application.Resources>
         <ResourceDictionary>
-            <!-- Colors that adapt to Light/Dark theme -->
+            <!-- Static colors -->
             <Color x:Key="Primary">#1976D2</Color>
             <Color x:Key="PrimaryDark">#90CAF9</Color>
             <Color x:Key="Secondary">#FFC107</Color>
             <Color x:Key="Tertiary">#2B0B98</Color>
             
-            <!-- Theme-aware colors using AppThemeColor -->
-            <AppThemeColor x:Key="PageBackgroundColor" Light="#FFFFFF" Dark="#121212" />
-            <AppThemeColor x:Key="TextColor" Light="#000000" Dark="#FFFFFF" />
-            <AppThemeColor x:Key="SecondaryTextColor" Light="#666666" Dark="#AAAAAA" />
-            <AppThemeColor x:Key="ButtonBackgroundColor" Light="#E0E0E0" Dark="#424242" />
-            <AppThemeColor x:Key="OperatorButtonColor" Light="#FFC864" Dark="#FF9800" />
-            <AppThemeColor x:Key="DisplayBackgroundColor" Light="#F5F5F5" Dark="#1E1E1E" />
+            <!-- Theme-aware colors using OnAppTheme -->
+            <OnAppTheme x:Key="PageBackgroundColor" x:TypeArguments="Color" Light="#FFFFFF" Dark="#121212" />
+            <OnAppTheme x:Key="TextColor" x:TypeArguments="Color" Light="#000000" Dark="#FFFFFF" />
+            <OnAppTheme x:Key="SecondaryTextColor" x:TypeArguments="Color" Light="#666666" Dark="#AAAAAA" />
+            <OnAppTheme x:Key="ButtonBackgroundColor" x:TypeArguments="Color" Light="#E0E0E0" Dark="#424242" />
+            <OnAppTheme x:Key="OperatorButtonColor" x:TypeArguments="Color" Light="#FFC864" Dark="#FF9800" />
+            <OnAppTheme x:Key="DisplayBackgroundColor" x:TypeArguments="Color" Light="#F5F5F5" Dark="#1E1E1E" />
 
             <!-- Global Styles -->
             <Style TargetType="ContentPage">
