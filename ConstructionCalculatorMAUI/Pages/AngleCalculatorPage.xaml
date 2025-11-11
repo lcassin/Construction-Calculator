@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.AngleCalculatorPage"
+             Title="Angle Calculator">
+
+    <!-- 
+    Angle Calculator Page
+    Calculates angles from rise/run measurements and vice versa.
+    Includes a right triangle solver that calculates missing values from any 2 known values.
+    -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Rise/Run to Angle Section -->
+            <Label Text="Calculate Angle from Rise/Run"
+                   FontSize="16"
+                   FontAttributes="Bold" />
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Rise:" FontSize="14" />
+                <Entry x:Name="RiseEntry"
+                       Placeholder="e.g., 4' or 4&quot; or 4"
+                       FontSize="14"
+                       Completed="OnRiseCompleted" />
+
+                <Label Text="Run:" FontSize="14" />
+                <Entry x:Name="RunEntry"
+                       Placeholder="e.g., 12' or 12&quot; or 12"
+                       FontSize="14"
+                       Completed="OnCalculateAngleClicked" />
+
+                <Button Text="Calculate Angle"
+                        Clicked="OnCalculateAngleClicked"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        BackgroundColor="{DynamicResource OperatorButtonColor}"
+                        TextColor="#000000"
+                        HeightRequest="45" />
+            </VerticalStackLayout>
+
+            <!-- Angle to Rise/Run Section -->
+            <Label Text="Calculate Rise/Run from Angle"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,20,0,0" />
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Angle:" FontSize="14" />
+                <Entry x:Name="AngleEntry"
+                       Placeholder="e.g., 45 (degrees by default)"
+                       FontSize="14"
+                       Keyboard="Numeric"
+                       Completed="OnCalculateRatioClicked" />
+
+                <HorizontalStackLayout Spacing="10">
+                    <Button x:Name="ModeButton"
+                            Text="Degrees"
+                            Clicked="OnModeToggleClicked"
+                            FontSize="12"
+                            HorizontalOptions="FillAndExpand" />
+                    <Button Text="Calculate Ratio"
+                            Clicked="OnCalculateRatioClicked"
+                            FontSize="12"
+                            BackgroundColor="{DynamicResource OperatorButtonColor}"
+                            TextColor="#000000"
+                            HorizontalOptions="FillAndExpand" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Result Display -->
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10"
+                    Margin="0,10,0,0">
+                <Label x:Name="ResultLabel"
+                       Text=""
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       MinimumHeightRequest="50" />
+            </Border>
+
+            <!-- Right Triangle Solver Section -->
+            <Label Text="Right Triangle Solver"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,30,0,0" />
+
+            <Label Text="Enter any 2 values to calculate the rest:"
+                   FontSize="12"
+                   FontAttributes="Italic"
+                   TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Angle:" FontSize="14" />
+                <Entry x:Name="SolverAngleEntry"
+                       Placeholder="e.g., 45 (degrees)"
+                       FontSize="14"
+                       Keyboard="Numeric" />
+
+                <Label Text="Opposite (Rise):" FontSize="14" />
+                <Entry x:Name="SolverOppositeEntry"
+                       Placeholder="e.g., 4' or 48&quot;"
+                       FontSize="14" />
+
+                <Label Text="Adjacent (Run):" FontSize="14" />
+                <Entry x:Name="SolverAdjacentEntry"
+                       Placeholder="e.g., 12' or 144&quot;"
+                       FontSize="14" />
+
+                <Label Text="Hypotenuse:" FontSize="14" />
+                <Entry x:Name="SolverHypotenuseEntry"
+                       Placeholder="e.g., 12' 8&quot;"
+                       FontSize="14" />
+
+                <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                    <Button Text="Calculate"
+                            Clicked="OnSolveTriangleClicked"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            BackgroundColor="{DynamicResource OperatorButtonColor}"
+                            TextColor="#000000"
+                            HorizontalOptions="FillAndExpand" />
+                    <Button Text="Clear"
+                            Clicked="OnSolverClearClicked"
+                            FontSize="14"
+                            HorizontalOptions="FillAndExpand" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Solver Result Display -->
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="10"
+                    Margin="0,10,0,20">
+                <ScrollView HeightRequest="150">
+                    <Label x:Name="SolverResultLabel"
+                           Text=""
+                           FontFamily="Courier"
+                           FontSize="12"
+                           LineBreakMode="WordWrap" />
+                </ScrollView>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -12,3 +12,8 @@
 /innosetup-6.5.4.exe
 /ConstructionCalculator/README.md
 /ConstructionCalculator/.vs/ProjectEvaluation
+/ConstructionCalculator.Core/bin
+/ConstructionCalculator.Core/obj
+/ConstructionCalculatorMAUI/.vs
+/ConstructionCalculatorMAUI/bin
+/ConstructionCalculatorMAUI/obj

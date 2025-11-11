@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.AreaCalculatorPage"
+             Title="Area Calculator">
+
+    <!-- 
+    Area Calculator Page
+    Calculates total square footage by adding multiple rectangular sections.
+    Useful for complex floor plans that can be broken into rectangles.
+    -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Instructions -->
+            <Label Text="Calculate total square footage by adding multiple rectangular sections.&#x0a;Break complex floor plans into rectangles."
+                   FontSize="12"
+                   FontAttributes="Italic"
+                   TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <!-- Input Section -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Length:" FontSize="14" />
+                <Entry x:Name="LengthEntry"
+                       Placeholder="e.g., 23' 6&quot;"
+                       FontSize="14"
+                       Completed="OnLengthCompleted" />
+
+                <Label Text="Width:" FontSize="14" />
+                <Entry x:Name="WidthEntry"
+                       Placeholder="e.g., 15' 3&quot;"
+                       FontSize="14"
+                       Completed="OnAddSectionClicked" />
+
+                <Button Text="Add Section"
+                        Clicked="OnAddSectionClicked"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        BackgroundColor="{DynamicResource OperatorButtonColor}"
+                        TextColor="#000000"
+                        HeightRequest="50"
+                        Margin="0,10,0,0" />
+            </VerticalStackLayout>
+
+            <!-- Sections List -->
+            <Label Text="Sections:"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0" />
+
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="1"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="5"
+                    HeightRequest="200">
+                <ScrollView>
+                    <CollectionView x:Name="SectionsCollection"
+                                    SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding}"
+                                       FontFamily="Courier"
+                                       FontSize="12"
+                                       Padding="5" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </Border>
+
+            <!-- Action Buttons -->
+            <Grid ColumnDefinitions="*,*,*"
+                  ColumnSpacing="10"
+                  Margin="0,10,0,0">
+                <Button Text="Remove Selected"
+                        Grid.Column="0"
+                        Clicked="OnRemoveSectionClicked"
+                        FontSize="12" />
+                <Button Text="Clear All"
+                        Grid.Column="1"
+                        Clicked="OnClearAllClicked"
+                        FontSize="12" />
+                <Button Text="Copy Total"
+                        Grid.Column="2"
+                        Clicked="OnCopyTotalClicked"
+                        FontSize="12"
+                        BackgroundColor="#ADD8E6"
+                        TextColor="#000000" />
+            </Grid>
+
+            <!-- Total Display -->
+            <Border Stroke="{DynamicResource TextColor}"
+                    StrokeThickness="2"
+                    BackgroundColor="{DynamicResource DisplayBackgroundColor}"
+                    Padding="15"
+                    Margin="0,20,0,0">
+                <Label x:Name="TotalAreaLabel"
+                       Text="Total Area: 0.00 sq ft"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
