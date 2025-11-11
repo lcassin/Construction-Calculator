@@ -5,12 +5,18 @@
              BackgroundColor="#1E88E5">
     
     <Grid>
-        <Image Source="splashlogo"
-               WidthRequest="310"
+        <Image WidthRequest="310"
                HeightRequest="310"
                HorizontalOptions="Center"
                VerticalOptions="Center"
-               Aspect="AspectFit" />
+               Aspect="AspectFit">
+            <Image.Source>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="WinUI">splashlogo.png</On>
+                    <On Platform="Android,iOS,MacCatalyst">splashlogo</On>
+                </OnPlatform>
+            </Image.Source>
+        </Image>
     </Grid>
     
 </ContentPage>
