@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="com.cassinfo.constructioncalculator" Publisher="CN=CassInfo" Version="2.0.0.0" />
+  <Identity Name="com.lcassin.constructioncalculator" Publisher="CN=lcassin" Version="2.0.3.0" />
 
   <Properties>
     <DisplayName>Construction Calculator</DisplayName>
-    <PublisherDisplayName>CassInfo</PublisherDisplayName>
+    <PublisherDisplayName>Lee Cassin</PublisherDisplayName>
+    <Logo>Assets\PackageLogo.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -29,6 +30,14 @@
         BackgroundColor="#1E88E5"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Square310x310Logo="Assets\LargeTile.png" Wide310x150Logo="Assets\WideTile.png" Square71x71Logo="Assets\SmallTile.png"/>
+        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badge"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png"/>
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/>
+          <uap:Rotation Preference="portrait"/>
+          <uap:Rotation Preference="landscapeFlipped"/>
+          <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

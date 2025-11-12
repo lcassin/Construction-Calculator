@@ -24,6 +24,16 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetFrameworkIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetFrameworkIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetFrameworkIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+    <PackageCertificateThumbprint>76D06CABD19BCD8D88B8E4066274F3B3A8431769</PackageCertificateThumbprint>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <DefaultLanguage>en-us</DefaultLanguage>
+    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppInstallerUri>c:\temp</AppInstallerUri>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
 
   <!-- Windows-specific configuration for unpackaged development builds -->
@@ -66,6 +76,22 @@
 
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\StoreLogo.scale-100.png" />
+    <None Remove="Assets\StoreLogo.scale-125.png" />
+    <None Remove="Assets\StoreLogo.scale-150.png" />
+    <None Remove="Assets\StoreLogo.scale-200.png" />
+    <None Remove="Assets\StoreLogo.scale-400.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
   </ItemGroup>
 
   <ItemGroup>
