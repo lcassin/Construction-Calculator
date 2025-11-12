@@ -3,5 +3,22 @@
   <PropertyGroup>
     <ActiveDebugFramework>net8.0-windows10.0.19041.0</ActiveDebugFramework>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
+    <SmallTileSource>C:\Users\LCassin\source\repos\Construction_Calculator\ConstructionCalculatorMAUI\Resources\AppIcon\appicon.png</SmallTileSource>
+    <MediumTileSource>C:\Users\LCassin\source\repos\Construction_Calculator\ConstructionCalculatorMAUI\Resources\AppIcon\appicon.png</MediumTileSource>
+    <WideTileSource>C:\Users\LCassin\source\repos\Construction_Calculator\ConstructionCalculator\Assets\Wide310x150Logo.scale-400.png</WideTileSource>
+    <LargeTileSource>C:\Users\LCassin\source\repos\Construction_Calculator\ConstructionCalculatorMAUI\Resources\Images\splashlogo.png</LargeTileSource>
+    <AppIconSource>C:\Users\LCassin\source\repos\Construction_Calculator\ConstructionCalculator\Assets\LargeTile.scale-100.png</AppIconSource>
+    <SplashScreenSource>C:\Users\LCassin\source\repos\Construction_Calculator\ConstructionCalculatorMAUI\Resources\Splash\splash.png</SplashScreenSource>
+    <PackageLogoSource>C:\Users\LCassin\source\repos\Construction_Calculator\ConstructionCalculator\Assets\LargeTile.scale-100.png</PackageLogoSource>
+    <BadgeLogoSource>C:\Users\LCassin\source\repos\Construction_Calculator\ConstructionCalculatorMAUI\Assets\StoreLogo.scale-400.png</BadgeLogoSource>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <_LastSelectedProfileId>MSIX-win-x64.pubxml</_LastSelectedProfileId>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
   </PropertyGroup>
+  <ItemGroup>
+    <None Update="Platforms\Windows\Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
 </Project>

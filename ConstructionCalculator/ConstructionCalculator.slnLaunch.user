@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "..\\ConstructionCalculator.Core\\ConstructionCalculator.Core.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\ConstructionCalculatorMAUI\\ConstructionCalculatorMAUI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
