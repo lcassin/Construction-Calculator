@@ -5,7 +5,7 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="com.lcassin.constructioncalculator" Publisher="CN=lcassin" Version="2.0.3.0" />
+  <Identity Name="com.lcassin.constructioncalculator" Publisher="CN=lcassin" Version="2.0.5.0" />
 
   <Properties>
     <DisplayName>Construction Calculator</DisplayName>
