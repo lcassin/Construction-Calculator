@@ -23,8 +23,22 @@
     <!-- Windows platform versions -->
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <!-- Windows-specific configuration for unpackaged development builds -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+
+  <!-- Windows MSIX packaging for Release builds -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <WindowsPackageType>MSIX</WindowsPackageType>
+    <AppxManifest>Platforms\Windows\Package.appxmanifest</AppxManifest>
+    <AppxBundle>Always</AppxBundle>
+    <AppxPackageDir>$(MSBuildProjectDirectory)\AppPackages\</AppxPackageDir>
     
-    <!-- Windows packaging properties -->
+    <!-- Packaging/signing properties (Release only) -->
     <PackageCertificateThumbprint>76D06CABD19BCD8D88B8E4066274F3B3A8431769</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <DefaultLanguage>en-us</DefaultLanguage>
@@ -35,26 +49,6 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppInstallerUri>c:\temp</AppInstallerUri>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-  </PropertyGroup>
-
-  <!-- Windows-specific configuration for unpackaged development builds -->
-  <!-- Note: These properties only affect Windows builds; other platforms ignore them -->
-  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)' == 'Debug'">
-    <WindowsPackageType>None</WindowsPackageType>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-  </PropertyGroup>
-
-  <!-- Windows MSIX packaging for Release builds -->
-  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)'=='Release'">
-    <WindowsPackageType>MSIX</WindowsPackageType>
-    <AppxManifest>Platforms\Windows\Package.appxmanifest</AppxManifest>
-    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
-    <AppxBundle>Always</AppxBundle>
-    <AppxPackageDir>$(MSBuildProjectDirectory)\AppPackages\</AppxPackageDir>
-    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-    <GenerateTestArtifacts>False</GenerateTestArtifacts>
   </PropertyGroup>
 
 
