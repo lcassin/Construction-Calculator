@@ -140,7 +140,7 @@ namespace ConstructionCalculator
             if (buttonText == "Calculate" || buttonText == "Calculate Angle" || 
                 buttonText == "Calculate Ratio" || buttonText == "Solve" ||
                 buttonText == "=" || buttonText == "+" || buttonText == "-" || 
-                buttonText == "*" || buttonText == "/" || buttonText == "×" || buttonText == "÷")
+                buttonText == "*" || buttonText == "×" || buttonText == "÷")
             {
                 return ButtonType.Operator;
             }

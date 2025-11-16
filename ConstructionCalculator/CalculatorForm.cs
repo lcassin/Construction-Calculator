@@ -107,7 +107,7 @@ namespace ConstructionCalculator
             this.MainMenuStrip = menuStrip;
             this.Controls.Add(menuStrip);
             
-            this.ClientSize = new Size(400, 685);
+            this.ClientSize = new Size(400, 755);
             this.Text = "Construction Calculator";
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -167,7 +167,8 @@ namespace ConstructionCalculator
 				"7", "8", "9", "÷",
                 "4", "5", "6", "×",
                 "1", "2", "3", "-",
-                "0", ".", "=", "+",
+                "0", "'", "\"", "+",
+                "Space", "/", ".", "=",
                 "C", "CE", "Copy", "Mode"
             ];
 
@@ -199,10 +200,10 @@ namespace ConstructionCalculator
 
             Label instructionLabel = new()
 			{
-                Location = new Point(20, 600),
+                Location = new Point(20, 670),
                 Size = new Size(360, 60),
                 Font = new Font("Segoe UI", 8, FontStyle.Regular),
-                Text = "Enter measurements: 23' 6 1/2\" or 6 1/2\" or 1/2\"\nShortcuts: Enter/= (calc), Esc (clear), Ctrl+Z (undo), Ctrl+M (mode)\nCtrl+C (copy), Ctrl++/−/×/÷ (operators)",
+                Text = "Enter measurements: 23' 6 1/2\" or 6 1/2\" or 1/2\"\nTap = to calculate, C to clear, CE to undo last entry\nMode toggles between fractions and decimal inches",
                 TextAlign = ContentAlignment.MiddleLeft,
                 BackColor = Color.Transparent
             };
@@ -312,6 +313,10 @@ namespace ConstructionCalculator
                     System.Windows.Forms.Clipboard.SetText(displayTextBox.Text);
                     displayTextBox.Focus();
                     displayTextBox.SelectAll();
+                }
+                else if (buttonText == "Space")
+                {
+                    AppendToDisplay(" ");
                 }
                 else if (buttonText == "±")
                 {
@@ -1029,7 +1034,7 @@ namespace ConstructionCalculator
                 {
                     ButtonType buttonType;
                     if (btn.Text == "=" || btn.Text == "+" || btn.Text == "-" || 
-                        btn.Text == "*" || btn.Text == "/" || btn.Text == "×" || btn.Text == "÷")
+                        btn.Text == "*" || btn.Text == "×" || btn.Text == "÷")
                     {
                         buttonType = ButtonType.Operator;
                         btn.Font = new Font("Segoe UI", 20, FontStyle.Bold);
