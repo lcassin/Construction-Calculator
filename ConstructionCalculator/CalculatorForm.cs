@@ -328,7 +328,7 @@ namespace ConstructionCalculator
                     displayTextBox.Focus();
 					displayTextBox.SelectAll();
 				}
-                else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "/" || buttonText == "×" || buttonText == "÷")
+                else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "×" || buttonText == "÷")
                 {
                     string operation = buttonText;
                     if (buttonText == "×") operation = "*";
