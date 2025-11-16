@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -163,8 +164,8 @@ namespace ConstructionCalculator
 
             string[] buttonLabels =
 			[
-				"7", "8", "9", "/",
-                "4", "5", "6", "*",
+				"7", "8", "9", "÷",
+                "4", "5", "6", "×",
                 "1", "2", "3", "-",
                 "0", ".", "=", "+",
                 "C", "CE", "Copy", "Mode"
@@ -322,9 +323,12 @@ namespace ConstructionCalculator
                     displayTextBox.Focus();
 					displayTextBox.SelectAll();
 				}
-                else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "/")
+                else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "/" || buttonText == "×" || buttonText == "÷")
                 {
-                    SetOperation(buttonText);
+                    string operation = buttonText;
+                    if (buttonText == "×") operation = "*";
+                    if (buttonText == "÷") operation = "/";
+                    SetOperation(operation);
                 }
                 else
                 {
@@ -1004,40 +1008,44 @@ namespace ConstructionCalculator
             BeginInvoke(new Action(ApplyButtonColors));
         }
 
+
         private void ApplyButtonColors()
         {
+            bool isDark = MaterialSkinManager.Instance.Theme == MaterialSkinManager.Themes.DARK;
+            
+            if (displayTextBox != null)
+            {
+                ThemeHelper.ApplyMauiTextBoxStyle(displayTextBox, isDark, isDisplay: true);
+            }
+            
+            if (chainLabel != null)
+            {
+                ThemeHelper.ApplyMauiLabelStyle(chainLabel, isDark, isSecondary: true);
+            }
+            
             foreach (Control control in this.Controls)
             {
                 if (control is Button btn)
                 {
+                    ButtonType buttonType;
                     if (btn.Text == "=" || btn.Text == "+" || btn.Text == "-" || 
-                        btn.Text == "*" || btn.Text == "/")
+                        btn.Text == "*" || btn.Text == "/" || btn.Text == "×" || btn.Text == "÷")
                     {
-                        btn.BackColor = Color.FromArgb(255, 200, 100);
-                        btn.UseVisualStyleBackColor = false;
-                        btn.FlatAppearance.BorderSize = 0;
-                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 200, 100);
-                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 180, 80);
-                        btn.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                        buttonType = ButtonType.Operator;
+                        btn.Font = new Font("Segoe UI", 20, FontStyle.Bold);
                     }
                     else if (btn.Text == "C" || btn.Text == "CE" || btn.Text == "Copy" || btn.Text == "Mode")
                     {
-                        btn.BackColor = Color.FromArgb(220, 220, 220);
-                        btn.UseVisualStyleBackColor = false;
-                        btn.FlatAppearance.BorderSize = 0;
-                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(220, 220, 220);
-                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(200, 200, 200);
-                        btn.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                        buttonType = ButtonType.Action;
+                        btn.Font = new Font("Segoe UI", 18, FontStyle.Regular);
                     }
-                    else if (btn.Text.Length <= 2)
+                    else
                     {
-                        btn.BackColor = Color.FromArgb(173, 216, 230);
-                        btn.UseVisualStyleBackColor = false;
-                        btn.FlatAppearance.BorderSize = 0;
-                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(173, 216, 230);
-                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(153, 206, 220);
-                        btn.Font = new Font("Segoe UI", 14, FontStyle.Regular);
+                        buttonType = ButtonType.Number;
+                        btn.Font = new Font("Segoe UI", 18, FontStyle.Regular);
                     }
+                    
+                    ThemeHelper.ApplyMauiButtonStyle(btn, buttonType, isDark);
                 }
             }
         }
