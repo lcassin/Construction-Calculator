@@ -79,4 +79,4 @@ jobs:
 
     # Build the application
     - name: Build the application
-      run: dotnet build ConstructionCalculator/ConstructionCalculator.sln -c ${{ matrix.configuration }}
+      run: dotnet build ConstructionCalculator/ConstructionCalculator.csproj -c ${{ matrix.configuration }}
