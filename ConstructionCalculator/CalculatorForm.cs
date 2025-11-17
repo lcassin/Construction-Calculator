@@ -172,7 +172,7 @@ namespace ConstructionCalculator
                 "C", "CE", "Copy", "Mode"
             ];
 
-            int buttonWidth = 80;
+            int buttonWidth = 85;
             int buttonHeight = 60;
             int padding = 10;
             int startX = 20;
@@ -532,12 +532,11 @@ namespace ConstructionCalculator
 	                    storedValue = currentValue;
 	                }
                 
-	                currentOperation = operation;
+                currentOperation = operation;
 	                shouldClearDisplay = true;
 	                displayTextBox.Text = "";
                 
-	                displayTextBox.Focus();
-				displayTextBox.SelectAll();
+	                FocusDisplayAtEnd();
 			}
 	            catch (Exception ex)
 	            {
@@ -638,6 +637,15 @@ namespace ConstructionCalculator
             {
                 displayTextBox.Text += text;
             }
+            
+            FocusDisplayAtEnd();
+        }
+        
+        private void FocusDisplayAtEnd()
+        {
+            displayTextBox.Focus();
+            displayTextBox.SelectionStart = displayTextBox.Text.Length;
+            displayTextBox.SelectionLength = 0;
         }
 
         private Measurement ParseCurrentDisplay()
