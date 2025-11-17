@@ -119,7 +119,8 @@ namespace ConstructionCalculator
                 Text = "Auto-Calculate Steps",
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 BackColor = Color.FromArgb(255, 200, 100),
-                UseVisualStyleBackColor = false
+                UseVisualStyleBackColor = false,
+                TextAlign = ContentAlignment.MiddleCenter
             };
             autoCalculateButton.Click += AutoCalculateSteps;
             this.Controls.Add(autoCalculateButton);
@@ -131,7 +132,8 @@ namespace ConstructionCalculator
                 Text = "Calculate",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 BackColor = Color.FromArgb(255, 200, 100),
-                UseVisualStyleBackColor = false
+                UseVisualStyleBackColor = false,
+                TextAlign = ContentAlignment.MiddleCenter
             };
             calculateButton.Click += Calculate;
             this.Controls.Add(calculateButton);
