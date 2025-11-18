@@ -18,3 +18,10 @@
 /ConstructionCalculatorMAUI/bin
 /ConstructionCalculatorMAUI/obj
 /ConstructionCalculatorMAUI/AppPackages/ConstructionCalculatorMAUI_2.0.0.0_Test
+/ConstructionCalculator.WPF/bin
+/ConstructionCalculator.WPF/obj
+
+# Additional build artifacts
+*.user
+*.suo
+.vs/
