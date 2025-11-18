@@ -575,27 +575,32 @@ public partial class MainWindow : Window
 
     private void AngleCalculator_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Angle Calculator - To be implemented", "Coming Soon", MessageBoxButton.OK, MessageBoxImage.Information);
+        var angleCalculator = new AngleCalculatorWindow { Owner = this };
+        angleCalculator.ShowDialog();
     }
 
     private void StairCalculator_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Stair Calculator - To be implemented", "Coming Soon", MessageBoxButton.OK, MessageBoxImage.Information);
+        var stairCalculator = new StairCalculatorWindow { Owner = this };
+        stairCalculator.ShowDialog();
     }
 
     private void SurveyCalculator_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Survey Calculator - To be implemented", "Coming Soon", MessageBoxButton.OK, MessageBoxImage.Information);
+        var surveyCalculator = new SurveyCalculatorWindow { Owner = this };
+        surveyCalculator.ShowDialog();
     }
 
     private void SeatingLayoutCalculator_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Seating Layout Calculator - To be implemented", "Coming Soon", MessageBoxButton.OK, MessageBoxImage.Information);
+        var seatingLayoutCalculator = new SeatingLayoutCalculatorWindow { Owner = this };
+        seatingLayoutCalculator.ShowDialog();
     }
 
     private void AreaCalculator_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Area Calculator - To be implemented", "Coming Soon", MessageBoxButton.OK, MessageBoxImage.Information);
+        var areaCalculator = new AreaCalculatorWindow { Owner = this };
+        areaCalculator.ShowDialog();
     }
 
     private void LightTheme_Click(object sender, RoutedEventArgs e)
