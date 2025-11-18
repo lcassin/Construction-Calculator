@@ -1,16 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace ConstructionCalculator.Core
+namespace ConstructionCalculator
 {
     public class Measurement
     {
         public int Feet { get; set; }
-
         public int Inches { get; set; }
-
         public int Numerator { get; set; }
-
         public int Denominator { get; set; }
 
         public Measurement(int feet = 0, int inches = 0, int numerator = 0, int denominator = 16)

@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -106,7 +107,7 @@ namespace ConstructionCalculator
             this.MainMenuStrip = menuStrip;
             this.Controls.Add(menuStrip);
             
-            this.ClientSize = new Size(400, 685);
+            this.ClientSize = new Size(400, 755);
             this.Text = "Construction Calculator";
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -163,14 +164,15 @@ namespace ConstructionCalculator
 
             string[] buttonLabels =
 			[
-				"7", "8", "9", "/",
-                "4", "5", "6", "*",
+				"7", "8", "9", "÷",
+                "4", "5", "6", "×",
                 "1", "2", "3", "-",
-                "0", ".", "=", "+",
+                "0", "'", "\"", "+",
+                "Space", "/", ".", "=",
                 "C", "CE", "Copy", "Mode"
             ];
 
-            int buttonWidth = 80;
+            int buttonWidth = 85;
             int buttonHeight = 60;
             int padding = 10;
             int startX = 20;
@@ -198,10 +200,10 @@ namespace ConstructionCalculator
 
             Label instructionLabel = new()
 			{
-                Location = new Point(20, 600),
+                Location = new Point(20, 670),
                 Size = new Size(360, 60),
                 Font = new Font("Segoe UI", 8, FontStyle.Regular),
-                Text = "Enter measurements: 23' 6 1/2\" or 6 1/2\" or 1/2\"\nShortcuts: Enter/= (calc), Esc (clear), Ctrl+Z (undo), Ctrl+M (mode)\nCtrl+C (copy), Ctrl++/−/×/÷ (operators)",
+                Text = "Enter measurements: 23' 6 1/2\" or 6 1/2\" or 1/2\"\nTap = to calculate, C to clear, CE to undo last entry\nMode toggles between fractions and decimal inches",
                 TextAlign = ContentAlignment.MiddleLeft,
                 BackColor = Color.Transparent
             };
@@ -312,6 +314,10 @@ namespace ConstructionCalculator
                     displayTextBox.Focus();
                     displayTextBox.SelectAll();
                 }
+                else if (buttonText == "Space")
+                {
+                    AppendToDisplay(" ");
+                }
                 else if (buttonText == "±")
                 {
                     ToggleSign();
@@ -322,9 +328,12 @@ namespace ConstructionCalculator
                     displayTextBox.Focus();
 					displayTextBox.SelectAll();
 				}
-                else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "/")
+                else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "×" || buttonText == "÷")
                 {
-                    SetOperation(buttonText);
+                    string operation = buttonText;
+                    if (buttonText == "×") operation = "*";
+                    if (buttonText == "÷") operation = "/";
+                    SetOperation(operation);
                 }
                 else
                 {
@@ -523,12 +532,11 @@ namespace ConstructionCalculator
 	                    storedValue = currentValue;
 	                }
                 
-	                currentOperation = operation;
+                currentOperation = operation;
 	                shouldClearDisplay = true;
 	                displayTextBox.Text = "";
                 
-	                displayTextBox.Focus();
-				displayTextBox.SelectAll();
+	                FocusDisplayAtEnd();
 			}
 	            catch (Exception ex)
 	            {
@@ -629,6 +637,15 @@ namespace ConstructionCalculator
             {
                 displayTextBox.Text += text;
             }
+            
+            FocusDisplayAtEnd();
+        }
+        
+        private void FocusDisplayAtEnd()
+        {
+            displayTextBox.Focus();
+            displayTextBox.SelectionStart = displayTextBox.Text.Length;
+            displayTextBox.SelectionLength = 0;
         }
 
         private Measurement ParseCurrentDisplay()
@@ -1004,40 +1021,44 @@ namespace ConstructionCalculator
             BeginInvoke(new Action(ApplyButtonColors));
         }
 
+
         private void ApplyButtonColors()
         {
+            bool isDark = MaterialSkinManager.Instance.Theme == MaterialSkinManager.Themes.DARK;
+            
+            if (displayTextBox != null)
+            {
+                ThemeHelper.ApplyMauiTextBoxStyle(displayTextBox, isDark, isDisplay: true);
+            }
+            
+            if (chainLabel != null)
+            {
+                ThemeHelper.ApplyMauiLabelStyle(chainLabel, isDark, isSecondary: true);
+            }
+            
             foreach (Control control in this.Controls)
             {
                 if (control is Button btn)
                 {
+                    ButtonType buttonType;
                     if (btn.Text == "=" || btn.Text == "+" || btn.Text == "-" || 
-                        btn.Text == "*" || btn.Text == "/")
+                        btn.Text == "*" || btn.Text == "×" || btn.Text == "÷")
                     {
-                        btn.BackColor = Color.FromArgb(255, 200, 100);
-                        btn.UseVisualStyleBackColor = false;
-                        btn.FlatAppearance.BorderSize = 0;
-                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 200, 100);
-                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 180, 80);
-                        btn.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                        buttonType = ButtonType.Operator;
+                        btn.Font = new Font("Segoe UI", 20, FontStyle.Bold);
                     }
                     else if (btn.Text == "C" || btn.Text == "CE" || btn.Text == "Copy" || btn.Text == "Mode")
                     {
-                        btn.BackColor = Color.FromArgb(220, 220, 220);
-                        btn.UseVisualStyleBackColor = false;
-                        btn.FlatAppearance.BorderSize = 0;
-                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(220, 220, 220);
-                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(200, 200, 200);
-                        btn.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+                        buttonType = ButtonType.Action;
+                        btn.Font = new Font("Segoe UI", 18, FontStyle.Regular);
                     }
-                    else if (btn.Text.Length <= 2)
+                    else
                     {
-                        btn.BackColor = Color.FromArgb(173, 216, 230);
-                        btn.UseVisualStyleBackColor = false;
-                        btn.FlatAppearance.BorderSize = 0;
-                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(173, 216, 230);
-                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(153, 206, 220);
-                        btn.Font = new Font("Segoe UI", 14, FontStyle.Regular);
+                        buttonType = ButtonType.Number;
+                        btn.Font = new Font("Segoe UI", 18, FontStyle.Regular);
                     }
+                    
+                    ThemeHelper.ApplyMauiButtonStyle(btn, buttonType, isDark);
                 }
             }
         }

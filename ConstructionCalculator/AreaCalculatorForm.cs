@@ -28,6 +28,31 @@ namespace ConstructionCalculator
             catch
             {
             }
+            
+            ApplyMauiStyling();
+            this.Activated += (s, e) => BeginInvoke(new Action(ApplyMauiStyling));
+        }
+
+        private void ApplyMauiStyling()
+        {
+            bool isDark = MaterialSkinManager.Instance.Theme == MaterialSkinManager.Themes.DARK;
+            
+            foreach (Control control in this.Controls)
+            {
+                if (control is Button btn)
+                {
+                    ButtonType buttonType = ThemeHelper.ClassifyButton(btn.Text);
+                    ThemeHelper.ApplyMauiButtonStyle(btn, buttonType, isDark);
+                }
+                else if (control is TextBox textBox)
+                {
+                    ThemeHelper.ApplyMauiTextBoxStyle(textBox, isDark, isDisplay: textBox.ReadOnly);
+                }
+                else if (control is Label label)
+                {
+                    ThemeHelper.ApplyMauiLabelStyle(label, isDark, isSecondary: false);
+                }
+            }
         }
 
         private void InitializeComponent()
