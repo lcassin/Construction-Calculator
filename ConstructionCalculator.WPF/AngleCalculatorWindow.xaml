@@ -4,15 +4,7 @@
         Title="Angle Calculator" Height="800" Width="450"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     
-    <Window.Resources>
-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="#4A90E2"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-        </Style>
-    </Window.Resources>
+    <!-- Button styles now defined in App.xaml -->
     
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="20">
@@ -59,11 +51,11 @@
 
             <!-- Mode and Calculate Ratio Buttons -->
             <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,0,0,15">
-                <Button x:Name="ModeButton" Content="Degrees" Width="135" Height="35" 
-                        FontSize="12" Margin="100,0,10,0" Click="ModeButton_Click" HorizontalAlignment="Left"
-                        Background="#D0D0D0" Foreground="#202020"/>
-                <Button x:Name="CalculateRatioButton" Content="Calculate Ratio" Width="135" Height="35" 
-                        Style="{StaticResource PrimaryActionButtonStyle}" FontSize="12" Click="CalculateRatioButton_Click"/>
+                <Button x:Name="ModeButton" Content="Degrees" 
+                        Style="{StaticResource ActionButtonStyle}"
+                        Margin="100,0,10,0" Click="ModeButton_Click" HorizontalAlignment="Left"/>
+                <Button x:Name="CalculateRatioButton" Content="Calculate Ratio" 
+                        Style="{StaticResource PrimaryActionButtonStyle}" Click="CalculateRatioButton_Click"/>
             </StackPanel>
 
             <!-- Result Display -->
@@ -103,11 +95,12 @@
 
             <!-- Solver Buttons -->
             <StackPanel Grid.Row="12" Orientation="Horizontal" Margin="0,0,0,15">
-                <Button x:Name="SolverCalculateButton" Content="Calculate" Width="135" Height="40" 
-                        Style="{StaticResource PrimaryActionButtonStyle}" Margin="100,0,10,0" Click="SolverCalculateButton_Click" HorizontalAlignment="Left"/>
-                <Button x:Name="SolverClearButton" Content="Clear" Width="135" Height="40" 
-                        FontSize="14" Click="SolverClearButton_Click"
-                        Background="#D0D0D0" Foreground="#202020"/>
+                <Button x:Name="SolverCalculateButton" Content="Calculate" 
+                        Style="{StaticResource PrimaryActionButtonStyle}" 
+                        Margin="100,0,10,0" Click="SolverCalculateButton_Click" HorizontalAlignment="Left"/>
+                <Button x:Name="SolverClearButton" Content="Clear" 
+                        Style="{StaticResource ActionButtonStyle}"
+                        Click="SolverClearButton_Click"/>
             </StackPanel>
 
             <!-- Solver Result Display -->
