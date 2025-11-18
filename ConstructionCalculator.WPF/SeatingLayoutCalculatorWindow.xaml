@@ -4,18 +4,12 @@
         Title="Seating Layout Calculator" Height="700" Width="900"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     
-    <Window.Resources>
-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="#4A90E2"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-        </Style>
-    </Window.Resources>
-    
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="20"/>
@@ -23,7 +17,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Left Column -->
-            <StackPanel Grid.Column="0">
+            <StackPanel Grid.Row="0" Grid.Column="0">
                 <!-- Row Configuration Section -->
                 <Border Background="LightGray" Padding="5" Margin="0,0,0,10">
                     <TextBlock Text="Row Configuration" FontSize="14" FontWeight="Bold"/>
@@ -76,7 +70,7 @@
             </StackPanel>
 
             <!-- Right Column -->
-            <StackPanel Grid.Column="2">
+            <StackPanel Grid.Row="0" Grid.Column="2">
                 <!-- Chair Specifications Section -->
                 <Border Background="LightGray" Padding="5" Margin="0,0,0,10">
                     <TextBlock Text="Chair Specifications" FontSize="14" FontWeight="Bold"/>
@@ -127,7 +121,7 @@
             </StackPanel>
 
             <!-- Buttons and Results (spanning both columns) -->
-            <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Margin="0,20,0,0">
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,20,0,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
                     <Button Content="Calculate Layout" Width="200" Height="45" 
                             Style="{StaticResource PrimaryActionButtonStyle}"

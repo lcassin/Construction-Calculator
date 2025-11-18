@@ -13,43 +13,7 @@
         KeyDown="Window_KeyDown"
         Icon="Assets/app.ico">
     
-    <Window.Resources>
-        <!-- Button Styles -->
-        <Style x:Key="NumberButtonStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="#E8E8E8"/>
-            <Setter Property="Foreground" Value="#202020"/>
-        </Style>
-        
-        <Style x:Key="EditorButtonStyle" TargetType="Button" BasedOn="{StaticResource NumberButtonStyle}">
-            <Setter Property="Background" Value="#B3D9FF"/>
-            <Setter Property="Foreground" Value="#0B3D91"/>
-        </Style>
-        
-        <Style x:Key="OperatorButtonStyle" TargetType="Button" BasedOn="{StaticResource NumberButtonStyle}">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Background" Value="#FFB84D"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-        </Style>
-        
-        <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource NumberButtonStyle}">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="#D0D0D0"/>
-            <Setter Property="Foreground" Value="#202020"/>
-        </Style>
-        
-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="#4A90E2"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-        </Style>
-    </Window.Resources>
+    <!-- Button styles now defined in App.xaml -->
     
     <DockPanel>
         <!-- Menu -->
