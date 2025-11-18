@@ -10,7 +10,8 @@
         Width="400"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        KeyDown="Window_KeyDown">
+        KeyDown="Window_KeyDown"
+        Icon="Assets/app.ico">
     
     <Window.Resources>
         <!-- Button Styles -->
