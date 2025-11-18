@@ -47,13 +47,13 @@
 
         <!-- Action Buttons -->
         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0,0,0,15">
-            <Button Content="Remove Selected" 
+            <Button Content="Remove Selected" MinWidth="130"
                     Style="{StaticResource ActionButtonStyle}"
                     Margin="0,0,10,0" Click="RemoveSectionButton_Click"/>
-            <Button Content="Clear All" 
+            <Button Content="Clear All" MinWidth="130"
                     Style="{StaticResource ActionButtonStyle}"
                     Margin="0,0,10,0" Click="ClearAllButton_Click"/>
-            <Button Content="Copy Total" 
+            <Button Content="Copy Total" MinWidth="130"
                     Style="{StaticResource ActionButtonStyle}"
                     Click="CopyTotalButton_Click"/>
         </StackPanel>

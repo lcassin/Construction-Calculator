@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Construction Calculator" 
         Height="755" 
-        Width="400"
+        Width="420"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
