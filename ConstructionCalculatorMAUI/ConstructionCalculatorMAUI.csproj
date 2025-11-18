@@ -2,6 +2,7 @@
   <PropertyGroup>
     <!-- Windows-only target framework -->
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+	<MauiVersion>8.0.92</MauiVersion>
     <OutputType>Exe</OutputType>
     <RootNamespace>ConstructionCalculatorMAUI</RootNamespace>
     <UseMaui>true</UseMaui>
