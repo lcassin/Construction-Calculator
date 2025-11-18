@@ -12,6 +12,12 @@
     <UseWPF>true</UseWPF>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <NoWarn>$(NoWarn);WPF0001</NoWarn>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Assets\splash.png" />
+    <Resource Include="Assets\app.ico" />
+  </ItemGroup>
 
 </Project>

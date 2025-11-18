@@ -82,7 +82,7 @@ public partial class MainWindow : Window
         shouldClearDisplay = false;
         calculationChain.Clear();
         UpdateChainDisplay();
-        FocusDisplayAtEnd();
+        FocusDisplayAndSelectAll();
     }
 
     private void ClearEntry()
@@ -117,7 +117,7 @@ public partial class MainWindow : Window
             DisplayTextBox.Text = isDecimalMode ? "0" : "0\"";
         }
         shouldClearDisplay = false;
-        FocusDisplayAtEnd();
+        FocusDisplayAndSelectAll();
     }
 
     private void UpdateChainDisplay()
@@ -344,6 +344,15 @@ public partial class MainWindow : Window
         DisplayTextBox.Focus();
         DisplayTextBox.CaretIndex = DisplayTextBox.Text.Length;
         DisplayTextBox.SelectionLength = 0;
+    }
+
+    private void FocusDisplayAndSelectAll()
+    {
+        DisplayTextBox.Focus();
+        Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.ContextIdle, new Action(() =>
+        {
+            DisplayTextBox.SelectAll();
+        }));
     }
 
     private Measurement ParseCurrentDisplay()
