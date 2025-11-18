@@ -3,6 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Angle Calculator" Height="800" Width="450"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    
+    <Window.Resources>
+        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#4A90E2"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+    </Window.Resources>
+    
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="20">
             <Grid.RowDefinitions>
@@ -38,7 +49,7 @@
 
             <!-- Calculate Angle Button -->
             <Button Grid.Row="2" x:Name="CalculateAngleButton" Content="Calculate Angle" Width="280" Height="40" 
-                    FontSize="14" FontWeight="Bold" Margin="100,0,0,15" Click="CalculateAngleButton_Click" HorizontalAlignment="Left"/>
+                    Style="{StaticResource PrimaryActionButtonStyle}" Margin="100,0,0,15" Click="CalculateAngleButton_Click" HorizontalAlignment="Left"/>
 
             <!-- Angle Input -->
             <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,10">
@@ -49,9 +60,10 @@
             <!-- Mode and Calculate Ratio Buttons -->
             <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,0,0,15">
                 <Button x:Name="ModeButton" Content="Degrees" Width="135" Height="35" 
-                        FontSize="12" Margin="100,0,10,0" Click="ModeButton_Click" HorizontalAlignment="Left"/>
+                        FontSize="12" Margin="100,0,10,0" Click="ModeButton_Click" HorizontalAlignment="Left"
+                        Background="#D0D0D0" Foreground="#202020"/>
                 <Button x:Name="CalculateRatioButton" Content="Calculate Ratio" Width="135" Height="35" 
-                        FontSize="12" FontWeight="Bold" Click="CalculateRatioButton_Click"/>
+                        Style="{StaticResource PrimaryActionButtonStyle}" FontSize="12" Click="CalculateRatioButton_Click"/>
             </StackPanel>
 
             <!-- Result Display -->
@@ -92,9 +104,10 @@
             <!-- Solver Buttons -->
             <StackPanel Grid.Row="12" Orientation="Horizontal" Margin="0,0,0,15">
                 <Button x:Name="SolverCalculateButton" Content="Calculate" Width="135" Height="40" 
-                        FontSize="14" FontWeight="Bold" Margin="100,0,10,0" Click="SolverCalculateButton_Click" HorizontalAlignment="Left"/>
+                        Style="{StaticResource PrimaryActionButtonStyle}" Margin="100,0,10,0" Click="SolverCalculateButton_Click" HorizontalAlignment="Left"/>
                 <Button x:Name="SolverClearButton" Content="Clear" Width="135" Height="40" 
-                        FontSize="14" Click="SolverClearButton_Click"/>
+                        FontSize="14" Click="SolverClearButton_Click"
+                        Background="#D0D0D0" Foreground="#202020"/>
             </StackPanel>
 
             <!-- Solver Result Display -->
