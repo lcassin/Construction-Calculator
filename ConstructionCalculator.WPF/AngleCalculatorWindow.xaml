@@ -40,7 +40,7 @@
             </StackPanel>
 
             <!-- Calculate Angle Button -->
-            <Button Grid.Row="2" x:Name="CalculateAngleButton" Content="Calculate Angle" Width="280" Height="40" 
+            <Button Grid.Row="2" x:Name="CalculateAngleButton" Content="Calculate Angle" 
                     Style="{StaticResource PrimaryActionButtonStyle}" Margin="100,0,0,15" Click="CalculateAngleButton_Click" HorizontalAlignment="Left"/>
 
             <!-- Angle Input -->
