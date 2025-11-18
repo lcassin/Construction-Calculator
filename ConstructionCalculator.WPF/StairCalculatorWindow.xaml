@@ -4,15 +4,7 @@
         Title="Stair Calculator" Height="900" Width="450"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     
-    <Window.Resources>
-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="#4A90E2"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-        </Style>
-    </Window.Resources>
+    <!-- Button styles now defined in App.xaml -->
     
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="20">
@@ -48,10 +40,12 @@
 
             <!-- Buttons -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,15">
-                <Button x:Name="AutoCalculateButton" Content="Auto-Calculate Steps" Width="180" Height="40" 
-                        FontSize="12" FontWeight="Bold" Margin="0,0,10,0" Click="AutoCalculateButton_Click"/>
-                <Button x:Name="CalculateButton" Content="Calculate" Width="180" Height="40" 
-                        FontSize="14" FontWeight="Bold" Click="CalculateButton_Click"/>
+                <Button x:Name="AutoCalculateButton" Content="Auto-Calculate Steps" 
+                        Style="{StaticResource ActionButtonStyle}"
+                        Margin="0,0,10,0" Click="AutoCalculateButton_Click"/>
+                <Button x:Name="CalculateButton" Content="Calculate" 
+                        Style="{StaticResource PrimaryActionButtonStyle}"
+                        Click="CalculateButton_Click"/>
             </StackPanel>
 
             <!-- Riser Height Result -->
