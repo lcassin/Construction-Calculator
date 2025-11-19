@@ -719,7 +719,8 @@ public partial class MainWindow : Window
 
     private void About_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Construction Calculator\nVersion 2.0 (WPF with Fluent Theme)\n\n© 2025", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+        var aboutWindow = new AboutWindow { Owner = this };
+        aboutWindow.ShowDialog();
     }
 
     private void PerformSquareRoot()
