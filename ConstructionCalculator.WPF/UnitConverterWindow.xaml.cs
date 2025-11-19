@@ -121,9 +121,13 @@ public partial class UnitConverterWindow : Window
     
     private void ConversionTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        if (FromValueTextBox != null && ToValueTextBox != null)
+        {
+            FromValueTextBox.Text = "";
+            ToValueTextBox.Text = "";
+        }
         UpdateUnitComboBoxes();
         UpdateReferenceText();
-        PerformConversion();
     }
     
     private void FromValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
