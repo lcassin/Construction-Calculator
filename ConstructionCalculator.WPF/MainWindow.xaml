@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ConstructionCalculator.WPF"
         mc:Ignorable="d"
         Title="Construction Calculator" 
-        Height="755" 
+        Height="825" 
         Width="420"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -24,6 +24,7 @@
                 <MenuItem Header="Survey Calculator" Click="SurveyCalculator_Click"/>
                 <MenuItem Header="Seating Layout Calculator" Click="SeatingLayoutCalculator_Click"/>
                 <MenuItem Header="Area Calculator" Click="AreaCalculator_Click"/>
+                <MenuItem Header="Unit Converter" Click="UnitConverter_Click"/>
                 <Separator/>
                 <MenuItem Header="Theme">
                     <MenuItem Header="Light" Click="LightTheme_Click"/>
@@ -85,6 +86,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -128,6 +130,11 @@
                 <Button Grid.Row="5" Grid.Column="1" Content="CE" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="5" Grid.Column="2" Content="Copy" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="5" Grid.Column="3" Content="Mode" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
+                
+                <!-- Row 6: %, √, x², (empty) -->
+                <Button Grid.Row="6" Grid.Column="0" Content="%" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="6" Grid.Column="1" Content="√" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="6" Grid.Column="2" Content="x²" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
             </Grid>
             
             <!-- Instructions -->
