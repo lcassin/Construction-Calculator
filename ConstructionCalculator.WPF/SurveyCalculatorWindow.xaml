@@ -82,14 +82,34 @@
 			<StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0,21,0,32" Grid.RowSpan="2">
 				<Label Content="Start Northing:" Width="140" VerticalAlignment="Center" FontSize="14"/>
 				<TextBox x:Name="StartNorthingTextBox" Width="278" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" GotFocus="TextBox_GotFocus"/>
+                         VerticalContentAlignment="Center" GotFocus="TextBox_GotFocus">
+					<TextBox.ToolTip>
+						<ToolTip>
+							<TextBlock>
+								<Run Text="Y coordinate (north distance)"/>
+								<LineBreak/>
+								<Run Text="Enter numeric value (e.g., 1000.50)"/>
+							</TextBlock>
+						</ToolTip>
+					</TextBox.ToolTip>
+				</TextBox>
 			</StackPanel>
 
 			<!-- Start Easting Input -->
 			<StackPanel Grid.Row="9" Orientation="Horizontal" Margin="0,6,0,13" Grid.RowSpan="2">
 				<Label Content="Start Easting:" Width="140" VerticalAlignment="Center" FontSize="14"/>
 				<TextBox x:Name="StartEastingTextBox" Width="278" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" GotFocus="TextBox_GotFocus"/>
+                         VerticalContentAlignment="Center" GotFocus="TextBox_GotFocus">
+					<TextBox.ToolTip>
+						<ToolTip>
+							<TextBlock>
+								<Run Text="X coordinate (east distance)"/>
+								<LineBreak/>
+								<Run Text="Enter numeric value (e.g., 500.00)"/>
+							</TextBlock>
+						</ToolTip>
+					</TextBox.ToolTip>
+				</TextBox>
 			</StackPanel>
 
 			<!-- Distance Input -->
