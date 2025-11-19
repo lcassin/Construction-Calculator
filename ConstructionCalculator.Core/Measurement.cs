@@ -35,6 +35,11 @@ namespace ConstructionCalculator
         {
             input = input.Trim();
             
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new FormatException("Measurement cannot be empty.\n\nAccepted formats:\n  3' 4-1/2\"\n  3'4\"\n  4-1/2\"\n  4.5\n\nNote: Inside a measurement, \"-\" means \"and\" (e.g., 4-1/2\" = 4.5 inches)");
+            }
+            
             bool isNegative = false;
             if (input.StartsWith("-"))
             {
@@ -47,11 +52,13 @@ namespace ConstructionCalculator
                 }
             }
             
+            input = NormalizeUnicode(input);
+            
             bool hasFeetMarker = input.Contains("'");
             
             string cleanInput = input.Replace("\"", "").Replace("'", " ").Trim();
             
-            var feetInchesMatch = Regex.Match(cleanInput, @"^(\d+)\s+(\d+)(?:[\s\-]+(\d+)/(\d+))?$");
+            var feetInchesMatch = Regex.Match(cleanInput, @"^(\d+)\s*(\d+)(?:[\s\-]+(\d+)/(\d+))?$");
             if (feetInchesMatch.Success)
             {
                 int feet = int.Parse(feetInchesMatch.Groups[1].Value);
@@ -90,12 +97,26 @@ namespace ConstructionCalculator
                 return isNegative ? FromDecimalInches(-m.ToTotalInches()) : m;
             }
             
-            if (double.TryParse(cleanInput, out double decimalValue))
+            if (double.TryParse(cleanInput, System.Globalization.CultureInfo.InvariantCulture, out double decimalValue))
             {
                 return FromDecimalInches(isNegative ? -decimalValue : decimalValue);
             }
             
-            throw new FormatException($"Unable to parse measurement: {input}");
+            throw new FormatException($"Unable to parse measurement: {input}\n\nAccepted formats:\n  3' 4-1/2\"\n  3'4\"\n  4-1/2\"\n  4.5\n\nNote: Inside a measurement, \"-\" means \"and\" (e.g., 4-1/2\" = 4.5 inches)\nFor subtraction, use separate measurements: 4\" - 1/2\"");
+        }
+
+        private static string NormalizeUnicode(string input)
+        {
+            return input
+                .Replace('\u2032', '\'')
+                .Replace('\u2033', '"')
+                .Replace('\u2018', '\'')
+                .Replace('\u2019', '\'')
+                .Replace('\u201C', '"')
+                .Replace('\u201D', '"')
+                .Replace('\u2013', '-')
+                .Replace('\u2014', '-')
+                .Replace('\u2212', '-');
         }
 
         public double ToTotalInches()
