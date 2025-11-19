@@ -660,6 +660,48 @@ public partial class MainWindow : Window
         unitConverter.ShowDialog();
     }
 
+    private void CalculatorLauncher_Click(object sender, RoutedEventArgs e)
+    {
+        var launcher = new CalculatorLauncherWindow { Owner = this };
+        launcher.ShowDialog();
+    }
+
+    private void ConcreteCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var concreteCalculator = new ConcreteCalculatorWindow { Owner = this };
+        concreteCalculator.ShowDialog();
+    }
+
+    private void RoofingCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var roofingCalculator = new RoofingCalculatorWindow { Owner = this };
+        roofingCalculator.ShowDialog();
+    }
+
+    private void PaintCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var paintCalculator = new PaintCalculatorWindow { Owner = this };
+        paintCalculator.ShowDialog();
+    }
+
+    private void BoardFeetCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var boardFeetCalculator = new BoardFeetCalculatorWindow { Owner = this };
+        boardFeetCalculator.ShowDialog();
+    }
+
+    private void DrywallCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var drywallCalculator = new DrywallCalculatorWindow { Owner = this };
+        drywallCalculator.ShowDialog();
+    }
+
+    private void GradingCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var gradingCalculator = new GradingCalculatorWindow { Owner = this };
+        gradingCalculator.ShowDialog();
+    }
+
     private void LightTheme_Click(object sender, RoutedEventArgs e)
     {
         Application.Current.ThemeMode = ThemeMode.Light;

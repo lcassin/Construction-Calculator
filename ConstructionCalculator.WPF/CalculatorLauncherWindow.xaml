@@ -1,0 +1,141 @@
+﻿<Window x:Class="ConstructionCalculator.WPF.CalculatorLauncherWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Calculator Launcher" Height="600" Width="800"
+        WindowStartupLocation="CenterOwner"
+        Icon="Assets/app.ico">
+
+	<Grid Margin="20" UseLayoutRounding="True">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<!-- Search Box -->
+		<TextBox x:Name="SearchTextBox" 
+                 Grid.Row="0"
+                 Height="40"
+                 FontSize="16"
+                 Padding="10"
+                 Margin="0,0,0,20"
+                 TextChanged="SearchTextBox_TextChanged">
+			<TextBox.Style>
+				<Style TargetType="TextBox">
+					<Style.Triggers>
+						<Trigger Property="Text" Value="">
+							<Setter Property="Background">
+								<Setter.Value>
+									<VisualBrush Stretch="None" AlignmentX="Left">
+										<VisualBrush.Visual>
+											<TextBlock Text="Search calculators..." 
+                                                       FontSize="16" Foreground="Gray" 
+                                                       Margin="10,0,0,0" VerticalAlignment="Center"/>
+										</VisualBrush.Visual>
+									</VisualBrush>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+					</Style.Triggers>
+				</Style>
+			</TextBox.Style>
+		</TextBox>
+
+		<!-- Instructions -->
+		<TextBlock Grid.Row="1" 
+                   Text="Select a calculator to open:" 
+                   FontSize="14" 
+                   Foreground="Gray"
+                   Margin="0,0,0,15"/>
+
+		<!-- Calculator Tiles -->
+		<ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+			<ItemsControl x:Name="CalculatorItemsControl">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<UniformGrid Columns="3"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemContainerStyle>
+					<Style TargetType="ContentPresenter">
+						<Setter Property="HorizontalAlignment" Value="Stretch"/>
+						<Setter Property="Margin" Value="5"/>
+					</Style>
+				</ItemsControl.ItemContainerStyle>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Button Click="CalculatorTile_Click"
+                                Tag="{Binding}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                Padding="15"
+                                MinHeight="150"
+                                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+							<Button.Resources>
+								<Style TargetType="Border">
+									<Setter Property="CornerRadius" Value="6"/>
+								</Style>
+							</Button.Resources>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="*"/>
+								</Grid.RowDefinitions>
+
+								<!-- Category Badge -->
+								<Border Grid.Row="0" 
+                                        Background="#E0E0E0" 
+                                        CornerRadius="3"
+                                        Padding="5,2"
+                                        HorizontalAlignment="Left"
+                                        Margin="0,0,0,8">
+									<TextBlock Text="{Binding Category}" 
+                                               FontSize="10" 
+                                               Foreground="#606060"/>
+								</Border>
+
+								<!-- Icon and Name Row -->
+								<Grid Grid.Row="1" Margin="0,0,0,8">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto"/>
+										<ColumnDefinition Width="*"/>
+									</Grid.ColumnDefinitions>
+									
+									<!-- Icon -->
+									<TextBlock Grid.Column="0" 
+									           Text="{Binding Icon}" 
+									           FontFamily="{Binding IconFontFamily}"
+									           FontSize="24" 
+									           VerticalAlignment="Center"
+									           Margin="0,0,10,0"/>
+									
+									<!-- Calculator Name -->
+									<TextBlock Grid.Column="1" 
+									           Text="{Binding Name}" 
+									           FontSize="16" 
+									           FontWeight="Bold"
+									           TextWrapping="Wrap"
+									           VerticalAlignment="Center"/>
+								</Grid>
+
+								<!-- Description -->
+								<TextBlock Grid.Row="3" 
+                                           Text="{Binding Description}" 
+                                           FontSize="12" 
+                                           Foreground="Gray"
+                                           TextWrapping="Wrap"
+                                           TextTrimming="CharacterEllipsis"
+                                           Width="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualWidth}"
+                                           VerticalAlignment="Top"/>
+							</Grid>
+						</Button>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
+	</Grid>
+</Window>
