@@ -40,10 +40,10 @@
 
             <!-- Buttons -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,15">
-                <Button x:Name="AutoCalculateButton" Content="Auto-Calculate Steps" 
+                <Button x:Name="AutoCalculateButton" Content="Auto-Calculate Steps" MinWidth="160"
                         Style="{StaticResource ActionButtonStyle}"
-                        Margin="0,0,10,0" Click="AutoCalculateButton_Click"/>
-                <Button x:Name="CalculateButton" Content="Calculate" 
+                        Margin="0,0,10,0" Click="AutoCalculateButton_Click" Height="32"/>
+                <Button x:Name="CalculateButton" Content="Calculate" MinWidth="120"
                         Style="{StaticResource PrimaryActionButtonStyle}"
                         Click="CalculateButton_Click"/>
             </StackPanel>

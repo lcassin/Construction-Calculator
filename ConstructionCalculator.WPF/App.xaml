@@ -91,5 +91,14 @@
             <Setter Property="Background" Value="#FFB84D"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
         </Style>
+        
+        <!-- Memory Button Style (for MC, MR, M+, M-) -->
+        <Style x:Key="MemoryButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonBase}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="#606060"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
     </Application.Resources>
 </Application>

@@ -1,0 +1,405 @@
+From 9dcfd2bd835996302e840ff97bff925697dc29d5 Mon Sep 17 00:00:00 2001
+From: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>
+Date: Tue, 18 Nov 2025 18:47:21 +0000
+Subject: [PATCH] Add rounded corners to all buttons and fix calculator UI
+ issues
+
+- Create centralized button styles in App.xaml with rounded corners (CornerRadius=6)
+- Add RoundedButtonBase style with ControlTemplate for consistent button appearance
+- Fix Stair Calculator: Apply ActionButtonStyle and PrimaryActionButtonStyle to buttons
+- Fix Seating Layout Calculator: Add proper Grid rows to prevent button/content overlapping
+- Fix Area Calculator: Remove fixed button sizes, use MinWidth/MinHeight for consistency
+- Remove duplicate button style definitions from all calculator windows
+- All buttons now have consistent rounded corners and sizing across all calculators
+
+Co-Authored-By: Lee <lcassin@cassinfo.com>
+---
+ .../AngleCalculatorWindow.xaml                | 31 +++----
+ ConstructionCalculator.WPF/App.xaml           | 87 ++++++++++++++++++-
+ .../AreaCalculatorWindow.xaml                 | 30 +++----
+ ConstructionCalculator.WPF/MainWindow.xaml    | 38 +-------
+ .../SeatingLayoutCalculatorWindow.xaml        | 20 ++---
+ .../StairCalculatorWindow.xaml                | 20 ++---
+ .../SurveyCalculatorWindow.xaml               | 17 +---
+ 7 files changed, 125 insertions(+), 118 deletions(-)
+
+diff --git a/ConstructionCalculator.WPF/AngleCalculatorWindow.xaml b/ConstructionCalculator.WPF/AngleCalculatorWindow.xaml
+index e11071a..f348c92 100644
+--- a/ConstructionCalculator.WPF/AngleCalculatorWindow.xaml
++++ b/ConstructionCalculator.WPF/AngleCalculatorWindow.xaml
+@@ -4,15 +4,7 @@
+         Title="Angle Calculator" Height="800" Width="450"
+         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+     
+-    <Window.Resources>
+-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
+-            <Setter Property="FontSize" Value="14"/>
+-            <Setter Property="FontWeight" Value="Bold"/>
+-            <Setter Property="Cursor" Value="Hand"/>
+-            <Setter Property="Background" Value="#4A90E2"/>
+-            <Setter Property="Foreground" Value="#FFFFFF"/>
+-        </Style>
+-    </Window.Resources>
++    <!-- Button styles now defined in App.xaml -->
+     
+     <ScrollViewer VerticalScrollBarVisibility="Auto">
+         <Grid Margin="20">
+@@ -59,11 +51,11 @@
+ 
+             <!-- Mode and Calculate Ratio Buttons -->
+             <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,0,0,15">
+-                <Button x:Name="ModeButton" Content="Degrees" Width="135" Height="35" 
+-                        FontSize="12" Margin="100,0,10,0" Click="ModeButton_Click" HorizontalAlignment="Left"
+-                        Background="#D0D0D0" Foreground="#202020"/>
+-                <Button x:Name="CalculateRatioButton" Content="Calculate Ratio" Width="135" Height="35" 
+-                        Style="{StaticResource PrimaryActionButtonStyle}" FontSize="12" Click="CalculateRatioButton_Click"/>
++                <Button x:Name="ModeButton" Content="Degrees" 
++                        Style="{StaticResource ActionButtonStyle}"
++                        Margin="100,0,10,0" Click="ModeButton_Click" HorizontalAlignment="Left"/>
++                <Button x:Name="CalculateRatioButton" Content="Calculate Ratio" 
++                        Style="{StaticResource PrimaryActionButtonStyle}" Click="CalculateRatioButton_Click"/>
+             </StackPanel>
+ 
+             <!-- Result Display -->
+@@ -103,11 +95,12 @@
+ 
+             <!-- Solver Buttons -->
+             <StackPanel Grid.Row="12" Orientation="Horizontal" Margin="0,0,0,15">
+-                <Button x:Name="SolverCalculateButton" Content="Calculate" Width="135" Height="40" 
+-                        Style="{StaticResource PrimaryActionButtonStyle}" Margin="100,0,10,0" Click="SolverCalculateButton_Click" HorizontalAlignment="Left"/>
+-                <Button x:Name="SolverClearButton" Content="Clear" Width="135" Height="40" 
+-                        FontSize="14" Click="SolverClearButton_Click"
+-                        Background="#D0D0D0" Foreground="#202020"/>
++                <Button x:Name="SolverCalculateButton" Content="Calculate" 
++                        Style="{StaticResource PrimaryActionButtonStyle}" 
++                        Margin="100,0,10,0" Click="SolverCalculateButton_Click" HorizontalAlignment="Left"/>
++                <Button x:Name="SolverClearButton" Content="Clear" 
++                        Style="{StaticResource ActionButtonStyle}"
++                        Click="SolverClearButton_Click"/>
+             </StackPanel>
+ 
+             <!-- Solver Result Display -->
+diff --git a/ConstructionCalculator.WPF/App.xaml b/ConstructionCalculator.WPF/App.xaml
+index 570c502..dc3750d 100644
+--- a/ConstructionCalculator.WPF/App.xaml
++++ b/ConstructionCalculator.WPF/App.xaml
+@@ -5,6 +5,91 @@
+              StartupUri="MainWindow.xaml"
+              ThemeMode="System">
+     <Application.Resources>
+-         
++        <!-- Base Rounded Button Style with ControlTemplate -->
++        <Style x:Key="RoundedButtonBase" TargetType="Button">
++            <Setter Property="Padding" Value="12,8"/>
++            <Setter Property="MinWidth" Value="80"/>
++            <Setter Property="MinHeight" Value="36"/>
++            <Setter Property="FontSize" Value="14"/>
++            <Setter Property="Cursor" Value="Hand"/>
++            <Setter Property="Template">
++                <Setter.Value>
++                    <ControlTemplate TargetType="Button">
++                        <Border x:Name="border"
++                                Background="{TemplateBinding Background}"
++                                BorderBrush="{TemplateBinding BorderBrush}"
++                                BorderThickness="{TemplateBinding BorderThickness}"
++                                CornerRadius="6"
++                                Padding="{TemplateBinding Padding}">
++                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
++                        </Border>
++                        <ControlTemplate.Triggers>
++                            <Trigger Property="IsMouseOver" Value="True">
++                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
++                            </Trigger>
++                            <Trigger Property="IsPressed" Value="True">
++                                <Setter TargetName="border" Property="Opacity" Value="0.8"/>
++                            </Trigger>
++                            <Trigger Property="IsEnabled" Value="False">
++                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
++                            </Trigger>
++                        </ControlTemplate.Triggers>
++                    </ControlTemplate>
++                </Setter.Value>
++            </Setter>
++        </Style>
++
++        <!-- Number Button Style -->
++        <Style x:Key="NumberButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonBase}">
++            <Setter Property="FontSize" Value="18"/>
++            <Setter Property="FontWeight" Value="Bold"/>
++            <Setter Property="Margin" Value="5"/>
++            <Setter Property="Background" Value="#E8E8E8"/>
++            <Setter Property="Foreground" Value="#202020"/>
++        </Style>
++        
++        <!-- Editor Button Style (for /, ', ", Space) -->
++        <Style x:Key="EditorButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonBase}">
++            <Setter Property="FontSize" Value="18"/>
++            <Setter Property="FontWeight" Value="Bold"/>
++            <Setter Property="Margin" Value="5"/>
++            <Setter Property="Background" Value="#B3D9FF"/>
++            <Setter Property="Foreground" Value="#0B3D91"/>
++        </Style>
++        
++        <!-- Operator Button Style (for ÷, ×, -, +, =) -->
++        <Style x:Key="OperatorButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonBase}">
++            <Setter Property="FontSize" Value="20"/>
++            <Setter Property="FontWeight" Value="Bold"/>
++            <Setter Property="Margin" Value="5"/>
++            <Setter Property="Background" Value="#FFB84D"/>
++            <Setter Property="Foreground" Value="#FFFFFF"/>
++        </Style>
++        
++        <!-- Action Button Style (for C, CE, Copy, Mode) -->
++        <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonBase}">
++            <Setter Property="FontSize" Value="14"/>
++            <Setter Property="Margin" Value="5"/>
++            <Setter Property="Background" Value="#D0D0D0"/>
++            <Setter Property="Foreground" Value="#202020"/>
++        </Style>
++        
++        <!-- Primary Action Button Style (for Calculate, Add Section, etc.) -->
++        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonBase}">
++            <Setter Property="FontSize" Value="14"/>
++            <Setter Property="FontWeight" Value="Bold"/>
++            <Setter Property="Margin" Value="5"/>
++            <Setter Property="MinWidth" Value="120"/>
++            <Setter Property="Background" Value="#4A90E2"/>
++            <Setter Property="Foreground" Value="#FFFFFF"/>
++        </Style>
++        
++        <!-- Symbol Button Style (for survey calculator symbols) -->
++        <Style x:Key="SymbolButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonBase}">
++            <Setter Property="FontSize" Value="16"/>
++            <Setter Property="FontWeight" Value="Bold"/>
++            <Setter Property="Background" Value="#FFB84D"/>
++            <Setter Property="Foreground" Value="#FFFFFF"/>
++        </Style>
+     </Application.Resources>
+ </Application>
+diff --git a/ConstructionCalculator.WPF/AreaCalculatorWindow.xaml b/ConstructionCalculator.WPF/AreaCalculatorWindow.xaml
+index 7e04ba4..2021814 100644
+--- a/ConstructionCalculator.WPF/AreaCalculatorWindow.xaml
++++ b/ConstructionCalculator.WPF/AreaCalculatorWindow.xaml
+@@ -4,15 +4,7 @@
+         Title="Area Calculator" Height="650" Width="550"
+         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+     
+-    <Window.Resources>
+-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
+-            <Setter Property="FontSize" Value="14"/>
+-            <Setter Property="FontWeight" Value="Bold"/>
+-            <Setter Property="Cursor" Value="Hand"/>
+-            <Setter Property="Background" Value="#4A90E2"/>
+-            <Setter Property="Foreground" Value="#FFFFFF"/>
+-        </Style>
+-    </Window.Resources>
++    <!-- Button styles now defined in App.xaml -->
+     
+     <Grid Margin="20">
+         <Grid.RowDefinitions>
+@@ -40,7 +32,7 @@
+         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,15">
+             <Label Content="Width:" Width="100" VerticalAlignment="Center" FontSize="14"/>
+             <TextBox x:Name="WidthTextBox" Width="180" Height="30" FontSize="14" VerticalContentAlignment="Center"/>
+-            <Button Content="Add Section" Width="180" Height="60" 
++            <Button Content="Add Section" 
+                     Style="{StaticResource PrimaryActionButtonStyle}"
+                     Margin="10,0,0,0" Click="AddSectionButton_Click"/>
+         </StackPanel>
+@@ -55,15 +47,15 @@
+ 
+         <!-- Action Buttons -->
+         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0,0,0,15">
+-            <Button Content="Remove Selected" Width="150" Height="40" FontSize="12" 
+-                    Margin="0,0,10,0" Click="RemoveSectionButton_Click"
+-                    Background="#D0D0D0" Foreground="#202020"/>
+-            <Button Content="Clear All" Width="150" Height="40" FontSize="12" 
+-                    Margin="0,0,10,0" Click="ClearAllButton_Click"
+-                    Background="#D0D0D0" Foreground="#202020"/>
+-            <Button Content="Copy Total" Width="150" Height="40" FontSize="12" 
+-                    Click="CopyTotalButton_Click"
+-                    Background="#D0D0D0" Foreground="#202020"/>
++            <Button Content="Remove Selected" 
++                    Style="{StaticResource ActionButtonStyle}"
++                    Margin="0,0,10,0" Click="RemoveSectionButton_Click"/>
++            <Button Content="Clear All" 
++                    Style="{StaticResource ActionButtonStyle}"
++                    Margin="0,0,10,0" Click="ClearAllButton_Click"/>
++            <Button Content="Copy Total" 
++                    Style="{StaticResource ActionButtonStyle}"
++                    Click="CopyTotalButton_Click"/>
+         </StackPanel>
+ 
+         <!-- Total Area Display -->
+diff --git a/ConstructionCalculator.WPF/MainWindow.xaml b/ConstructionCalculator.WPF/MainWindow.xaml
+index 74cd016..4891eb9 100644
+--- a/ConstructionCalculator.WPF/MainWindow.xaml
++++ b/ConstructionCalculator.WPF/MainWindow.xaml
+@@ -13,43 +13,7 @@
+         KeyDown="Window_KeyDown"
+         Icon="Assets/app.ico">
+     
+-    <Window.Resources>
+-        <!-- Button Styles -->
+-        <Style x:Key="NumberButtonStyle" TargetType="Button">
+-            <Setter Property="FontSize" Value="18"/>
+-            <Setter Property="FontWeight" Value="Bold"/>
+-            <Setter Property="Margin" Value="5"/>
+-            <Setter Property="Cursor" Value="Hand"/>
+-            <Setter Property="Background" Value="#E8E8E8"/>
+-            <Setter Property="Foreground" Value="#202020"/>
+-        </Style>
+-        
+-        <Style x:Key="EditorButtonStyle" TargetType="Button" BasedOn="{StaticResource NumberButtonStyle}">
+-            <Setter Property="Background" Value="#B3D9FF"/>
+-            <Setter Property="Foreground" Value="#0B3D91"/>
+-        </Style>
+-        
+-        <Style x:Key="OperatorButtonStyle" TargetType="Button" BasedOn="{StaticResource NumberButtonStyle}">
+-            <Setter Property="FontSize" Value="20"/>
+-            <Setter Property="Background" Value="#FFB84D"/>
+-            <Setter Property="Foreground" Value="#FFFFFF"/>
+-        </Style>
+-        
+-        <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource NumberButtonStyle}">
+-            <Setter Property="FontSize" Value="14"/>
+-            <Setter Property="Background" Value="#D0D0D0"/>
+-            <Setter Property="Foreground" Value="#202020"/>
+-        </Style>
+-        
+-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
+-            <Setter Property="FontSize" Value="14"/>
+-            <Setter Property="FontWeight" Value="Bold"/>
+-            <Setter Property="Margin" Value="5"/>
+-            <Setter Property="Cursor" Value="Hand"/>
+-            <Setter Property="Background" Value="#4A90E2"/>
+-            <Setter Property="Foreground" Value="#FFFFFF"/>
+-        </Style>
+-    </Window.Resources>
++    <!-- Button styles now defined in App.xaml -->
+     
+     <DockPanel>
+         <!-- Menu -->
+diff --git a/ConstructionCalculator.WPF/SeatingLayoutCalculatorWindow.xaml b/ConstructionCalculator.WPF/SeatingLayoutCalculatorWindow.xaml
+index c054db3..74d8fa2 100644
+--- a/ConstructionCalculator.WPF/SeatingLayoutCalculatorWindow.xaml
++++ b/ConstructionCalculator.WPF/SeatingLayoutCalculatorWindow.xaml
+@@ -4,18 +4,12 @@
+         Title="Seating Layout Calculator" Height="700" Width="900"
+         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+     
+-    <Window.Resources>
+-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
+-            <Setter Property="FontSize" Value="14"/>
+-            <Setter Property="FontWeight" Value="Bold"/>
+-            <Setter Property="Cursor" Value="Hand"/>
+-            <Setter Property="Background" Value="#4A90E2"/>
+-            <Setter Property="Foreground" Value="#FFFFFF"/>
+-        </Style>
+-    </Window.Resources>
+-    
+     <ScrollViewer VerticalScrollBarVisibility="Auto">
+         <Grid Margin="20">
++            <Grid.RowDefinitions>
++                <RowDefinition Height="Auto"/>
++                <RowDefinition Height="Auto"/>
++            </Grid.RowDefinitions>
+             <Grid.ColumnDefinitions>
+                 <ColumnDefinition Width="*"/>
+                 <ColumnDefinition Width="20"/>
+@@ -23,7 +17,7 @@
+             </Grid.ColumnDefinitions>
+ 
+             <!-- Left Column -->
+-            <StackPanel Grid.Column="0">
++            <StackPanel Grid.Row="0" Grid.Column="0">
+                 <!-- Row Configuration Section -->
+                 <Border Background="LightGray" Padding="5" Margin="0,0,0,10">
+                     <TextBlock Text="Row Configuration" FontSize="14" FontWeight="Bold"/>
+@@ -76,7 +70,7 @@
+             </StackPanel>
+ 
+             <!-- Right Column -->
+-            <StackPanel Grid.Column="2">
++            <StackPanel Grid.Row="0" Grid.Column="2">
+                 <!-- Chair Specifications Section -->
+                 <Border Background="LightGray" Padding="5" Margin="0,0,0,10">
+                     <TextBlock Text="Chair Specifications" FontSize="14" FontWeight="Bold"/>
+@@ -127,7 +121,7 @@
+             </StackPanel>
+ 
+             <!-- Buttons and Results (spanning both columns) -->
+-            <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Margin="0,20,0,0">
++            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,20,0,0">
+                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+                     <Button Content="Calculate Layout" Width="200" Height="45" 
+                             Style="{StaticResource PrimaryActionButtonStyle}"
+diff --git a/ConstructionCalculator.WPF/StairCalculatorWindow.xaml b/ConstructionCalculator.WPF/StairCalculatorWindow.xaml
+index 8db1d0f..3ac0fb4 100644
+--- a/ConstructionCalculator.WPF/StairCalculatorWindow.xaml
++++ b/ConstructionCalculator.WPF/StairCalculatorWindow.xaml
+@@ -4,15 +4,7 @@
+         Title="Stair Calculator" Height="900" Width="450"
+         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+     
+-    <Window.Resources>
+-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
+-            <Setter Property="FontSize" Value="14"/>
+-            <Setter Property="FontWeight" Value="Bold"/>
+-            <Setter Property="Cursor" Value="Hand"/>
+-            <Setter Property="Background" Value="#4A90E2"/>
+-            <Setter Property="Foreground" Value="#FFFFFF"/>
+-        </Style>
+-    </Window.Resources>
++    <!-- Button styles now defined in App.xaml -->
+     
+     <ScrollViewer VerticalScrollBarVisibility="Auto">
+         <Grid Margin="20">
+@@ -48,10 +40,12 @@
+ 
+             <!-- Buttons -->
+             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,15">
+-                <Button x:Name="AutoCalculateButton" Content="Auto-Calculate Steps" Width="180" Height="40" 
+-                        FontSize="12" FontWeight="Bold" Margin="0,0,10,0" Click="AutoCalculateButton_Click"/>
+-                <Button x:Name="CalculateButton" Content="Calculate" Width="180" Height="40" 
+-                        FontSize="14" FontWeight="Bold" Click="CalculateButton_Click"/>
++                <Button x:Name="AutoCalculateButton" Content="Auto-Calculate Steps" 
++                        Style="{StaticResource ActionButtonStyle}"
++                        Margin="0,0,10,0" Click="AutoCalculateButton_Click"/>
++                <Button x:Name="CalculateButton" Content="Calculate" 
++                        Style="{StaticResource PrimaryActionButtonStyle}"
++                        Click="CalculateButton_Click"/>
+             </StackPanel>
+ 
+             <!-- Riser Height Result -->
+diff --git a/ConstructionCalculator.WPF/SurveyCalculatorWindow.xaml b/ConstructionCalculator.WPF/SurveyCalculatorWindow.xaml
+index 7a0f914..c7f6449 100644
+--- a/ConstructionCalculator.WPF/SurveyCalculatorWindow.xaml
++++ b/ConstructionCalculator.WPF/SurveyCalculatorWindow.xaml
+@@ -4,22 +4,7 @@
+         Title="Survey Calculator" Height="680" Width="500"
+         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+     
+-    <Window.Resources>
+-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button">
+-            <Setter Property="FontSize" Value="14"/>
+-            <Setter Property="FontWeight" Value="Bold"/>
+-            <Setter Property="Cursor" Value="Hand"/>
+-            <Setter Property="Background" Value="#4A90E2"/>
+-            <Setter Property="Foreground" Value="#FFFFFF"/>
+-        </Style>
+-        <Style x:Key="SymbolButtonStyle" TargetType="Button">
+-            <Setter Property="FontSize" Value="16"/>
+-            <Setter Property="FontWeight" Value="Bold"/>
+-            <Setter Property="Cursor" Value="Hand"/>
+-            <Setter Property="Background" Value="#FFB84D"/>
+-            <Setter Property="Foreground" Value="#FFFFFF"/>
+-        </Style>
+-    </Window.Resources>
++    <!-- Button styles now defined in App.xaml -->
+     
+     <ScrollViewer VerticalScrollBarVisibility="Auto">
+         <Grid Margin="20">
+-- 
+2.34.1
+
