@@ -11,6 +11,7 @@ public partial class UnitConverterWindow : Window
     {
         InitializeComponent();
         InitializeConversionFactors();
+        ConversionTypeComboBox.SelectedIndex = 0;
         UpdateUnitComboBoxes();
         UpdateReferenceText();
     }
@@ -66,6 +67,9 @@ public partial class UnitConverterWindow : Window
     
     private void UpdateUnitComboBoxes()
     {
+        if (ConversionTypeComboBox.SelectedItem == null || FromUnitComboBox == null || ToUnitComboBox == null)
+            return;
+            
         string selectedType = ((ComboBoxItem)ConversionTypeComboBox.SelectedItem).Content.ToString() ?? "Length";
         
         FromUnitComboBox.Items.Clear();
@@ -89,6 +93,9 @@ public partial class UnitConverterWindow : Window
     
     private void UpdateReferenceText()
     {
+        if (ConversionTypeComboBox.SelectedItem == null || ReferenceTextBlock == null)
+            return;
+            
         string selectedType = ((ComboBoxItem)ConversionTypeComboBox.SelectedItem).Content.ToString() ?? "Length";
         
         string referenceText = selectedType switch
