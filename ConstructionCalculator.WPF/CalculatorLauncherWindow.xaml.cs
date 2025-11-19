@@ -33,7 +33,8 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Area Calculator",
                 Category = "Common",
                 Description = "Calculate areas of multiple sections and sum totals",
-                Icon = "▭",
+                Icon = "⬛",
+                IconFontFamily = "Segoe UI Symbol",
                 OpenAction = () => new AreaCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -73,7 +74,8 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Stair Calculator",
                 Category = "Construction",
                 Description = "Calculate stair dimensions, rise, run, and stringers",
-                Icon = "🪜",
+                Icon = "⇧",
+                IconFontFamily = "Segoe UI Symbol",
                 OpenAction = () => new StairCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -97,7 +99,8 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Board Feet",
                 Category = "Construction",
                 Description = "Calculate board feet for lumber",
-                Icon = "🪵",
+                Icon = "📏",
+                IconFontFamily = "Segoe UI Emoji",
                 OpenAction = () => new BoardFeetCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -159,5 +162,6 @@ public class CalculatorDescriptor
     public string Category { get; set; } = "";
     public string Description { get; set; } = "";
     public string Icon { get; set; } = "";
+    public string IconFontFamily { get; set; } = "Segoe UI Emoji";
     public System.Action? OpenAction { get; set; }
 }

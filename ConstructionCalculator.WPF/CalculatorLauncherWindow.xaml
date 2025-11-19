@@ -107,6 +107,7 @@
 									<!-- Icon -->
 									<TextBlock Grid.Column="0" 
 									           Text="{Binding Icon}" 
+									           FontFamily="{Binding IconFontFamily}"
 									           FontSize="24" 
 									           VerticalAlignment="Center"
 									           Margin="0,0,10,0"/>
