@@ -5,7 +5,7 @@
         WindowStartupLocation="CenterOwner"
         Icon="Assets/app.ico">
 
-	<Grid Margin="20">
+	<Grid Margin="20" UseLayoutRounding="True">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
@@ -53,19 +53,24 @@
 			<ItemsControl x:Name="CalculatorItemsControl">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<WrapPanel Orientation="Horizontal"/>
+						<UniformGrid Columns="3"/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemContainerStyle>
+					<Style>
+						<Setter Property="FrameworkElement.Margin" Value="5"/>
+					</Style>
+				</ItemsControl.ItemContainerStyle>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<Button Click="CalculatorTile_Click"
                                 Tag="{Binding}"
-                                Width="230"
-                                Height="120"
-                                Margin="5"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
                                 VerticalContentAlignment="Stretch"
                                 Padding="15"
+                                MinHeight="120"
                                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
 							<Button.Resources>
 								<Style TargetType="Border">
@@ -74,6 +79,7 @@
 							</Button.Resources>
 							<Grid>
 								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto"/>
 									<RowDefinition Height="Auto"/>
 									<RowDefinition Height="Auto"/>
 									<RowDefinition Height="*"/>
@@ -91,16 +97,31 @@
                                                Foreground="#606060"/>
 								</Border>
 
-								<!-- Calculator Name -->
-								<TextBlock Grid.Row="1" 
-                                           Text="{Binding Name}" 
-                                           FontSize="16" 
-                                           FontWeight="Bold"
-                                           TextWrapping="Wrap"
-                                           Margin="0,0,0,8"/>
+								<!-- Icon and Name Row -->
+								<Grid Grid.Row="1" Margin="0,0,0,8">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto"/>
+										<ColumnDefinition Width="*"/>
+									</Grid.ColumnDefinitions>
+									
+									<!-- Icon -->
+									<TextBlock Grid.Column="0" 
+									           Text="{Binding Icon}" 
+									           FontSize="24" 
+									           VerticalAlignment="Center"
+									           Margin="0,0,10,0"/>
+									
+									<!-- Calculator Name -->
+									<TextBlock Grid.Column="1" 
+									           Text="{Binding Name}" 
+									           FontSize="16" 
+									           FontWeight="Bold"
+									           TextWrapping="Wrap"
+									           VerticalAlignment="Center"/>
+								</Grid>
 
 								<!-- Description -->
-								<TextBlock Grid.Row="2" 
+								<TextBlock Grid.Row="3" 
                                            Text="{Binding Description}" 
                                            FontSize="12" 
                                            Foreground="Gray"

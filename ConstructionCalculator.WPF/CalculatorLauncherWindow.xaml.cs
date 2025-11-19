@@ -25,6 +25,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Unit Converter",
                 Category = "Common",
                 Description = "Convert between units: length, area, volume, weight, temperature",
+                Icon = "⇄",
                 OpenAction = () => new UnitConverterWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -32,6 +33,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Area Calculator",
                 Category = "Common",
                 Description = "Calculate areas of multiple sections and sum totals",
+                Icon = "▭",
                 OpenAction = () => new AreaCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -39,6 +41,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Concrete Calculator",
                 Category = "Construction",
                 Description = "Calculate cubic yards for slabs, footings, and columns",
+                Icon = "🏗",
                 OpenAction = () => new ConcreteCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -46,6 +49,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Angle Calculator",
                 Category = "Measurement & Layout",
                 Description = "Calculate angles from rise/run and solve right triangles",
+                Icon = "∠",
                 OpenAction = () => new AngleCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -53,6 +57,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Survey Calculator",
                 Category = "Measurement & Layout",
                 Description = "Convert bearings/azimuths and calculate coordinates",
+                Icon = "🧭",
                 OpenAction = () => new SurveyCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -60,6 +65,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Seating Layout",
                 Category = "Measurement & Layout",
                 Description = "Calculate seating arrangements and spacing",
+                Icon = "💺",
                 OpenAction = () => new SeatingLayoutCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -67,6 +73,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Stair Calculator",
                 Category = "Construction",
                 Description = "Calculate stair dimensions, rise, run, and stringers",
+                Icon = "🪜",
                 OpenAction = () => new StairCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -74,6 +81,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Roofing Calculator",
                 Category = "Construction",
                 Description = "Calculate roof area, pitch, and shingle requirements",
+                Icon = "🏠",
                 OpenAction = () => new RoofingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -81,6 +89,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Paint/Coverage",
                 Category = "Construction",
                 Description = "Calculate paint needed for walls and ceilings",
+                Icon = "🎨",
                 OpenAction = () => new PaintCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -88,6 +97,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Board Feet",
                 Category = "Construction",
                 Description = "Calculate board feet for lumber",
+                Icon = "🪵",
                 OpenAction = () => new BoardFeetCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -95,6 +105,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Drywall Calculator",
                 Category = "Construction",
                 Description = "Calculate drywall sheets needed for rooms",
+                Icon = "🧱",
                 OpenAction = () => new DrywallCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -102,6 +113,7 @@ public partial class CalculatorLauncherWindow : Window
                 Name = "Grading/Slope",
                 Category = "Construction",
                 Description = "Convert between rise/run, percent, and angle",
+                Icon = "⛰",
                 OpenAction = () => new GradingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             }
         };
@@ -146,5 +158,6 @@ public class CalculatorDescriptor
     public string Name { get; set; } = "";
     public string Category { get; set; } = "";
     public string Description { get; set; } = "";
+    public string Icon { get; set; } = "";
     public System.Action? OpenAction { get; set; }
 }
