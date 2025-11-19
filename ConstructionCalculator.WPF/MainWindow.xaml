@@ -19,12 +19,26 @@
 		<!-- Menu -->
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="Tools">
-				<MenuItem Header="Angle Calculator" Click="AngleCalculator_Click"/>
-				<MenuItem Header="Stair Calculator" Click="StairCalculator_Click"/>
-				<MenuItem Header="Survey Calculator" Click="SurveyCalculator_Click"/>
-				<MenuItem Header="Seating Layout Calculator" Click="SeatingLayoutCalculator_Click"/>
-				<MenuItem Header="Area Calculator" Click="AreaCalculator_Click"/>
-				<MenuItem Header="Unit Converter" Click="UnitConverter_Click"/>
+				<MenuItem Header="Calculator Launcher..." Click="CalculatorLauncher_Click" FontWeight="Bold"/>
+				<Separator/>
+				<MenuItem Header="Common">
+					<MenuItem Header="Unit Converter" Click="UnitConverter_Click"/>
+					<MenuItem Header="Area Calculator" Click="AreaCalculator_Click"/>
+					<MenuItem Header="Concrete Calculator" Click="ConcreteCalculator_Click"/>
+				</MenuItem>
+				<MenuItem Header="Measurement &amp; Layout">
+					<MenuItem Header="Angle Calculator" Click="AngleCalculator_Click"/>
+					<MenuItem Header="Survey Calculator" Click="SurveyCalculator_Click"/>
+					<MenuItem Header="Seating Layout Calculator" Click="SeatingLayoutCalculator_Click"/>
+				</MenuItem>
+				<MenuItem Header="Construction">
+					<MenuItem Header="Stair Calculator" Click="StairCalculator_Click"/>
+					<MenuItem Header="Roofing Calculator" Click="RoofingCalculator_Click"/>
+					<MenuItem Header="Paint/Coverage Calculator" Click="PaintCalculator_Click"/>
+					<MenuItem Header="Board Feet Calculator" Click="BoardFeetCalculator_Click"/>
+					<MenuItem Header="Drywall Calculator" Click="DrywallCalculator_Click"/>
+					<MenuItem Header="Grading/Slope Calculator" Click="GradingCalculator_Click"/>
+				</MenuItem>
 				<Separator/>
 				<MenuItem Header="Theme">
 					<MenuItem Header="Light" Click="LightTheme_Click"/>
