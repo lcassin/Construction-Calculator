@@ -6,23 +6,32 @@ namespace ConstructionCalculator.WPF;
 
 public partial class ConcreteCalculatorWindow : Window
 {
+    private bool _isInitializing;
+
     public ConcreteCalculatorWindow()
     {
+        _isInitializing = true;
         InitializeComponent();
+        _isInitializing = false;
+        
+        UpdatePanels();
     }
 
     private void CalculationType_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (CalculationTypeComboBox.SelectedItem is ComboBoxItem item)
-        {
-            string type = item.Content.ToString() ?? "";
-            
-            SlabInputs.Visibility = type == "Slab" ? Visibility.Visible : Visibility.Collapsed;
-            FootingInputs.Visibility = type == "Footing" ? Visibility.Visible : Visibility.Collapsed;
-            ColumnInputs.Visibility = type == "Column" ? Visibility.Visible : Visibility.Collapsed;
-            
-            ResultTextBlock.Text = "";
-        }
+        if (_isInitializing) return;
+        UpdatePanels();
+    }
+
+    private void UpdatePanels()
+    {
+        var type = (CalculationTypeComboBox.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "Slab";
+        
+        SlabInputs.Visibility = type == "Slab" ? Visibility.Visible : Visibility.Collapsed;
+        FootingInputs.Visibility = type == "Footing" ? Visibility.Visible : Visibility.Collapsed;
+        ColumnInputs.Visibility = type == "Column" ? Visibility.Visible : Visibility.Collapsed;
+        
+        ResultTextBlock.Text = "";
     }
 
     private void Calculate_Click(object sender, RoutedEventArgs e)
@@ -33,7 +42,16 @@ public partial class ConcreteCalculatorWindow : Window
                 return;
 
             string type = item.Content.ToString() ?? "";
-            double wastePercent = double.Parse(WastePercentTextBox.Text);
+            
+            if (!double.TryParse(WastePercentTextBox.Text, out double wastePercent))
+            {
+                MessageBox.Show("Please enter a valid waste percentage.", 
+                              "Invalid Input", 
+                              MessageBoxButton.OK, 
+                              MessageBoxImage.Warning);
+                return;
+            }
+            
             double cubicFeet = 0;
 
             switch (type)
@@ -69,9 +87,12 @@ public partial class ConcreteCalculatorWindow : Window
 
     private double CalculateSlab()
     {
-        double length = double.Parse(SlabLengthTextBox.Text);
-        double width = double.Parse(SlabWidthTextBox.Text);
-        double thicknessInches = double.Parse(SlabThicknessTextBox.Text);
+        if (!double.TryParse(SlabLengthTextBox.Text, out double length) ||
+            !double.TryParse(SlabWidthTextBox.Text, out double width) ||
+            !double.TryParse(SlabThicknessTextBox.Text, out double thicknessInches))
+        {
+            throw new FormatException("Please enter valid numbers for length, width, and thickness.");
+        }
         
         double thicknessFeet = thicknessInches / 12.0;
         return length * width * thicknessFeet;
@@ -79,9 +100,12 @@ public partial class ConcreteCalculatorWindow : Window
 
     private double CalculateFooting()
     {
-        double perimeter = double.Parse(FootingPerimeterTextBox.Text);
-        double widthInches = double.Parse(FootingWidthTextBox.Text);
-        double depthInches = double.Parse(FootingDepthTextBox.Text);
+        if (!double.TryParse(FootingPerimeterTextBox.Text, out double perimeter) ||
+            !double.TryParse(FootingWidthTextBox.Text, out double widthInches) ||
+            !double.TryParse(FootingDepthTextBox.Text, out double depthInches))
+        {
+            throw new FormatException("Please enter valid numbers for perimeter, width, and depth.");
+        }
         
         double widthFeet = widthInches / 12.0;
         double depthFeet = depthInches / 12.0;
@@ -90,9 +114,12 @@ public partial class ConcreteCalculatorWindow : Window
 
     private double CalculateColumn()
     {
-        double diameterInches = double.Parse(ColumnDiameterTextBox.Text);
-        double heightFeet = double.Parse(ColumnHeightTextBox.Text);
-        int quantity = int.Parse(ColumnQuantityTextBox.Text);
+        if (!double.TryParse(ColumnDiameterTextBox.Text, out double diameterInches) ||
+            !double.TryParse(ColumnHeightTextBox.Text, out double heightFeet) ||
+            !int.TryParse(ColumnQuantityTextBox.Text, out int quantity))
+        {
+            throw new FormatException("Please enter valid numbers for diameter, height, and quantity.");
+        }
         
         double radiusFeet = (diameterInches / 2.0) / 12.0;
         double volumePerColumn = Math.PI * radiusFeet * radiusFeet * heightFeet;
