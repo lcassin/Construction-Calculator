@@ -56,15 +56,23 @@ public partial class SurveyCalculatorWindow : Window
     {
         try
         {
-            string bearingStr = BearingTextBox.Text.Trim().ToUpper();
-            double azimuth = ParseBearingToAzimuth(bearingStr);
+            string bearingStr = BearingTextBox.Text.Trim();
+            var result = TryParseBearing(bearingStr);
 
-            int degrees = (int)azimuth;
-            double minutesDecimal = (azimuth - degrees) * 60;
-            int minutes = (int)minutesDecimal;
-            double seconds = (minutesDecimal - minutes) * 60;
+            int azDegrees = (int)result.azimuth;
+            double azMinutesDecimal = (result.azimuth - azDegrees) * 60;
+            int azMinutes = (int)azMinutesDecimal;
+            double azSeconds = (azMinutesDecimal - azMinutes) * 60;
 
-            ConversionResultLabel.Text = $"Azimuth: {degrees:D3}° {minutes:D2}' {seconds:F1}\"\n({azimuth:F4}°)";
+            int angleDegrees = (int)result.angle;
+            double angleMinutesDecimal = (result.angle - angleDegrees) * 60;
+            int angleMinutes = (int)angleMinutesDecimal;
+            double angleSeconds = (angleMinutesDecimal - angleMinutes) * 60;
+
+            ConversionResultLabel.Text = $"Azimuth: {azDegrees:D3}° {azMinutes:D2}' {azSeconds:F1}\"\n" +
+                                        $"({result.azimuth:F4}°)\n\n" +
+                                        $"Bearing Angle: {angleDegrees:D2}° {angleMinutes:D2}' {angleSeconds:F1}\"\n" +
+                                        $"({result.angle:F4}°)";
         }
         catch (Exception ex)
         {
@@ -136,37 +144,87 @@ public partial class SurveyCalculatorWindow : Window
 
     private double ParseBearingToAzimuth(string bearing)
     {
-        char firstDir = bearing[0];
-        char lastDir = bearing[^1];
+        var result = TryParseBearing(bearing);
+        return result.azimuth;
+    }
 
-        if ((firstDir != 'N' && firstDir != 'S') || (lastDir != 'E' && lastDir != 'W'))
+    private (char ns, char ew, double angle, double azimuth) TryParseBearing(string bearing)
+    {
+        bearing = bearing.ToUpper().Trim();
+
+        if (string.IsNullOrWhiteSpace(bearing))
         {
-            throw new FormatException("Bearing must be in format like N45E, S30W, etc.");
+            throw new FormatException("Bearing cannot be empty.\n\nExamples:\n  N 57° 00' E\n  S 21° 30' W\n  N45E\n  N 57.5° E");
         }
 
-        string numberPart = bearing[1..^1];
-        numberPart = numberPart.Replace("°", " ").Replace("'", " ").Replace("\"", " ").Trim();
+        char firstDir = '\0';
+        int firstDirIndex = -1;
+        for (int i = 0; i < bearing.Length; i++)
+        {
+            if (bearing[i] == 'N' || bearing[i] == 'S')
+            {
+                firstDir = bearing[i];
+                firstDirIndex = i;
+                break;
+            }
+        }
+
+        char lastDir = '\0';
+        int lastDirIndex = -1;
+        for (int i = bearing.Length - 1; i >= 0; i--)
+        {
+            if (bearing[i] == 'E' || bearing[i] == 'W')
+            {
+                lastDir = bearing[i];
+                lastDirIndex = i;
+                break;
+            }
+        }
+
+        if (firstDir == '\0' || lastDir == '\0' || firstDirIndex >= lastDirIndex)
+        {
+            throw new FormatException("Bearing must start with N or S and end with E or W.\n\nExamples:\n  N 57° 00' E\n  S 21° 30' W\n  N45E\n  N 57.5° E");
+        }
+
+        string numberPart = bearing.Substring(firstDirIndex + 1, lastDirIndex - firstDirIndex - 1).Trim();
+
+        numberPart = numberPart.Replace("°", " ").Replace("'", " ").Replace("\"", " ")
+                               .Replace("D", " ").Replace("M", " ").Replace("S", " ")
+                               .Replace(":", " ").Replace("-", " ");
 
         string[] parts = numberPart.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-        double degrees = double.Parse(parts[0]);
+        if (parts.Length == 0)
+        {
+            throw new FormatException("No angle value found in bearing.\n\nExamples:\n  N 57° 00' E\n  S 21° 30' W\n  N45E");
+        }
+
+        double degrees = double.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture);
         double minutes = 0;
         double seconds = 0;
 
         if (parts.Length > 1)
         {
-            minutes = double.Parse(parts[1]);
+            minutes = double.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture);
+            if (minutes < 0 || minutes >= 60)
+            {
+                throw new ArgumentException("Minutes must be between 0 and 59");
+            }
         }
         if (parts.Length > 2)
         {
-            seconds = double.Parse(parts[2]);
+            seconds = double.Parse(parts[2], System.Globalization.CultureInfo.InvariantCulture);
+            if (seconds < 0 || seconds >= 60)
+            {
+                throw new ArgumentException("Seconds must be between 0 and 59");
+            }
         }
 
         double angle = degrees + (minutes / 60.0) + (seconds / 3600.0);
 
         if (angle < 0 || angle > 90)
         {
-            throw new ArgumentException("Bearing angle must be between 0 and 90 degrees");
+            throw new ArgumentException($"Bearing angle must be between 0° and 90° (got {angle:F2}°)");
         }
 
         double azimuth;
@@ -182,12 +240,12 @@ public partial class SurveyCalculatorWindow : Window
         {
             azimuth = 180 + angle;
         }
-        else
+        else // N and W
         {
             azimuth = 360 - angle;
         }
 
-        return azimuth;
+        return (firstDir, lastDir, angle, azimuth);
     }
 
     private string AzimuthToBearing(double azimuth)

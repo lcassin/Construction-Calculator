@@ -44,7 +44,27 @@
 			<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
 				<Label Content="Bearing:" Width="110" VerticalAlignment="Center" FontSize="14"/>
 				<TextBox x:Name="BearingTextBox" Width="308" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" GotFocus="TextBox_GotFocus"/>
+	                         VerticalContentAlignment="Center" GotFocus="TextBox_GotFocus">
+					<TextBox.Style>
+						<Style TargetType="TextBox">
+							<Style.Triggers>
+								<Trigger Property="Text" Value="">
+									<Setter Property="Background">
+										<Setter.Value>
+											<VisualBrush Stretch="None" AlignmentX="Left">
+												<VisualBrush.Visual>
+													<TextBlock Text="e.g., N 57° 00' E or N45E" 
+	                                                           FontSize="12" Foreground="Gray" 
+	                                                           Margin="5,0,0,0" VerticalAlignment="Center"/>
+												</VisualBrush.Visual>
+											</VisualBrush>
+										</Setter.Value>
+									</Setter>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</TextBox.Style>
+				</TextBox>
 			</StackPanel>
 
 			<!-- Azimuth Input -->
