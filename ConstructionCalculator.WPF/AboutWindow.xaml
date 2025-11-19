@@ -11,10 +11,14 @@
         <StackPanel Margin="40,30,40,30" HorizontalAlignment="Center">
             
             <!-- App Icon -->
-            <Image Source="Assets/app.ico" 
+            <Image Source="Assets/splash.png" 
                    Width="150" 
                    Height="150" 
+                   Stretch="Uniform"
                    HorizontalAlignment="Center"
+                   SnapsToDevicePixels="True"
+                   UseLayoutRounding="True"
+                   RenderOptions.BitmapScalingMode="HighQuality"
                    Margin="0,0,0,20"/>
             
             <!-- App Title -->
@@ -102,6 +106,12 @@
                        Margin="0,0,0,10"/>
             
             <TextBlock Text="Windows Desktop Application"
+                       FontSize="12"
+                       HorizontalAlignment="Center"
+                       Foreground="Gray"
+                       Margin="0,0,0,5"/>
+            
+            <TextBlock Text="© 2025"
                        FontSize="12"
                        HorizontalAlignment="Center"
                        Foreground="Gray"
