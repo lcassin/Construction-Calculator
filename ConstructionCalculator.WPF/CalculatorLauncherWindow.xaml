@@ -70,7 +70,7 @@
                                 HorizontalContentAlignment="Stretch"
                                 VerticalContentAlignment="Stretch"
                                 Padding="15"
-                                MinHeight="120"
+                                MinHeight="150"
                                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
 							<Button.Resources>
 								<Style TargetType="Border">
@@ -84,7 +84,10 @@
 									<RowDefinition Height="Auto"/>
 									<RowDefinition Height="*"/>
 								</Grid.RowDefinitions>
-
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="*"/>
+								</Grid.ColumnDefinitions>
 								<!-- Category Badge -->
 								<Border Grid.Row="0" 
                                         Background="#E0E0E0" 
@@ -127,6 +130,7 @@
                                            FontSize="12" 
                                            Foreground="Gray"
                                            TextWrapping="Wrap"
+										   MinHeight="50"
                                            VerticalAlignment="Top"/>
 							</Grid>
 						</Button>
