@@ -57,8 +57,9 @@
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 				<ItemsControl.ItemContainerStyle>
-					<Style>
-						<Setter Property="FrameworkElement.Margin" Value="5"/>
+					<Style TargetType="ContentPresenter">
+						<Setter Property="HorizontalAlignment" Value="Stretch"/>
+						<Setter Property="Margin" Value="5"/>
 					</Style>
 				</ItemsControl.ItemContainerStyle>
 				<ItemsControl.ItemTemplate>
@@ -130,7 +131,8 @@
                                            FontSize="12" 
                                            Foreground="Gray"
                                            TextWrapping="Wrap"
-										   MinHeight="50"
+                                           TextTrimming="CharacterEllipsis"
+                                           Width="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualWidth}"
                                            VerticalAlignment="Top"/>
 							</Grid>
 						</Button>
