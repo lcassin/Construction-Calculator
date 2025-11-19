@@ -32,7 +32,8 @@ ArchitecturesInstallIn64BitMode=x64
 PrivilegesRequired=admin
 SetupIconFile=Assets\app.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
-LicenseFile=..\LICENSE
+; LicenseFile=..\ConstructionCalculator\LICENSE
+; Uncomment the above line if you want to include a license agreement during installation
 ; Uncomment the following line if you have a code signing certificate
 ; SignTool=signtool
 
