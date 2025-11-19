@@ -55,7 +55,15 @@ public partial class MainWindow : Window
                 PerformCalculation();
                 FocusDisplayAtEnd();
             }
-            else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "×" || buttonText == "÷")
+            else if (buttonText == "√")
+            {
+                PerformSquareRoot();
+            }
+            else if (buttonText == "x²")
+            {
+                PerformSquared();
+            }
+            else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "×" || buttonText == "÷" || buttonText == "%")
             {
                 string operation = buttonText;
                 if (buttonText == "×") operation = "*";
@@ -134,7 +142,7 @@ public partial class MainWindow : Window
         {
             string item = calculationChain[i];
 
-            if (item == "+" || item == "-" || item == "*" || item == "/")
+            if (item == "+" || item == "-" || item == "*" || item == "/" || item == "%")
             {
                 currentOperation = item;
             }
@@ -161,6 +169,9 @@ public partial class MainWindow : Window
                             break;
                         case "/":
                             storedValue /= value.ToTotalInches();
+                            break;
+                        case "%":
+                            storedValue *= (value.ToTotalInches() / 100.0);
                             break;
                     }
                     currentOperation = "";
@@ -300,6 +311,9 @@ public partial class MainWindow : Window
                         return;
                     }
                     result = storedValue / current.ToTotalInches();
+                    break;
+                case "%":
+                    result = storedValue * (current.ToTotalInches() / 100.0);
                     break;
                 default:
                     return;
@@ -510,6 +524,9 @@ public partial class MainWindow : Window
                         }
                         result /= nextValue.ToTotalInches();
                         break;
+                    case "%":
+                        result *= (nextValue.ToTotalInches() / 100.0);
+                        break;
                 }
             }
 
@@ -612,6 +629,12 @@ public partial class MainWindow : Window
         areaCalculator.ShowDialog();
     }
 
+    private void UnitConverter_Click(object sender, RoutedEventArgs e)
+    {
+        var unitConverter = new UnitConverterWindow { Owner = this };
+        unitConverter.ShowDialog();
+    }
+
     private void LightTheme_Click(object sender, RoutedEventArgs e)
     {
         Application.Current.ThemeMode = ThemeMode.Light;
@@ -630,5 +653,66 @@ public partial class MainWindow : Window
     private void About_Click(object sender, RoutedEventArgs e)
     {
         MessageBox.Show("Construction Calculator\nVersion 2.0 (WPF with Fluent Theme)\n\n© 2025", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private void PerformSquareRoot()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+
+            if (totalInches < 0)
+            {
+                MessageBox.Show("Cannot calculate square root of negative value", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            double sqrtInches = Math.Sqrt(totalInches);
+            Measurement result = Measurement.FromDecimalInches(sqrtInches);
+
+            calculationChain.Clear();
+            calculationChain.Add($"√({DisplayTextBox.Text.Trim()})");
+            UpdateChainDisplay();
+
+            UpdateDisplay(result);
+            storedValue = result;
+            currentOperation = "";
+            shouldClearDisplay = true;
+
+            FocusDisplayAtEnd();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Square root error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Clear();
+        }
+    }
+
+    private void PerformSquared()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            double squaredInches = totalInches * totalInches;
+            Measurement result = Measurement.FromDecimalInches(squaredInches);
+
+            calculationChain.Clear();
+            calculationChain.Add($"({DisplayTextBox.Text.Trim()})²");
+            UpdateChainDisplay();
+
+            UpdateDisplay(result);
+            storedValue = result;
+            currentOperation = "";
+            shouldClearDisplay = true;
+
+            FocusDisplayAtEnd();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Squared error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Clear();
+        }
     }
 }
