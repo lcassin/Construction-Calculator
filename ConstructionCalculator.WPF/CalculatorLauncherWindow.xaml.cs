@@ -98,7 +98,7 @@ public partial class CalculatorLauncherWindow : Window
             {
                 Name = "Board Feet",
                 Category = "Construction",
-                Description = "Calculate board feet for lumber",
+                Description = "Calculate board feet for lumber. One Board Foot Equals 1'W x 1'L x 1\"D",
                 Icon = "📏",
                 IconFontFamily = "Segoe UI Emoji",
                 OpenAction = () => new BoardFeetCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
