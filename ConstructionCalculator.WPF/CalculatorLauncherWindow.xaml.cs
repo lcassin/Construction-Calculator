@@ -37,7 +37,7 @@ public partial class CalculatorLauncherWindow : Window
             new CalculatorDescriptor
             {
                 Name = "Concrete Calculator",
-                Category = "Common",
+                Category = "Construction",
                 Description = "Calculate cubic yards for slabs, footings, and columns",
                 OpenAction = () => new ConcreteCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
