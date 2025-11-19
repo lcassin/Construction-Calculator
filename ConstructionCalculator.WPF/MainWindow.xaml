@@ -68,14 +68,13 @@
                      Grid.Row="2"
                      Text="0&quot;"
                      FontFamily="Consolas"
-                     FontSize="24"
+                     FontSize="36"
                      FontWeight="Bold"
                      TextAlignment="Right"
                      Padding="10"
-                     Height="60"
-                     Margin="0,0,0,20"
+                     Margin="0,0,0,15"
                      VerticalContentAlignment="Center"
-                     KeyDown="DisplayTextBox_KeyDown"/>
+                     KeyDown="DisplayTextBox_KeyDown" Background="#FFE6E6E6"/>
             
             <!-- Button Grid -->
             <Grid Grid.Row="3" Margin="0,0,0,20">

@@ -72,7 +72,7 @@
         
         <!-- Action Buttons -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-            <Button Content="Copy Result" MinWidth="120" Style="{StaticResource ActionButtonStyle}" Click="CopyResult_Click" Margin="0,0,10,0"/>
+            <Button Content="Copy Result" MinWidth="120" Style="{StaticResource ActionButtonStyle}" Click="CopyResult_Click" Margin="0,0,10,0" Height="29"/>
             <Button Content="Clear" MinWidth="120" Style="{StaticResource ActionButtonStyle}" Click="Clear_Click"/>
         </StackPanel>
         
