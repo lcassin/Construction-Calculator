@@ -69,11 +69,13 @@ public partial class BoardFeetCalculatorWindow : Window
         var removeButton = new Button
         {
             Content = "Remove",
-            Width = 70,
-            Height = 25,
+            Width = 90,
+            Height = 28,
             Margin = new Thickness(10, 0, 0, 0),
-            Tag = index
-        };
+            Tag = index,
+			FontFamily = new System.Windows.Media.FontFamily("Segoe UI"),
+			FontSize = 12
+		};
         removeButton.Click += RemovePiece_Click;
 
         panel.Children.Add(textBlock);
