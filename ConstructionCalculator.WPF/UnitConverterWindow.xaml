@@ -25,7 +25,7 @@
         <!-- Conversion Type -->
         <TextBlock Grid.Row="0" Text="Conversion Type:" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
         <ComboBox Grid.Row="1" x:Name="ConversionTypeComboBox" FontSize="14" Margin="0,0,0,20" SelectionChanged="ConversionTypeComboBox_SelectionChanged">
-            <ComboBoxItem Content="Length" IsSelected="True"/>
+            <ComboBoxItem Content="Length"/>
             <ComboBoxItem Content="Area"/>
             <ComboBoxItem Content="Volume"/>
             <ComboBoxItem Content="Weight"/>

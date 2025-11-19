@@ -35,6 +35,18 @@ namespace ConstructionCalculator
         {
             input = input.Trim();
             
+            bool isNegative = false;
+            if (input.StartsWith("-"))
+            {
+                isNegative = true;
+                input = input.Substring(1).Trim();
+                
+                if (input.StartsWith("(") && input.EndsWith(")"))
+                {
+                    input = input.Substring(1, input.Length - 2).Trim();
+                }
+            }
+            
             bool hasFeetMarker = input.Contains("'");
             
             string cleanInput = input.Replace("\"", "").Replace("'", " ").Trim();
@@ -46,7 +58,8 @@ namespace ConstructionCalculator
                 int inches = int.Parse(feetInchesMatch.Groups[2].Value);
                 int numerator = feetInchesMatch.Groups[3].Success ? int.Parse(feetInchesMatch.Groups[3].Value) : 0;
                 int denominator = feetInchesMatch.Groups[4].Success ? int.Parse(feetInchesMatch.Groups[4].Value) : 16;
-                return new Measurement(feet, inches, numerator, denominator);
+                var m = new Measurement(feet, inches, numerator, denominator);
+                return isNegative ? FromDecimalInches(-m.ToTotalInches()) : m;
             }
             
             var singleNumberMatch = Regex.Match(cleanInput, @"^(\d+)(?:[\s\-]+(\d+)/(\d+))?$");
@@ -56,14 +69,16 @@ namespace ConstructionCalculator
                 int numerator = singleNumberMatch.Groups[2].Success ? int.Parse(singleNumberMatch.Groups[2].Value) : 0;
                 int denominator = singleNumberMatch.Groups[3].Success ? int.Parse(singleNumberMatch.Groups[3].Value) : 16;
                 
+                Measurement m;
                 if (hasFeetMarker)
                 {
-                    return new Measurement(value, 0, numerator, denominator);
+                    m = new Measurement(value, 0, numerator, denominator);
                 }
                 else
                 {
-                    return new Measurement(0, value, numerator, denominator);
+                    m = new Measurement(0, value, numerator, denominator);
                 }
+                return isNegative ? FromDecimalInches(-m.ToTotalInches()) : m;
             }
             
             var fractionOnlyMatch = Regex.Match(cleanInput, @"^(\d+)/(\d+)$");
@@ -71,12 +86,13 @@ namespace ConstructionCalculator
             {
                 int numerator = int.Parse(fractionOnlyMatch.Groups[1].Value);
                 int denominator = int.Parse(fractionOnlyMatch.Groups[2].Value);
-                return new Measurement(0, 0, numerator, denominator);
+                var m = new Measurement(0, 0, numerator, denominator);
+                return isNegative ? FromDecimalInches(-m.ToTotalInches()) : m;
             }
             
             if (double.TryParse(cleanInput, out double decimalValue))
             {
-                return FromDecimalInches(decimalValue);
+                return FromDecimalInches(isNegative ? -decimalValue : decimalValue);
             }
             
             throw new FormatException($"Unable to parse measurement: {input}");
@@ -137,21 +153,31 @@ namespace ConstructionCalculator
         public string ToFractionString()
         {
             Normalize();
+            
+            double totalInches = ToTotalInches();
+            bool isNegative = totalInches < 0;
+            
+            if (isNegative)
+            {
+                Measurement positive = FromDecimalInches(Math.Abs(totalInches));
+                return "-" + positive.ToFractionString();
+            }
+            
             string result = "";
             
             if (Feet != 0)
             {
-                result = $"{Feet}'";
+                result = $"{Math.Abs(Feet)}'";
             }
             
             if (Inches != 0 || Numerator != 0 || Feet == 0)
             {
                 if (Feet != 0) result += " ";
-                result += Inches.ToString();
+                result += Math.Abs(Inches).ToString();
                 
                 if (Numerator != 0)
                 {
-                    result += $"-{Numerator}/{Denominator}";
+                    result += $"-{Math.Abs(Numerator)}/{Math.Abs(Denominator)}";
                 }
                 
                 result += "\"";
