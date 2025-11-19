@@ -18,6 +18,13 @@ public partial class UnitConverterWindow : Window
     
     private void InitializeConversionFactors()
     {
+        conversionFactors["Measurement Format"] = new Dictionary<string, double>
+        {
+            { "Feet/Inches/Fractions", 1.0 },
+            { "Decimal Inches", 1.0 },
+            { "Decimal Feet", 1.0 }
+        };
+        
         conversionFactors["Length"] = new Dictionary<string, double>
         {
             { "Inches", 1.0 },
@@ -100,6 +107,7 @@ public partial class UnitConverterWindow : Window
         
         string referenceText = selectedType switch
         {
+            "Measurement Format" => "Feet/Inches/Fractions: 6' 3 1/2\"\nDecimal Inches: 75.5\nDecimal Feet: 6.2917\n\nExamples:\n6' 3 1/2\" = 75.5 inches = 6.2917 feet\n100 inches = 8' 4\" = 8.3333 feet",
             "Length" => "1 foot = 12 inches\n1 yard = 3 feet = 36 inches\n1 mile = 5,280 feet\n1 meter = 39.37 inches\n1 inch = 2.54 centimeters",
             "Area" => "1 square foot = 144 square inches\n1 square yard = 9 square feet\n1 acre = 43,560 square feet\n1 square meter = 10.764 square feet",
             "Volume" => "1 cubic foot = 1,728 cubic inches\n1 cubic yard = 27 cubic feet\n1 gallon = 231 cubic inches\n1 cubic meter = 35.315 cubic feet",
@@ -138,6 +146,12 @@ public partial class UnitConverterWindow : Window
         string fromUnit = FromUnitComboBox.SelectedItem.ToString() ?? "";
         string toUnit = ToUnitComboBox.SelectedItem.ToString() ?? "";
         
+        if (selectedType == "Measurement Format")
+        {
+            ConvertMeasurementFormat(FromValueTextBox.Text, fromUnit, toUnit);
+            return;
+        }
+        
         if (!double.TryParse(FromValueTextBox.Text, out double fromValue))
         {
             ToValueTextBox.Text = "";
@@ -161,6 +175,62 @@ public partial class UnitConverterWindow : Window
         }
         
         ToValueTextBox.Text = result.ToString("F6").TrimEnd('0').TrimEnd('.');
+    }
+    
+    private void ConvertMeasurementFormat(string inputText, string fromUnit, string toUnit)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(inputText))
+            {
+                ToValueTextBox.Text = "";
+                return;
+            }
+            
+            double totalInches = 0;
+            
+            if (fromUnit == "Feet/Inches/Fractions")
+            {
+                Measurement m = Measurement.Parse(inputText);
+                totalInches = m.ToTotalInches();
+            }
+            else if (fromUnit == "Decimal Inches")
+            {
+                if (!double.TryParse(inputText, out totalInches))
+                {
+                    ToValueTextBox.Text = "Invalid input";
+                    return;
+                }
+            }
+            else if (fromUnit == "Decimal Feet")
+            {
+                if (!double.TryParse(inputText, out double feet))
+                {
+                    ToValueTextBox.Text = "Invalid input";
+                    return;
+                }
+                totalInches = feet * 12.0;
+            }
+            
+            if (toUnit == "Feet/Inches/Fractions")
+            {
+                Measurement result = Measurement.FromDecimalInches(totalInches);
+                ToValueTextBox.Text = result.ToFractionString();
+            }
+            else if (toUnit == "Decimal Inches")
+            {
+                ToValueTextBox.Text = totalInches.ToString("F4").TrimEnd('0').TrimEnd('.');
+            }
+            else if (toUnit == "Decimal Feet")
+            {
+                double feet = totalInches / 12.0;
+                ToValueTextBox.Text = feet.ToString("F6").TrimEnd('0').TrimEnd('.');
+            }
+        }
+        catch (Exception ex)
+        {
+            ToValueTextBox.Text = $"Error: {ex.Message}";
+        }
     }
     
     private double ConvertTemperature(double value, string fromUnit, string toUnit)
