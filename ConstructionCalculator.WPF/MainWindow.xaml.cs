@@ -761,6 +761,90 @@ public partial class MainWindow : Window
         aboutWindow.ShowDialog();
     }
 
+    private void HelpThisCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Main) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpMain_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Main) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpUnitConverter_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.UnitConverter) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpArea_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Area) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpAngle_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Angle) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpSurvey_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Survey) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpSeatingLayout_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.SeatingLayout) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpConcrete_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Concrete) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpStair_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Stair) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpRoofing_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Roofing) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpPaint_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Paint) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpBoardFeet_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.BoardFeet) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpDrywall_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Drywall) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpGrading_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Grading) { Owner = this };
+        helpWindow.Show();
+    }
+
     private void PerformSquareRoot()
     {
         try

@@ -46,6 +46,31 @@
 					<MenuItem Header="Dark" Click="DarkTheme_Click"/>
 					<MenuItem Header="System Default" Click="SystemTheme_Click"/>
 				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="Help (F1)">
+				<MenuItem Header="Help for This Calculator (F1)" Click="HelpThisCalculator_Click" FontWeight="Bold"/>
+				<Separator/>
+				<MenuItem Header="Calculators">
+					<MenuItem Header="Common">
+						<MenuItem Header="Help: Main Calculator" Click="HelpMain_Click"/>
+						<MenuItem Header="Help: Unit Converter" Click="HelpUnitConverter_Click"/>
+						<MenuItem Header="Help: Area Calculator" Click="HelpArea_Click"/>
+					</MenuItem>
+					<MenuItem Header="Measurement &amp; Layout">
+						<MenuItem Header="Help: Angle Calculator" Click="HelpAngle_Click"/>
+						<MenuItem Header="Help: Survey Calculator" Click="HelpSurvey_Click"/>
+						<MenuItem Header="Help: Seating Layout Calculator" Click="HelpSeatingLayout_Click"/>
+					</MenuItem>
+					<MenuItem Header="Construction">
+						<MenuItem Header="Help: Concrete Calculator" Click="HelpConcrete_Click"/>
+						<MenuItem Header="Help: Stair Calculator" Click="HelpStair_Click"/>
+						<MenuItem Header="Help: Roofing Calculator" Click="HelpRoofing_Click"/>
+						<MenuItem Header="Help: Paint/Coverage Calculator" Click="HelpPaint_Click"/>
+						<MenuItem Header="Help: Board Feet Calculator" Click="HelpBoardFeet_Click"/>
+						<MenuItem Header="Help: Drywall Calculator" Click="HelpDrywall_Click"/>
+						<MenuItem Header="Help: Grading/Slope Calculator" Click="HelpGrading_Click"/>
+					</MenuItem>
+				</MenuItem>
 				<Separator/>
 				<MenuItem Header="About" Click="About_Click"/>
 			</MenuItem>
@@ -171,6 +196,8 @@
                 <Run Text="Tap = to calculate, C to clear, CE to undo last entry"/>
                 <LineBreak/>
                 <Run Text="Mode toggles between fractions and decimal inches"/>
+                <LineBreak/>
+                <Run Text="Press F1 for help" FontWeight="SemiBold"/>
 			</TextBlock>
 		</Grid>
 	</DockPanel>
