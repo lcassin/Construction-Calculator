@@ -3,11 +3,11 @@
 ; Requires .NET 10 self-contained publish output
 
 #define MyAppName "Construction Calculator"
-#define MyAppVersion "2.0.0"
+#define MyAppVersion "2.0.1"
 #define MyAppPublisher "Lee Cassin"
 #define MyAppURL "https://github.com/lcassin/Construction-Calculator"
 #define MyAppExeName "ConstructionCalculator.WPF.exe"
-#define PublishDir "bin\Release\net10.0-windows\"
+#define PublishDir "publish\win-x64"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -29,10 +29,17 @@ SolidCompression=yes
 WizardStyle=modern
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-PrivilegesRequired=lowest
+PrivilegesRequired=admin
 SetupIconFile=Assets\app.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
-LicenseFile=..\LICENSE
+; Upgrade behavior settings
+UsePreviousAppDir=yes
+UsePreviousGroup=yes
+UsePreviousTasks=yes
+CloseApplications=yes
+RestartApplications=no
+; LicenseFile=..\ConstructionCalculator\LICENSE
+; Uncomment the above line if you want to include a license agreement during installation
 ; Uncomment the following line if you have a code signing certificate
 ; SignTool=signtool
 
