@@ -25,6 +25,11 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -85,14 +90,18 @@
             <StackPanel Grid.Row="9" Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="Available Length:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="AvailableLengthTextBox" Width="250" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"/>
+                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"
+                         LostFocus="AvailableLength_LostFocus"
+                         ToolTip="Enter as feet/inches (e.g., 14' or 12' 6&quot;)"/>
             </StackPanel>
             
             <!-- Available Width Input -->
             <StackPanel Grid.Row="10" Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="Available Width:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="AvailableWidthTextBox" Width="250" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"/>
+                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"
+                         LostFocus="AvailableWidth_LostFocus"
+                         ToolTip="Enter as feet/inches (e.g., 14' or 10' 8&quot;)"/>
             </StackPanel>
             
             <!-- Space Fit Result -->

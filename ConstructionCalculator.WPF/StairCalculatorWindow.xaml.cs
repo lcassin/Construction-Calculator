@@ -252,6 +252,11 @@ public partial class StairCalculatorWindow : Window
             }
 
             GenerateVisualDiagram(totalRise, numberOfSteps, riserHeight, treadDepth);
+            
+            if (IncludeLandingCheckBox.IsChecked == true)
+            {
+                CheckSpaceFit();
+            }
         }
         catch (Exception ex)
         {
@@ -427,6 +432,22 @@ public partial class StairCalculatorWindow : Window
     
     private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
+    }
+    
+    private void AvailableLength_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (IncludeLandingCheckBox.IsChecked == true)
+        {
+            CheckSpaceFit();
+        }
+    }
+    
+    private void AvailableWidth_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (IncludeLandingCheckBox.IsChecked == true)
+        {
+            CheckSpaceFit();
+        }
     }
     
     private void CheckSpaceFit()

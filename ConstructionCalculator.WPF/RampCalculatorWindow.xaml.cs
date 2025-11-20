@@ -88,6 +88,11 @@ public partial class RampCalculatorWindow : Window
             }
 
             GenerateVisualDiagram(totalRise, requiredRun, slopeRatio, landingsRequired);
+            
+            if (IncludeLandingsCheckBox.IsChecked == true)
+            {
+                CheckSpaceFit();
+            }
         }
         catch (Exception ex)
         {
@@ -267,6 +272,22 @@ public partial class RampCalculatorWindow : Window
     
     private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
+    }
+    
+    private void AvailableLength_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (IncludeLandingsCheckBox.IsChecked == true)
+        {
+            CheckSpaceFit();
+        }
+    }
+    
+    private void AvailableWidth_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (IncludeLandingsCheckBox.IsChecked == true)
+        {
+            CheckSpaceFit();
+        }
     }
     
     private void CheckSpaceFit()
