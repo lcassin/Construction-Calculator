@@ -80,6 +80,7 @@
                 <Label Content="Available Length:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="AvailableLengthTextBox" Width="250" Height="30" FontSize="14" 
                          VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"
+                         LostFocus="AvailableLength_LostFocus"
                          ToolTip="Enter as feet/inches (e.g., 30' or 25' 6&quot;)"/>
             </StackPanel>
             
@@ -88,6 +89,7 @@
                 <Label Content="Available Width:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="AvailableWidthTextBox" Width="250" Height="30" FontSize="14" 
                          VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"
+                         LostFocus="AvailableWidth_LostFocus"
                          ToolTip="Enter as feet/inches (e.g., 11' or 10' 8&quot;)"/>
             </StackPanel>
             
