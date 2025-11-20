@@ -32,7 +32,8 @@
             <!-- Total Rise Input -->
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="Total Rise:" Width="130" VerticalAlignment="Center" FontSize="14"/>
-                <TextBox x:Name="TotalRiseTextBox" Width="250" Height="30" FontSize="14" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="TotalRiseTextBox" Width="250" Height="30" FontSize="14" VerticalContentAlignment="Center"
+                         ToolTip="Enter as feet/inches (e.g., 3' 6&quot; or 42&quot;)"/>
             </StackPanel>
 
             <!-- Slope Ratio Input -->
@@ -44,7 +45,8 @@
             <!-- Ramp Width Input -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="Ramp Width:" Width="130" VerticalAlignment="Center" FontSize="14"/>
-                <TextBox x:Name="RampWidthTextBox" Width="250" Height="30" FontSize="14" VerticalContentAlignment="Center" Text="36&quot;"/>
+                <TextBox x:Name="RampWidthTextBox" Width="250" Height="30" FontSize="14" VerticalContentAlignment="Center" Text="36&quot;"
+                         ToolTip="Enter as feet/inches (e.g., 3' or 36&quot;)"/>
             </StackPanel>
 
             <!-- Calculate Button -->
@@ -77,14 +79,16 @@
             <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="Available Length:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="AvailableLengthTextBox" Width="250" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"/>
+                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"
+                         ToolTip="Enter as feet/inches (e.g., 30' or 25' 6&quot;)"/>
             </StackPanel>
             
             <!-- Available Width Input -->
             <StackPanel Grid.Row="9" Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="Available Width:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="AvailableWidthTextBox" Width="250" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"/>
+                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"
+                         ToolTip="Enter as feet/inches (e.g., 11' or 10' 8&quot;)"/>
             </StackPanel>
             
             <!-- Space Fit Result -->
@@ -115,7 +119,8 @@
             <StackPanel Grid.Row="13" x:Name="LandingDepthPanel" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Collapsed">
                 <Label Content="Landing Depth:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="LandingDepthTextBox" Width="250" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" TextChanged="LandingDepthTextBox_TextChanged"/>
+                         VerticalContentAlignment="Center" TextChanged="LandingDepthTextBox_TextChanged"
+                         ToolTip="Enter as feet/inches (e.g., 6' or 72&quot;)"/>
             </StackPanel>
 
             <!-- Overall Dimensions Result -->

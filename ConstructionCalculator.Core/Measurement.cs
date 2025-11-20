@@ -35,6 +35,8 @@ namespace ConstructionCalculator
         {
             input = input.Trim();
             
+            input = NormalizeUnicode(input);
+            
             bool isNegative = false;
             if (input.StartsWith("-"))
             {
@@ -96,6 +98,20 @@ namespace ConstructionCalculator
             }
             
             throw new FormatException($"Unable to parse measurement: {input}");
+        }
+
+        private static string NormalizeUnicode(string input)
+        {
+            return input
+                .Replace('\u2032', '\'')
+                .Replace('\u2033', '"')
+                .Replace('\u2018', '\'')
+                .Replace('\u2019', '\'')
+                .Replace('\u201C', '"')
+                .Replace('\u201D', '"')
+                .Replace('\u2013', '-')
+                .Replace('\u2014', '-')
+                .Replace('\u2212', '-');
         }
 
         public double ToTotalInches()
