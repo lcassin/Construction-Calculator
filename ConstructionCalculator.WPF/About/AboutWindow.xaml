@@ -72,7 +72,9 @@
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Stair Calculator with code compliance" 
                            FontSize="13" Margin="0,3,0,3"/>
-                <TextBlock Text="• Survey Calculator for bearing/azimuth and coordinates" 
+                <TextBlock Text="• Accessibility Ramp Calculator with ADA compliance" 
+                           FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• Survey Calculator for bearing/azimuth and coordinates"
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Seating Layout Calculator for auditoriums" 
                            FontSize="13" Margin="0,3,0,3"/>
