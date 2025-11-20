@@ -29,7 +29,7 @@ SolidCompression=yes
 WizardStyle=modern
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-PrivilegesRequired=admin
+PrivilegesRequired=lowest
 SetupIconFile=Assets\app.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 ; Upgrade behavior settings
@@ -38,7 +38,7 @@ UsePreviousGroup=yes
 UsePreviousTasks=yes
 CloseApplications=yes
 RestartApplications=no
-; LicenseFile=..\ConstructionCalculator\LICENSE
+LicenseFile=..\LICENSE
 ; Uncomment the above line if you want to include a license agreement during installation
 ; Uncomment the following line if you have a code signing certificate
 ; SignTool=signtool
