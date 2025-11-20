@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ConstructionCalculator.WPF;
 
 public partial class CalculatorLauncherWindow : Window
 {
     private List<CalculatorDescriptor> allCalculators;
+    private CalculatorDescriptor? _hoveredCalculator;
     
     public CalculatorLauncherWindow()
     {
@@ -175,6 +177,33 @@ public partial class CalculatorLauncherWindow : Window
         {
             var helpWindow = new HelpWindow(descriptor.HelpKind) { Owner = this };
             helpWindow.Show();
+        }
+    }
+
+    private void Tile_MouseEnter(object sender, MouseEventArgs e)
+    {
+        if (sender is FrameworkElement element && element.DataContext is CalculatorDescriptor descriptor)
+        {
+            _hoveredCalculator = descriptor;
+        }
+    }
+
+    private void Tile_MouseLeave(object sender, MouseEventArgs e)
+    {
+        _hoveredCalculator = null;
+    }
+
+    private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.F1)
+        {
+            e.Handled = true;
+            
+            if (_hoveredCalculator != null)
+            {
+                var helpWindow = new HelpWindow(_hoveredCalculator.HelpKind) { Owner = this };
+                helpWindow.Show();
+            }
         }
     }
 }
