@@ -32,6 +32,12 @@ ArchitecturesInstallIn64BitMode=x64
 PrivilegesRequired=admin
 SetupIconFile=Assets\app.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
+; Upgrade behavior settings
+UsePreviousAppDir=yes
+UsePreviousGroup=yes
+UsePreviousTasks=yes
+CloseApplications=yes
+RestartApplications=no
 ; LicenseFile=..\ConstructionCalculator\LICENSE
 ; Uncomment the above line if you want to include a license agreement during installation
 ; Uncomment the following line if you have a code signing certificate
