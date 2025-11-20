@@ -440,10 +440,14 @@ public partial class MainWindow : Window
 
                 lastWasQuote = false;
             }
+            
+            if (text.Contains('%'))
+                return true;
+                
             return false;
         }
 
-        return text.Contains('+') || text.Contains('-') || text.Contains('*') || text.Contains('/');
+        return text.Contains('+') || text.Contains('-') || text.Contains('*') || text.Contains('/') || text.Contains('%');
     }
 
     private bool IsFractionNotDivision(string text, int slashIndex)
@@ -528,30 +532,64 @@ public partial class MainWindow : Window
                     break;
 
                 string op = parts[i];
-                Measurement nextValue = Measurement.Parse(parts[i + 1]);
-
-                switch (op)
+                string nextValueStr = parts[i + 1];
+                
+                bool isPercent = nextValueStr.TrimEnd().EndsWith("%");
+                if (isPercent)
                 {
-                    case "+":
-                        result += nextValue;
-                        break;
-                    case "-":
-                        result -= nextValue;
-                        break;
-                    case "*":
-                        result *= nextValue.ToTotalInches();
-                        break;
-                    case "/":
-                        if (nextValue.ToTotalInches() == 0)
-                        {
-                            MessageBox.Show("Cannot divide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                        result /= nextValue.ToTotalInches();
-                        break;
-                    case "%":
-                        result *= (nextValue.ToTotalInches() / 100.0);
-                        break;
+                    nextValueStr = nextValueStr.TrimEnd().TrimEnd('%').Trim();
+                }
+                
+                Measurement nextValue = Measurement.Parse(nextValueStr);
+                double nextValueInches = nextValue.ToTotalInches();
+                
+                if (isPercent)
+                {
+                    double pct = nextValueInches / 100.0;
+                    
+                    switch (op)
+                    {
+                        case "+":
+                            result = result + (result * pct);
+                            break;
+                        case "-":
+                            result = result - (result * pct);
+                            break;
+                        case "*":
+                            result = result * pct;
+                            break;
+                        case "/":
+                            if (pct == 0)
+                            {
+                                MessageBox.Show("Cannot divide by zero percent", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            result = result / pct;
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (op)
+                    {
+                        case "+":
+                            result += nextValue;
+                            break;
+                        case "-":
+                            result -= nextValue;
+                            break;
+                        case "*":
+                            result *= nextValueInches;
+                            break;
+                        case "/":
+                            if (nextValueInches == 0)
+                            {
+                                MessageBox.Show("Cannot divide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            result /= nextValueInches;
+                            break;
+                    }
                 }
             }
 
