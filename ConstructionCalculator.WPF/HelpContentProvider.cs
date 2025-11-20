@@ -177,36 +177,41 @@ public static class HelpContentProvider
             Title = "Stair Calculator",
             IconGlyph = "🪜",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate stair dimensions including rise, run, and number of steps. Supports complex configurations with landings.",
+            Summary = "Calculate stair dimensions including rise, run, and number of steps. Supports complex configurations with landings and multiple stair types (straight, L-shaped, U-shaped).",
             ExpectedInputs = new List<string> 
             { 
                 "Total Rise (height)", 
                 "Number of Risers", 
-                "Tread Depth",
-                "Landing Height (optional)",
-                "Landing Depth (optional)"
+                "Stair Width (typically 36\" minimum)",
+                "Landing Type (Straight/Right Angle/Full Return)",
+                "Landing Depth (when using landings)",
+                "Steps Before Landing (when using landings)"
             },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
             Examples = new List<ExampleItem> 
             { 
-                new("Total Rise: 108\", Risers: 14", "Riser: 7.71\"", "Standard straight run"),
-                new("Total Rise: 108\", Landing at 54\"", "7 risers per flight", "Split with mid-landing"),
-                new("Limited space: 96\" rise, 3' landing", "Switchback configuration", "Saves horizontal space")
+                new("Total Rise: 108\", Risers: 14, Width: 36\"", "Riser: 7.71\", Run: 130\"", "Standard straight run"),
+                new("108\" rise, 7 steps before landing, Straight", "Two 7-step flights", "Split with mid-landing"),
+                new("108\" rise, L-shaped landing", "Length: 65\", Width: 101\"", "Right angle turn saves space"),
+                new("108\" rise, U-shaped landing", "Length: 65\", Width: 72\"", "Switchback configuration")
             },
             Tips = new List<string> 
             { 
-                "Ideal riser height: 7-7.75 inches for residential",
+                "Ideal riser height: 7-7.75 inches for residential (IBC/IRC)",
                 "Ideal tread depth: 10-11 inches minimum",
                 "Commercial code: 4-7\" rise, 11\" minimum tread",
-                "Landing function: Use when you have limited space or need to change direction",
-                "Landing placement: Typically at mid-height for comfort and code compliance",
-                "Landing depth: Must be at least as wide as the stair width (usually 36\" minimum)",
-                "Switchback stairs: Use landing at halfway point to reverse direction (saves space)",
-                "L-shaped stairs: Landing at corner allows 90° turn between flights",
-                "Multiple landings: Break very tall stairs into 3+ flights for safety and code",
-                "Auto-calculate: Enter landing height and calculator splits stairs into flights automatically",
-                "Space planning: Landing adds depth but reduces total horizontal run length needed",
-                "Limited space solution: Landings let you fit stairs in tighter areas by changing direction"
+                "Stair width: 36\" minimum for residential, 44\" for commercial",
+                "Landing depth: Must be at least as wide as stair width (36\" minimum per code)",
+                "Maximum rise between landings: 12 feet (144\") per IBC/IRC",
+                "Straight landing: Both flights continue in same direction",
+                "Right Angle (L-shaped): Second flight turns 90° - saves space in corners",
+                "Full Return (U-shaped): Flights parallel but opposite - best for tight vertical spaces",
+                "U-shaped landing width: Should be at least 2x stair width for code compliance",
+                "Overall Length: Distance along first flight direction",
+                "Overall Width: Distance perpendicular to first flight",
+                "Code compliance: Calculator validates against IBC/IRC requirements",
+                "Space planning: Use landing type to fit stairs in available footprint",
+                "Auto-calculate: Automatically determines optimal number of steps for ideal riser height"
             }
         };
     }
