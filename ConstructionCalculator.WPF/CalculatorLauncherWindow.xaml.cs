@@ -26,6 +26,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Common",
                 Description = "Convert between units: length, area, volume, weight, temperature",
                 Icon = "⇄",
+                HelpKind = CalculatorKind.UnitConverter,
                 OpenAction = () => new UnitConverterWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -35,6 +36,7 @@ public partial class CalculatorLauncherWindow : Window
                 Description = "Calculate areas of multiple sections and sum totals",
                 Icon = "⬛",
                 IconFontFamily = "Segoe UI Symbol",
+                HelpKind = CalculatorKind.Area,
                 OpenAction = () => new AreaCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -43,6 +45,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Construction",
                 Description = "Calculate cubic yards for slabs, footings, and columns",
                 Icon = "🏗",
+                HelpKind = CalculatorKind.Concrete,
                 OpenAction = () => new ConcreteCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -51,6 +54,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Measurement & Layout",
                 Description = "Calculate angles from rise/run and solve right triangles",
                 Icon = "∠",
+                HelpKind = CalculatorKind.Angle,
                 OpenAction = () => new AngleCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -59,6 +63,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Measurement & Layout",
                 Description = "Convert bearings/azimuths and calculate coordinates",
                 Icon = "🧭",
+                HelpKind = CalculatorKind.Survey,
                 OpenAction = () => new SurveyCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -67,6 +72,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Measurement & Layout",
                 Description = "Calculate seating arrangements and spacing",
                 Icon = "💺",
+                HelpKind = CalculatorKind.SeatingLayout,
                 OpenAction = () => new SeatingLayoutCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -76,6 +82,7 @@ public partial class CalculatorLauncherWindow : Window
                 Description = "Calculate stair dimensions, rise, run, and stringers",
                 Icon = "⇧",
                 IconFontFamily = "Segoe UI Symbol",
+                HelpKind = CalculatorKind.Stair,
                 OpenAction = () => new StairCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -84,6 +91,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Construction",
                 Description = "Calculate roof area, pitch, and shingle requirements",
                 Icon = "🏠",
+                HelpKind = CalculatorKind.Roofing,
                 OpenAction = () => new RoofingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -92,6 +100,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Construction",
                 Description = "Calculate paint needed for walls and ceilings",
                 Icon = "🎨",
+                HelpKind = CalculatorKind.Paint,
                 OpenAction = () => new PaintCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -101,6 +110,7 @@ public partial class CalculatorLauncherWindow : Window
                 Description = "Calculate board feet for lumber",
                 Icon = "📏",
                 IconFontFamily = "Segoe UI Emoji",
+                HelpKind = CalculatorKind.BoardFeet,
                 OpenAction = () => new BoardFeetCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -109,6 +119,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Construction",
                 Description = "Calculate drywall sheets needed for rooms",
                 Icon = "🧱",
+                HelpKind = CalculatorKind.Drywall,
                 OpenAction = () => new DrywallCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
             new CalculatorDescriptor
@@ -117,6 +128,7 @@ public partial class CalculatorLauncherWindow : Window
                 Category = "Construction",
                 Description = "Convert between rise/run, percent, and angle",
                 Icon = "⛰",
+                HelpKind = CalculatorKind.Grading,
                 OpenAction = () => new GradingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             }
         };
@@ -154,6 +166,17 @@ public partial class CalculatorLauncherWindow : Window
             descriptor.OpenAction?.Invoke();
         }
     }
+
+    private void HelpButton_Click(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true; // Prevent the tile button from also firing
+        
+        if (sender is Button button && button.Tag is CalculatorDescriptor descriptor)
+        {
+            var helpWindow = new HelpWindow(descriptor.HelpKind) { Owner = this };
+            helpWindow.Show();
+        }
+    }
 }
 
 public class CalculatorDescriptor
@@ -163,5 +186,6 @@ public class CalculatorDescriptor
     public string Description { get; set; } = "";
     public string Icon { get; set; } = "";
     public string IconFontFamily { get; set; } = "Segoe UI Emoji";
+    public CalculatorKind HelpKind { get; set; }
     public System.Action? OpenAction { get; set; }
 }

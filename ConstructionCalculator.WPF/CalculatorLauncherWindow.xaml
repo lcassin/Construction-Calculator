@@ -42,11 +42,16 @@
 		</TextBox>
 
 		<!-- Instructions -->
-		<TextBlock Grid.Row="1" 
-                   Text="Select a calculator to open:" 
-                   FontSize="14" 
-                   Foreground="Gray"
-                   Margin="0,0,0,15"/>
+		<StackPanel Grid.Row="1" Margin="0,0,0,15">
+			<TextBlock Text="Select a calculator to open:" 
+			           FontSize="14" 
+			           Foreground="Gray"/>
+			<TextBlock Text="Press F1 for context help" 
+			           FontSize="12" 
+			           Foreground="#0078D4"
+			           FontWeight="SemiBold"
+			           Margin="0,5,0,0"/>
+		</StackPanel>
 
 		<!-- Calculator Tiles -->
 		<ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
@@ -64,21 +69,30 @@
 				</ItemsControl.ItemContainerStyle>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Button Click="CalculatorTile_Click"
-                                Tag="{Binding}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                VerticalContentAlignment="Stretch"
-                                Padding="15"
-                                MinHeight="120"
-                                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-							<Button.Resources>
-								<Style TargetType="Border">
-									<Setter Property="CornerRadius" Value="6"/>
-								</Style>
-							</Button.Resources>
-							<Grid>
+						<Grid>
+							<Button Click="CalculatorTile_Click"
+	                                Tag="{Binding}"
+	                                HorizontalAlignment="Stretch"
+	                                VerticalAlignment="Stretch"
+	                                HorizontalContentAlignment="Stretch"
+	                                VerticalContentAlignment="Stretch"
+	                                Padding="15"
+	                                MinHeight="120"
+	                                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+								<Button.ToolTip>
+									<ToolTip>
+										<StackPanel>
+											<TextBlock FontWeight="Bold" Text="{Binding Name}"/>
+											<TextBlock Text="Press F1 for help" FontSize="11" Foreground="Gray" Margin="0,3,0,0"/>
+										</StackPanel>
+									</ToolTip>
+								</Button.ToolTip>
+								<Button.Resources>
+									<Style TargetType="Border">
+										<Setter Property="CornerRadius" Value="6"/>
+									</Style>
+								</Button.Resources>
+								<Grid>
 								<Grid.RowDefinitions>
 									<RowDefinition Height="Auto"/>
 									<RowDefinition Height="Auto"/>
@@ -131,8 +145,46 @@
                                            TextTrimming="CharacterEllipsis"
                                            Width="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualWidth}"
                                            VerticalAlignment="Top"/>
-							</Grid>
-						</Button>
+								</Grid>
+							</Button>
+							
+							<!-- Help Button Overlay (appears on hover) -->
+							<Button x:Name="HelpButton"
+							        Width="28" 
+							        Height="28"
+							        HorizontalAlignment="Right"
+							        VerticalAlignment="Top"
+							        Margin="5"
+							        Content="?"
+							        FontWeight="Bold"
+							        FontSize="14"
+							        Background="#0078D4"
+							        Foreground="White"
+							        BorderThickness="0"
+							        Cursor="Hand"
+							        Opacity="0"
+							        Click="HelpButton_Click"
+							        Tag="{Binding}">
+								<Button.Resources>
+									<Style TargetType="Border">
+										<Setter Property="CornerRadius" Value="14"/>
+									</Style>
+								</Button.Resources>
+								<Button.ToolTip>
+									<TextBlock Text="View help for this calculator"/>
+								</Button.ToolTip>
+								<Button.Style>
+									<Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+										<Setter Property="Opacity" Value="0"/>
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="True">
+												<Setter Property="Opacity" Value="1"/>
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</Button.Style>
+							</Button>
+						</Grid>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
