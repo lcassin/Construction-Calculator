@@ -7,7 +7,7 @@
 #define MyAppPublisher "Lee Cassin"
 #define MyAppURL "https://github.com/lcassin/Construction-Calculator"
 #define MyAppExeName "ConstructionCalculator.WPF.exe"
-#define PublishDir "publish\win-x64"
+#define PublishDir "bin\Release\net10.0-windows\publish"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -29,7 +29,7 @@ SolidCompression=yes
 WizardStyle=modern
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-PrivilegesRequired=admin
+PrivilegesRequired=lowest
 SetupIconFile=Assets\app.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 ; Upgrade behavior settings
@@ -38,8 +38,7 @@ UsePreviousGroup=yes
 UsePreviousTasks=yes
 CloseApplications=yes
 RestartApplications=no
-; LicenseFile=..\ConstructionCalculator\LICENSE
-; Uncomment the above line if you want to include a license agreement during installation
+LicenseFile=..\LICENSE
 ; Uncomment the following line if you have a code signing certificate
 ; SignTool=signtool
 
