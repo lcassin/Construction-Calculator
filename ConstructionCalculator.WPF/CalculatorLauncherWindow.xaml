@@ -1,9 +1,11 @@
 ﻿<Window x:Class="ConstructionCalculator.WPF.CalculatorLauncherWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ConstructionCalculator.WPF"
         Title="Calculator Launcher" Height="600" Width="800"
         WindowStartupLocation="CenterOwner"
-        Icon="Assets/app.ico">
+        Icon="Assets/app.ico"
+        local:HelpBehavior.CalculatorKind="Main">
 
 	<Grid Margin="20" UseLayoutRounding="True">
 		<Grid.RowDefinitions>
@@ -70,7 +72,8 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<Grid>
-							<Button Click="CalculatorTile_Click"
+							<Button x:Name="TileButton"
+							        Click="CalculatorTile_Click"
 	                                Tag="{Binding}"
 	                                HorizontalAlignment="Stretch"
 	                                VerticalAlignment="Stretch"
@@ -162,9 +165,9 @@
 							        Foreground="White"
 							        BorderThickness="0"
 							        Cursor="Hand"
-							        Opacity="0"
 							        Click="HelpButton_Click"
-							        Tag="{Binding}">
+							        Tag="{Binding}"
+							        Panel.ZIndex="100">
 								<Button.Resources>
 									<Style TargetType="Border">
 										<Setter Property="CornerRadius" Value="14"/>
@@ -175,10 +178,10 @@
 								</Button.ToolTip>
 								<Button.Style>
 									<Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-										<Setter Property="Opacity" Value="0"/>
+										<Setter Property="Visibility" Value="Collapsed"/>
 										<Style.Triggers>
-											<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="True">
-												<Setter Property="Opacity" Value="1"/>
+											<DataTrigger Binding="{Binding ElementName=TileButton, Path=IsMouseOver}" Value="True">
+												<Setter Property="Visibility" Value="Visible"/>
 											</DataTrigger>
 										</Style.Triggers>
 									</Style>
