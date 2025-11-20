@@ -14,6 +14,7 @@ public partial class MainWindow : Window
     private Measurement? storedValue = null;
     private bool shouldClearDisplay = false;
     private readonly List<string> calculationChain = new();
+    private Measurement? memoryValue = null;
 
     public MainWindow()
     {
@@ -54,6 +55,38 @@ public partial class MainWindow : Window
             {
                 PerformCalculation();
                 FocusDisplayAtEnd();
+            }
+            else if (buttonText == "√")
+            {
+                PerformSquareRoot();
+            }
+            else if (buttonText == "x²")
+            {
+                PerformSquared();
+            }
+            else if (buttonText == "%")
+            {
+                PerformPercent();
+            }
+            else if (buttonText == "+/-")
+            {
+                ToggleSign();
+            }
+            else if (buttonText == "MC")
+            {
+                MemoryClear();
+            }
+            else if (buttonText == "MR")
+            {
+                MemoryRecall();
+            }
+            else if (buttonText == "M+")
+            {
+                MemoryAdd();
+            }
+            else if (buttonText == "M-")
+            {
+                MemorySubtract();
             }
             else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "×" || buttonText == "÷")
             {
@@ -134,7 +167,7 @@ public partial class MainWindow : Window
         {
             string item = calculationChain[i];
 
-            if (item == "+" || item == "-" || item == "*" || item == "/")
+            if (item == "+" || item == "-" || item == "*" || item == "/" || item == "%")
             {
                 currentOperation = item;
             }
@@ -161,6 +194,9 @@ public partial class MainWindow : Window
                             break;
                         case "/":
                             storedValue /= value.ToTotalInches();
+                            break;
+                        case "%":
+                            storedValue *= (value.ToTotalInches() / 100.0);
                             break;
                     }
                     currentOperation = "";
@@ -300,6 +336,9 @@ public partial class MainWindow : Window
                         return;
                     }
                     result = storedValue / current.ToTotalInches();
+                    break;
+                case "%":
+                    result = storedValue * (current.ToTotalInches() / 100.0);
                     break;
                 default:
                     return;
@@ -510,6 +549,9 @@ public partial class MainWindow : Window
                         }
                         result /= nextValue.ToTotalInches();
                         break;
+                    case "%":
+                        result *= (nextValue.ToTotalInches() / 100.0);
+                        break;
                 }
             }
 
@@ -612,6 +654,12 @@ public partial class MainWindow : Window
         areaCalculator.ShowDialog();
     }
 
+    private void UnitConverter_Click(object sender, RoutedEventArgs e)
+    {
+        var unitConverter = new UnitConverterWindow { Owner = this };
+        unitConverter.ShowDialog();
+    }
+
     private void LightTheme_Click(object sender, RoutedEventArgs e)
     {
         Application.Current.ThemeMode = ThemeMode.Light;
@@ -630,5 +678,236 @@ public partial class MainWindow : Window
     private void About_Click(object sender, RoutedEventArgs e)
     {
         MessageBox.Show("Construction Calculator\nVersion 2.0 (WPF with Fluent Theme)\n\n© 2025", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private void PerformSquareRoot()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+
+            if (totalInches < 0)
+            {
+                MessageBox.Show("Cannot calculate square root of negative value", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            double sqrtInches = Math.Sqrt(totalInches);
+            Measurement result = Measurement.FromDecimalInches(sqrtInches);
+
+            calculationChain.Clear();
+            calculationChain.Add($"√({DisplayTextBox.Text.Trim()})");
+            UpdateChainDisplay();
+
+            UpdateDisplay(result);
+            storedValue = result;
+            currentOperation = "";
+            shouldClearDisplay = true;
+
+            FocusDisplayAtEnd();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Square root error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Clear();
+        }
+    }
+
+    private void PerformSquared()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            double squaredInches = totalInches * totalInches;
+            Measurement result = Measurement.FromDecimalInches(squaredInches);
+
+            calculationChain.Clear();
+            calculationChain.Add($"({DisplayTextBox.Text.Trim()})²");
+            UpdateChainDisplay();
+
+            UpdateDisplay(result);
+            storedValue = result;
+            currentOperation = "";
+            shouldClearDisplay = true;
+
+            FocusDisplayAtEnd();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Squared error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Clear();
+        }
+    }
+
+    private void PerformPercent()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double currentValue = current.ToTotalInches();
+            Measurement result;
+
+            if (storedValue != null && !string.IsNullOrEmpty(currentOperation))
+            {
+                switch (currentOperation)
+                {
+                    case "*":
+                        result = storedValue * (currentValue / 100.0);
+                        break;
+                    case "/":
+                        if (currentValue == 0)
+                        {
+                            MessageBox.Show("Cannot divide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                        result = storedValue / (currentValue / 100.0);
+                        break;
+                    case "+":
+                        result = storedValue + (storedValue * (currentValue / 100.0));
+                        break;
+                    case "-":
+                        result = storedValue - (storedValue * (currentValue / 100.0));
+                        break;
+                    default:
+                        result = Measurement.FromDecimalInches(currentValue / 100.0);
+                        break;
+                }
+
+                string displayText = DisplayTextBox.Text.Trim();
+                if (!shouldClearDisplay && calculationChain.Count > 0 &&
+                    calculationChain[^1] != "+" &&
+                    calculationChain[^1] != "-" &&
+                    calculationChain[^1] != "*" &&
+                    calculationChain[^1] != "/")
+                {
+                    calculationChain.Add(displayText + "%");
+                }
+                else if (calculationChain.Count > 0 &&
+                         (calculationChain[^1] == "+" ||
+                          calculationChain[^1] == "-" ||
+                          calculationChain[^1] == "*" ||
+                          calculationChain[^1] == "/"))
+                {
+                    calculationChain.Add(displayText + "%");
+                }
+                UpdateChainDisplay();
+
+                UpdateDisplay(result);
+                storedValue = result;
+                currentOperation = "";
+                shouldClearDisplay = true;
+            }
+            else
+            {
+                result = Measurement.FromDecimalInches(currentValue / 100.0);
+                
+                calculationChain.Clear();
+                calculationChain.Add($"{DisplayTextBox.Text.Trim()}%");
+                UpdateChainDisplay();
+
+                UpdateDisplay(result);
+                storedValue = result;
+                currentOperation = "";
+                shouldClearDisplay = true;
+            }
+
+            FocusDisplayAtEnd();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Percentage error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Clear();
+        }
+    }
+
+    private void ToggleSign()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            Measurement negated = Measurement.FromDecimalInches(-totalInches);
+            
+            UpdateDisplay(negated);
+            FocusDisplayAtEnd();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Toggle sign error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void MemoryClear()
+    {
+        memoryValue = null;
+        UpdateMemoryIndicator();
+    }
+
+    private void MemoryRecall()
+    {
+        if (memoryValue != null)
+        {
+            UpdateDisplay(memoryValue);
+            shouldClearDisplay = true;
+            FocusDisplayAtEnd();
+        }
+    }
+
+    private void MemoryAdd()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            if (memoryValue == null)
+            {
+                memoryValue = current;
+            }
+            else
+            {
+                memoryValue = memoryValue + current;
+            }
+            UpdateMemoryIndicator();
+            FocusDisplayAtEnd();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Memory add error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void MemorySubtract()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            if (memoryValue == null)
+            {
+                memoryValue = Measurement.FromDecimalInches(-current.ToTotalInches());
+            }
+            else
+            {
+                memoryValue = memoryValue - current;
+            }
+            UpdateMemoryIndicator();
+            FocusDisplayAtEnd();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Memory subtract error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void UpdateMemoryIndicator()
+    {
+        if (memoryValue != null)
+        {
+            Title = "Construction Calculator [M]";
+        }
+        else
+        {
+            Title = "Construction Calculator";
+        }
     }
 }

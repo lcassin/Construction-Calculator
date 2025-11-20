@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ConstructionCalculator.WPF"
         mc:Ignorable="d"
         Title="Construction Calculator" 
-        Height="755" 
-        Width="420"
+        Height="825" 
+        Width="520"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
@@ -24,6 +24,7 @@
                 <MenuItem Header="Survey Calculator" Click="SurveyCalculator_Click"/>
                 <MenuItem Header="Seating Layout Calculator" Click="SeatingLayoutCalculator_Click"/>
                 <MenuItem Header="Area Calculator" Click="AreaCalculator_Click"/>
+                <MenuItem Header="Unit Converter" Click="UnitConverter_Click"/>
                 <Separator/>
                 <MenuItem Header="Theme">
                     <MenuItem Header="Light" Click="LightTheme_Click"/>
@@ -85,49 +86,61 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
-                <!-- Row 0: 7, 8, 9, ÷ -->
+                <!-- Row 0: 7, 8, 9, ÷, MC -->
                 <Button Grid.Row="0" Grid.Column="0" Content="7" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="0" Grid.Column="1" Content="8" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="0" Grid.Column="2" Content="9" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="0" Grid.Column="3" Content="÷" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="0" Grid.Column="4" Content="MC" Style="{StaticResource MemoryButtonStyle}" Click="Button_Click"/>
                 
-                <!-- Row 1: 4, 5, 6, × -->
+                <!-- Row 1: 4, 5, 6, ×, MR -->
                 <Button Grid.Row="1" Grid.Column="0" Content="4" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="1" Grid.Column="1" Content="5" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="1" Grid.Column="2" Content="6" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="1" Grid.Column="3" Content="×" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="1" Grid.Column="4" Content="MR" Style="{StaticResource MemoryButtonStyle}" Click="Button_Click"/>
                 
-                <!-- Row 2: 1, 2, 3, - -->
+                <!-- Row 2: 1, 2, 3, -, M+ -->
                 <Button Grid.Row="2" Grid.Column="0" Content="1" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="2" Grid.Column="1" Content="2" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="2" Grid.Column="2" Content="3" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="2" Grid.Column="3" Content="-" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="2" Grid.Column="4" Content="M+" Style="{StaticResource MemoryButtonStyle}" Click="Button_Click"/>
                 
-                <!-- Row 3: 0, ', ", + -->
+                <!-- Row 3: 0, ', ", +, M- -->
                 <Button Grid.Row="3" Grid.Column="0" Content="0" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="3" Grid.Column="1" Content="'" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="3" Grid.Column="2" Content="&quot;" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="3" Grid.Column="3" Content="+" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="3" Grid.Column="4" Content="M-" Style="{StaticResource MemoryButtonStyle}" Click="Button_Click"/>
                 
-                <!-- Row 4: Space, /, ., = -->
+                <!-- Row 4: Space, /, ., =, (empty) -->
                 <Button Grid.Row="4" Grid.Column="0" Content="Space" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="4" Grid.Column="1" Content="/" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="4" Grid.Column="2" Content="." Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
                 <Button Grid.Row="4" Grid.Column="3" Content="=" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
                 
-                <!-- Row 5: C, CE, Copy, Mode -->
-                <Button Grid.Row="5" Grid.Column="0" Content="C" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
-                <Button Grid.Row="5" Grid.Column="1" Content="CE" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
-                <Button Grid.Row="5" Grid.Column="2" Content="Copy" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
-                <Button Grid.Row="5" Grid.Column="3" Content="Mode" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
+                <!-- Row 5: %, √, x², +/-, (empty) -->
+                <Button Grid.Row="5" Grid.Column="0" Content="%" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="5" Grid.Column="1" Content="√" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="5" Grid.Column="2" Content="x²" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="5" Grid.Column="3" Content="+/-" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
+                
+                <!-- Row 6: C, CE, Copy, Mode, (empty) -->
+                <Button Grid.Row="6" Grid.Column="0" Content="C" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="6" Grid.Column="1" Content="CE" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="6" Grid.Column="2" Content="Copy" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
+                <Button Grid.Row="6" Grid.Column="3" Content="Mode" Style="{StaticResource ActionButtonStyle}" Click="Button_Click"/>
             </Grid>
             
             <!-- Instructions -->
