@@ -1,10 +1,11 @@
 ﻿<Window x:Class="ConstructionCalculator.WPF.Calculators.Construction.Drywall.DrywallCalculatorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:ConstructionCalculator.WPF.Shared.HelpSystem"
+        xmlns:local="clr-namespace:ConstructionCalculator.WPF.Calculators.Construction.Drywall"
+        xmlns:help="clr-namespace:ConstructionCalculator.WPF.Shared.HelpSystem"
         Title="Drywall Calculator" Height="650" Width="500"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
-        local:HelpBehavior.CalculatorKind="Drywall">
+        help:HelpBehavior.CalculatorKind="Drywall">
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
 		<Grid Margin="20">

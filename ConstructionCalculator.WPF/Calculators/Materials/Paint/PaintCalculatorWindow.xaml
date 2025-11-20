@@ -1,10 +1,11 @@
 ﻿<Window x:Class="ConstructionCalculator.WPF.Calculators.Materials.Paint.PaintCalculatorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:ConstructionCalculator.WPF.Shared.HelpSystem"
+        xmlns:local="clr-namespace:ConstructionCalculator.WPF.Calculators.Materials.Paint"
+        xmlns:help="clr-namespace:ConstructionCalculator.WPF.Shared.HelpSystem"
         Title="Paint/Coverage Calculator" Height="700" Width="500"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
-        local:HelpBehavior.CalculatorKind="Paint">
+        help:HelpBehavior.CalculatorKind="Paint">
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
 		<Grid Margin="20">
