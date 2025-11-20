@@ -302,6 +302,78 @@ public partial class MainWindow : Window
         {
             string displayText = DisplayTextBox.Text.Trim();
 
+            if (displayText.EndsWith("%"))
+            {
+                string numStr = displayText.TrimEnd('%').Trim();
+                double pctVal = Measurement.Parse(numStr).ToTotalInches() / 100.0;
+                Measurement pctResult;
+
+                if (storedValue != null && !string.IsNullOrEmpty(currentOperation))
+                {
+                    if (!shouldClearDisplay && calculationChain.Count > 0 &&
+                        calculationChain[^1] != "+" &&
+                        calculationChain[^1] != "-" &&
+                        calculationChain[^1] != "*" &&
+                        calculationChain[^1] != "/")
+                    {
+                        calculationChain.Add(displayText);
+                    }
+                    else if (calculationChain.Count > 0 &&
+                             (calculationChain[^1] == "+" ||
+                              calculationChain[^1] == "-" ||
+                              calculationChain[^1] == "*" ||
+                              calculationChain[^1] == "/"))
+                    {
+                        calculationChain.Add(displayText);
+                    }
+                    UpdateChainDisplay();
+
+                    switch (currentOperation)
+                    {
+                        case "*":
+                            pctResult = storedValue * pctVal;
+                            break;
+                        case "/":
+                            if (pctVal == 0)
+                            {
+                                MessageBox.Show("Cannot divide by zero percent", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            pctResult = storedValue / pctVal;
+                            break;
+                        case "+":
+                            pctResult = storedValue + (storedValue * pctVal);
+                            break;
+                        case "-":
+                            pctResult = storedValue - (storedValue * pctVal);
+                            break;
+                        default:
+                            pctResult = Measurement.FromDecimalInches(pctVal);
+                            break;
+                    }
+
+                    UpdateDisplay(pctResult);
+                    storedValue = pctResult;
+                    currentOperation = "";
+                    shouldClearDisplay = true;
+                    FocusDisplayAtEnd();
+                    return;
+                }
+                else
+                {
+                    pctResult = Measurement.FromDecimalInches(pctVal);
+                    calculationChain.Clear();
+                    calculationChain.Add(displayText);
+                    UpdateChainDisplay();
+                    UpdateDisplay(pctResult);
+                    storedValue = pctResult;
+                    currentOperation = "";
+                    shouldClearDisplay = true;
+                    FocusDisplayAtEnd();
+                    return;
+                }
+            }
+
             if (ContainsOperator(displayText))
             {
                 EvaluateExpression(displayText);
