@@ -10,7 +10,8 @@
         Width="450"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        Icon="Assets/app.ico">
+        Icon="Assets/app.ico"
+        local:HelpBehavior.CalculatorKind="UnitConverter">
     
     <Grid Margin="20">
         <Grid.RowDefinitions>
