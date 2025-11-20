@@ -89,6 +89,16 @@ public partial class CalculatorLauncherWindow : Window
             },
             new CalculatorDescriptor
             {
+                Name = "Accessibility Ramp",
+                Category = "Construction",
+                Description = "Calculate ADA-compliant ramp dimensions and landings",
+                Icon = "♿",
+                IconFontFamily = "Segoe UI Symbol",
+                HelpKind = CalculatorKind.Ramp,
+                OpenAction = () => new RampCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
                 Name = "Roofing Calculator",
                 Category = "Construction",
                 Description = "Calculate roof area, pitch, and shingle requirements",

@@ -4,6 +4,13 @@ using System.Windows.Media;
 
 namespace ConstructionCalculator.WPF;
 
+public enum LandingType
+{
+    Straight,
+    RightAngle,
+    FullReturn
+}
+
 public partial class StairCalculatorWindow : Window
 {
     public StairCalculatorWindow()
@@ -73,49 +80,121 @@ public partial class StairCalculatorWindow : Window
             {
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(LandingDepthTextBox.Text))
+                    if (string.IsNullOrWhiteSpace(LandingDepthTextBox.Text) || string.IsNullOrWhiteSpace(StairWidthTextBox.Text))
                     {
-                        StepsAfterLandingLabel.Text = "Enter landing depth";
-                        TotalRunWithLandingLabel.Text = "";
+                        StepsAfterLandingLabel.Text = "Enter landing depth and stair width";
+                        OverallLengthLabel.Text = "";
+                        OverallWidthLabel.Text = "";
                     }
                     else
                     {
                         Measurement landingDepth = Measurement.Parse(LandingDepthTextBox.Text);
                         double landingDepthInches = landingDepth.ToTotalInches();
-
-                        if (landingDepthInches < 36.0)
-                        {
-                            MessageBox.Show("Landing depth should be at least 36\" per typical building codes.",
-                                "Validation Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
+                        
+                        Measurement stairWidth = Measurement.Parse(StairWidthTextBox.Text);
+                        double stairWidthInches = stairWidth.ToTotalInches();
 
                         if (!int.TryParse(StepsBeforeLandingTextBox.Text, out int stepsBeforeLanding) || stepsBeforeLanding < 1)
                         {
                             StepsAfterLandingLabel.Text = "Invalid steps before landing";
-                            TotalRunWithLandingLabel.Text = "";
+                            OverallLengthLabel.Text = "";
+                            OverallWidthLabel.Text = "";
                         }
                         else if (stepsBeforeLanding >= numberOfSteps)
                         {
                             StepsAfterLandingLabel.Text = "Steps before landing must be less than total steps";
-                            TotalRunWithLandingLabel.Text = "";
+                            OverallLengthLabel.Text = "";
+                            OverallWidthLabel.Text = "";
                         }
                         else
                         {
                             int stepsAfterLanding = numberOfSteps - stepsBeforeLanding;
-                            double runBeforeLanding = (stepsBeforeLanding - 1) * treadDepthInches;
-                            double runAfterLanding = (stepsAfterLanding - 1) * treadDepthInches;
-                            double totalRunWithLanding = runBeforeLanding + landingDepthInches + runAfterLanding;
+                            double flightARun = (stepsBeforeLanding - 1) * treadDepthInches;
+                            double flightBRun = (stepsAfterLanding - 1) * treadDepthInches;
 
                             StepsAfterLandingLabel.Text = $"Steps After Landing: {stepsAfterLanding}";
-                            Measurement totalRunWithLandingMeasurement = Measurement.FromDecimalInches(totalRunWithLanding);
-                            TotalRunWithLandingLabel.Text = $"Total Run with Landing: {totalRunWithLandingMeasurement.ToFractionString()}";
+                            
+                            StringBuilder codeWarnings = new StringBuilder();
+                            
+                            if (landingDepthInches < 36.0)
+                            {
+                                codeWarnings.AppendLine("⚠ Landing depth should be at least 36\" per IBC/IRC");
+                            }
+                            
+                            if (landingDepthInches < stairWidthInches)
+                            {
+                                codeWarnings.AppendLine("⚠ Landing depth must be at least as wide as stair width per code");
+                            }
+                            
+                            double riseBeforeLanding = riserHeightInches * stepsBeforeLanding;
+                            double riseAfterLanding = riserHeightInches * stepsAfterLanding;
+                            
+                            if (riseBeforeLanding > 144.0)
+                            {
+                                codeWarnings.AppendLine($"⚠ Rise before landing ({riseBeforeLanding:F1}\") exceeds 12' maximum per code");
+                            }
+                            
+                            if (riseAfterLanding > 144.0)
+                            {
+                                codeWarnings.AppendLine($"⚠ Rise after landing ({riseAfterLanding:F1}\") exceeds 12' maximum per code");
+                            }
+                            
+                            LandingType landingType = (LandingType)LandingTypeComboBox.SelectedIndex;
+                            
+                            if (landingType == LandingType.FullReturn)
+                            {
+                                if (landingDepthInches < stairWidthInches * 2)
+                                {
+                                    codeWarnings.AppendLine("⚠ U-shaped landing should be at least 2x stair width for code compliance");
+                                }
+                            }
+                            
+                            if (codeWarnings.Length > 0)
+                            {
+                                MessageBox.Show(codeWarnings.ToString().Trim(),
+                                    "Code Requirements", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            
+                            double overallLength, overallWidth;
+                            
+                            switch (landingType)
+                            {
+                                case LandingType.Straight:
+                                    overallLength = flightARun + landingDepthInches + flightBRun;
+                                    overallWidth = stairWidthInches;
+                                    break;
+                                    
+                                case LandingType.RightAngle:
+                                    overallLength = flightARun + stairWidthInches;
+                                    overallWidth = Math.Max(landingDepthInches, stairWidthInches) + flightBRun;
+                                    break;
+                                    
+                                case LandingType.FullReturn:
+                                    overallLength = Math.Max(flightARun, flightBRun);
+                                    overallWidth = landingDepthInches + stairWidthInches;
+                                    break;
+                                    
+                                default:
+                                    overallLength = flightARun + landingDepthInches + flightBRun;
+                                    overallWidth = stairWidthInches;
+                                    break;
+                            }
+                            
+                            Measurement overallLengthMeasurement = Measurement.FromDecimalInches(overallLength);
+                            Measurement overallWidthMeasurement = Measurement.FromDecimalInches(overallWidth);
+                            
+                            OverallLengthLabel.Text = $"Overall Length: {overallLengthMeasurement.ToFractionString()}";
+                            OverallWidthLabel.Text = $"Overall Width: {overallWidthMeasurement.ToFractionString()}";
+                            
+                            CheckSpaceFit();
                         }
                     }
                 }
                 catch (Exception)
                 {
-                    StepsAfterLandingLabel.Text = "Invalid landing depth";
-                    TotalRunWithLandingLabel.Text = "";
+                    StepsAfterLandingLabel.Text = "Invalid landing depth or stair width";
+                    OverallLengthLabel.Text = "";
+                    OverallWidthLabel.Text = "";
                 }
             }
 
@@ -318,12 +397,21 @@ public partial class StairCalculatorWindow : Window
     private void IncludeLandingCheckBox_CheckedChanged(object sender, RoutedEventArgs e)
     {
         bool showLanding = IncludeLandingCheckBox.IsChecked == true;
+        LandingTypePanel.Visibility = showLanding ? Visibility.Visible : Visibility.Collapsed;
         LandingDepthPanel.Visibility = showLanding ? Visibility.Visible : Visibility.Collapsed;
         StepsBeforeLandingPanel.Visibility = showLanding ? Visibility.Visible : Visibility.Collapsed;
         StepsAfterLandingBorder.Visibility = showLanding ? Visibility.Visible : Visibility.Collapsed;
-        TotalRunWithLandingBorder.Visibility = showLanding ? Visibility.Visible : Visibility.Collapsed;
+        OverallDimensionsBorder.Visibility = showLanding ? Visibility.Visible : Visibility.Collapsed;
 
         if (showLanding && !string.IsNullOrWhiteSpace(TotalRiseTextBox.Text))
+        {
+            CalculateButton_Click(sender, e);
+        }
+    }
+    
+    private void LandingTypeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (IncludeLandingCheckBox.IsChecked == true && !string.IsNullOrWhiteSpace(TotalRiseTextBox.Text))
         {
             CalculateButton_Click(sender, e);
         }
@@ -342,6 +430,86 @@ public partial class StairCalculatorWindow : Window
         if (IncludeLandingCheckBox.IsChecked == true)
         {
             CalculateButton_Click(sender, e);
+        }
+    }
+    
+    private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        CheckSpaceFit();
+    }
+    
+    private void CheckSpaceFit()
+    {
+        if (string.IsNullOrWhiteSpace(AvailableLengthTextBox.Text) && string.IsNullOrWhiteSpace(AvailableWidthTextBox.Text))
+        {
+            SpaceFitBorder.Visibility = Visibility.Collapsed;
+            return;
+        }
+        
+        if (IncludeLandingCheckBox.IsChecked != true || string.IsNullOrWhiteSpace(OverallLengthLabel.Text))
+        {
+            SpaceFitBorder.Visibility = Visibility.Collapsed;
+            return;
+        }
+        
+        try
+        {
+            double? availableLength = null;
+            double? availableWidth = null;
+            
+            if (!string.IsNullOrWhiteSpace(AvailableLengthTextBox.Text))
+            {
+                Measurement lengthMeasurement = Measurement.Parse(AvailableLengthTextBox.Text);
+                availableLength = lengthMeasurement.ToTotalInches();
+            }
+            
+            if (!string.IsNullOrWhiteSpace(AvailableWidthTextBox.Text))
+            {
+                Measurement widthMeasurement = Measurement.Parse(AvailableWidthTextBox.Text);
+                availableWidth = widthMeasurement.ToTotalInches();
+            }
+            
+            string lengthText = OverallLengthLabel.Text.Replace("Overall Length: ", "");
+            string widthText = OverallWidthLabel.Text.Replace("Overall Width: ", "");
+            
+            Measurement overallLength = Measurement.Parse(lengthText);
+            Measurement overallWidth = Measurement.Parse(widthText);
+            
+            double requiredLength = overallLength.ToTotalInches();
+            double requiredWidth = overallWidth.ToTotalInches();
+            
+            bool fits = true;
+            StringBuilder fitMessage = new StringBuilder();
+            
+            if (availableLength.HasValue && requiredLength > availableLength.Value)
+            {
+                fits = false;
+                fitMessage.AppendLine($"⚠ Length exceeds available space by {Measurement.FromDecimalInches(requiredLength - availableLength.Value).ToFractionString()}");
+            }
+            
+            if (availableWidth.HasValue && requiredWidth > availableWidth.Value)
+            {
+                fits = false;
+                fitMessage.AppendLine($"⚠ Width exceeds available space by {Measurement.FromDecimalInches(requiredWidth - availableWidth.Value).ToFractionString()}");
+            }
+            
+            if (fits)
+            {
+                fitMessage.AppendLine("✓ Configuration fits in available space");
+                SpaceFitLabel.Foreground = Brushes.Green;
+            }
+            else
+            {
+                fitMessage.AppendLine("\nTry different landing type or consider spiral staircase");
+                SpaceFitLabel.Foreground = Brushes.Red;
+            }
+            
+            SpaceFitLabel.Text = fitMessage.ToString().Trim();
+            SpaceFitBorder.Visibility = Visibility.Visible;
+        }
+        catch
+        {
+            SpaceFitBorder.Visibility = Visibility.Collapsed;
         }
     }
 }

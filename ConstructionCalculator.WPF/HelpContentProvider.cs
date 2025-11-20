@@ -13,6 +13,7 @@ public static class HelpContentProvider
             CalculatorKind.Concrete => GetConcreteCalculatorHelp(),
             CalculatorKind.Angle => GetAngleCalculatorHelp(),
             CalculatorKind.Stair => GetStairCalculatorHelp(),
+            CalculatorKind.Ramp => GetRampCalculatorHelp(),
             CalculatorKind.Survey => GetSurveyCalculatorHelp(),
             CalculatorKind.SeatingLayout => GetSeatingLayoutCalculatorHelp(),
             CalculatorKind.Area => GetAreaCalculatorHelp(),
@@ -177,11 +178,90 @@ public static class HelpContentProvider
             Title = "Stair Calculator",
             IconGlyph = "🪜",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate stair dimensions including rise, run, and number of steps.",
-            ExpectedInputs = new List<string> { "Total Rise, Number of Risers, Tread Depth" },
+            Summary = "Calculate stair dimensions including rise, run, and number of steps. Supports complex configurations with landings and multiple stair types (straight, L-shaped, U-shaped).",
+            ExpectedInputs = new List<string> 
+            { 
+                "Total Rise (height)", 
+                "Number of Risers", 
+                "Stair Width (typically 36\" minimum)",
+                "Landing Type (Straight/Right Angle/Full Return)",
+                "Landing Depth (when using landings)",
+                "Steps Before Landing (when using landings)"
+            },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
-            Examples = new List<ExampleItem> { new("Total Rise: 108\", Risers: 14", "Riser: 7.71\"", "Standard stairs") },
-            Tips = new List<string> { "Ideal riser height: 7-7.75 inches", "Ideal tread depth: 10-11 inches" }
+            Examples = new List<ExampleItem> 
+            { 
+                new("Total Rise: 108\", Risers: 14, Width: 36\"", "Riser: 7.71\", Run: 130\"", "Standard straight run"),
+                new("108\" rise, 7 steps before landing, Straight", "Two 7-step flights", "Split with mid-landing"),
+                new("108\" rise, L-shaped landing", "Length: 65\", Width: 101\"", "Right angle turn saves space"),
+                new("108\" rise, U-shaped landing", "Length: 65\", Width: 72\"", "Switchback configuration")
+            },
+            Tips = new List<string> 
+            { 
+                "Ideal riser height: 7-7.75 inches for residential (IBC/IRC)",
+                "Ideal tread depth: 10-11 inches minimum",
+                "Commercial code: 4-7\" rise, 11\" minimum tread",
+                "Stair width: 36\" minimum for residential, 44\" for commercial",
+                "Landing depth: Must be at least as wide as stair width (36\" minimum per code)",
+                "Maximum rise between landings: 12 feet (144\") per IBC/IRC",
+                "Straight landing: Both flights continue in same direction",
+                "Right Angle (L-shaped): Second flight turns 90° - saves space in corners",
+                "Full Return (U-shaped): Flights parallel but opposite - best for tight vertical spaces",
+                "U-shaped landing width: Should be at least 2x stair width for code compliance",
+                "Overall Length: Distance along first flight direction",
+                "Overall Width: Distance perpendicular to first flight",
+                "Code compliance: Calculator validates against IBC/IRC requirements",
+                "Space planning: Use landing type to fit stairs in available footprint",
+                "Space constraints: Enter available length/width to check if configuration fits",
+                "Spiral staircase: Consider when no standard configuration fits available space",
+                "Spiral code: 26\" clear width minimum, 7.5\" tread depth at 12\" from narrow end, 9.5\" max riser",
+                "Auto-calculate: Automatically determines optimal number of steps for ideal riser height"
+            }
+        };
+    }
+
+    private static HelpTopic GetRampCalculatorHelp()
+    {
+        return new HelpTopic
+        {
+            Title = "Accessibility Ramp Calculator",
+            IconGlyph = "♿",
+            IconFontFamily = "Segoe UI Symbol",
+            Summary = "Calculate ADA-compliant accessibility ramp dimensions including slope, run length, and landing requirements. Supports complex configurations with landings for long runs.",
+            ExpectedInputs = new List<string>
+            {
+                "Total Rise (vertical height to overcome)",
+                "Slope Ratio (1:X format, default 1:12 for ADA)",
+                "Ramp Width (typically 36\" minimum for ADA)",
+                "Landing Type (Straight/Right Angle/Full Return)",
+                "Available Space (optional, for fit checking)"
+            },
+            Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
+            Examples = new List<ExampleItem>
+            {
+                new("Rise: 24\", Slope: 1:12", "Run: 24', 0 landings", "ADA compliant, under 30' max"),
+                new("Rise: 48\", Slope: 1:12", "Run: 48', 1 landing", "Requires landing at 30'"),
+                new("Rise: 72\", Slope: 1:12, L-shaped", "Length: 36', Width: 96'", "Right angle saves space"),
+                new("Rise: 96\", Slope: 1:12, U-shaped", "Length: 36', Width: 72'", "Switchback configuration")
+            },
+            Tips = new List<string>
+            {
+                "ADA compliance: Maximum slope 1:12 (1 inch rise per 12 inches run)",
+                "Maximum run: 30 feet before landing required (ADA)",
+                "Landing depth: 60\" minimum per ADA",
+                "Landing width: Must be at least as wide as ramp (36\" minimum)",
+                "Ramp width: 36\" minimum clear width for ADA compliance",
+                "Less steep slopes: Can use 1:16 or 1:20 for easier access",
+                "Straight landing: Both ramp segments continue in same direction",
+                "Right Angle (L-shaped): Second segment turns 90° - saves space in corners",
+                "Full Return (U-shaped): Segments parallel but opposite - best for tight spaces",
+                "Space constraints: Enter available length/width to check if configuration fits",
+                "Handrails: Required on both sides for ramps over 6\" rise or 72\" run",
+                "Edge protection: Required when drop-off exceeds 6\"",
+                "Surface: Must be slip-resistant and stable",
+                "Overall Length: Distance along first ramp segment direction",
+                "Overall Width: Distance perpendicular to first ramp segment"
+            }
         };
     }
 

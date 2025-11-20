@@ -34,6 +34,7 @@
 				<MenuItem Header="Construction">
 					<MenuItem Header="Concrete Calculator" Click="ConcreteCalculator_Click"/>
 					<MenuItem Header="Stair Calculator" Click="StairCalculator_Click"/>
+					<MenuItem Header="Accessibility Ramp Calculator" Click="RampCalculator_Click"/>
 					<MenuItem Header="Roofing Calculator" Click="RoofingCalculator_Click"/>
 					<MenuItem Header="Paint/Coverage Calculator" Click="PaintCalculator_Click"/>
 					<MenuItem Header="Board Feet Calculator" Click="BoardFeetCalculator_Click"/>
@@ -64,6 +65,7 @@
 					<MenuItem Header="Construction">
 						<MenuItem Header="Help: Concrete Calculator" Click="HelpConcrete_Click"/>
 						<MenuItem Header="Help: Stair Calculator" Click="HelpStair_Click"/>
+						<MenuItem Header="Help: Accessibility Ramp Calculator" Click="HelpRamp_Click"/>
 						<MenuItem Header="Help: Roofing Calculator" Click="HelpRoofing_Click"/>
 						<MenuItem Header="Help: Paint/Coverage Calculator" Click="HelpPaint_Click"/>
 						<MenuItem Header="Help: Board Feet Calculator" Click="HelpBoardFeet_Click"/>
