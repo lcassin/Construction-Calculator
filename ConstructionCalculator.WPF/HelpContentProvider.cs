@@ -177,11 +177,37 @@ public static class HelpContentProvider
             Title = "Stair Calculator",
             IconGlyph = "🪜",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate stair dimensions including rise, run, and number of steps.",
-            ExpectedInputs = new List<string> { "Total Rise, Number of Risers, Tread Depth" },
+            Summary = "Calculate stair dimensions including rise, run, and number of steps. Supports complex configurations with landings.",
+            ExpectedInputs = new List<string> 
+            { 
+                "Total Rise (height)", 
+                "Number of Risers", 
+                "Tread Depth",
+                "Landing Height (optional)",
+                "Landing Depth (optional)"
+            },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
-            Examples = new List<ExampleItem> { new("Total Rise: 108\", Risers: 14", "Riser: 7.71\"", "Standard stairs") },
-            Tips = new List<string> { "Ideal riser height: 7-7.75 inches", "Ideal tread depth: 10-11 inches" }
+            Examples = new List<ExampleItem> 
+            { 
+                new("Total Rise: 108\", Risers: 14", "Riser: 7.71\"", "Standard straight run"),
+                new("Total Rise: 108\", Landing at 54\"", "7 risers per flight", "Split with mid-landing"),
+                new("Limited space: 96\" rise, 3' landing", "Switchback configuration", "Saves horizontal space")
+            },
+            Tips = new List<string> 
+            { 
+                "Ideal riser height: 7-7.75 inches for residential",
+                "Ideal tread depth: 10-11 inches minimum",
+                "Commercial code: 4-7\" rise, 11\" minimum tread",
+                "Landing function: Use when you have limited space or need to change direction",
+                "Landing placement: Typically at mid-height for comfort and code compliance",
+                "Landing depth: Must be at least as wide as the stair width (usually 36\" minimum)",
+                "Switchback stairs: Use landing at halfway point to reverse direction (saves space)",
+                "L-shaped stairs: Landing at corner allows 90° turn between flights",
+                "Multiple landings: Break very tall stairs into 3+ flights for safety and code",
+                "Auto-calculate: Enter landing height and calculator splits stairs into flights automatically",
+                "Space planning: Landing adds depth but reduces total horizontal run length needed",
+                "Limited space solution: Landings let you fit stairs in tighter areas by changing direction"
+            }
         };
     }
 
