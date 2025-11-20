@@ -270,6 +270,14 @@ public partial class RampCalculatorWindow : Window
     {
     }
     
+    private void LandingDepth_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (IncludeLandingsCheckBox.IsChecked == true && !string.IsNullOrWhiteSpace(TotalRiseTextBox.Text))
+        {
+            CalculateButton_Click(sender, e);
+        }
+    }
+    
     private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
     }

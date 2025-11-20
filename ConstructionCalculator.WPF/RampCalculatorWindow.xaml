@@ -122,7 +122,8 @@
                 <Label Content="Landing Depth:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="LandingDepthTextBox" Width="250" Height="30" FontSize="14" 
                          VerticalContentAlignment="Center" TextChanged="LandingDepthTextBox_TextChanged"
-                         ToolTip="Enter as feet/inches (e.g., 6' or 72&quot;)"/>
+                         LostFocus="LandingDepth_LostFocus"
+                         ToolTip="Enter as feet/inches (e.g., 6' or 72&quot;). Press Enter or leave field to update."/>
             </StackPanel>
 
             <!-- Overall Dimensions Result -->
