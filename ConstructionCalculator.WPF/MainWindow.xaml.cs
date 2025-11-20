@@ -674,6 +674,12 @@ public partial class MainWindow : Window
         stairCalculator.ShowDialog();
     }
 
+    private void RampCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var rampCalculator = new RampCalculatorWindow { Owner = this };
+        rampCalculator.ShowDialog();
+    }
+
     private void SurveyCalculator_Click(object sender, RoutedEventArgs e)
     {
         var surveyCalculator = new SurveyCalculatorWindow { Owner = this };
@@ -812,6 +818,12 @@ public partial class MainWindow : Window
     private void HelpStair_Click(object sender, RoutedEventArgs e)
     {
         var helpWindow = new HelpWindow(CalculatorKind.Stair) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpRamp_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Ramp) { Owner = this };
         helpWindow.Show();
     }
 

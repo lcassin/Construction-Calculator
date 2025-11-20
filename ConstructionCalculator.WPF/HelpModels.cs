@@ -45,6 +45,7 @@ public enum CalculatorKind
     Main,
     Angle,
     Stair,
+    Ramp,
     Survey,
     SeatingLayout,
     Area,
