@@ -11,7 +11,7 @@
         Width="450"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        Icon="Assets/app.ico"
+        Icon="pack://application:,,,/Assets/app.ico"
         help:HelpBehavior.CalculatorKind="UnitConverter">
     
     <Grid Margin="20">
