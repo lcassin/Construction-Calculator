@@ -171,8 +171,8 @@ public partial class RampCalculatorWindow : Window
                     break;
                     
                 case RampLandingType.FullReturn:
-                    overallLength = Math.Max(runPerSegment, runPerSegment);
-                    overallWidth = landingDepthInches + rampWidthInches;
+                    overallLength = runPerSegment;
+                    overallWidth = (2 * rampWidthInches) + landingDepthInches;
                     break;
                     
                 default:
@@ -267,7 +267,6 @@ public partial class RampCalculatorWindow : Window
     
     private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        CheckSpaceFit();
     }
     
     private void CheckSpaceFit()

@@ -171,7 +171,7 @@ public partial class StairCalculatorWindow : Window
                                     
                                 case LandingType.FullReturn:
                                     overallLength = Math.Max(flightARun, flightBRun);
-                                    overallWidth = landingDepthInches + stairWidthInches;
+                                    overallWidth = (2 * stairWidthInches) + landingDepthInches;
                                     break;
                                     
                                 default:
@@ -427,7 +427,6 @@ public partial class StairCalculatorWindow : Window
     
     private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        CheckSpaceFit();
     }
     
     private void CheckSpaceFit()
