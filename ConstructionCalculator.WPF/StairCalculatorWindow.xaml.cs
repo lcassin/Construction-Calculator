@@ -425,9 +425,25 @@ public partial class StairCalculatorWindow : Window
     private void LandingDepthTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
     }
+    
+    private void LandingDepth_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (IncludeLandingCheckBox.IsChecked == true && !string.IsNullOrWhiteSpace(TotalRiseTextBox.Text))
+        {
+            CalculateButton_Click(sender, e);
+        }
+    }
 
     private void StepsBeforeLandingTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
+    }
+    
+    private void StepsBeforeLanding_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (IncludeLandingCheckBox.IsChecked == true && !string.IsNullOrWhiteSpace(TotalRiseTextBox.Text))
+        {
+            CalculateButton_Click(sender, e);
+        }
     }
     
     private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

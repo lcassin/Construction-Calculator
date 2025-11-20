@@ -132,14 +132,18 @@
             <StackPanel Grid.Row="14" x:Name="LandingDepthPanel" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Collapsed">
                 <Label Content="Landing Depth:" Width="130" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="LandingDepthTextBox" Width="250" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" TextChanged="LandingDepthTextBox_TextChanged"/>
+                         VerticalContentAlignment="Center" TextChanged="LandingDepthTextBox_TextChanged"
+                         LostFocus="LandingDepth_LostFocus"
+                         ToolTip="Enter as feet/inches (e.g., 5' or 60&quot;). Press Enter or leave field to update."/>
             </StackPanel>
 
             <!-- Steps Before Landing Input -->
             <StackPanel Grid.Row="15" x:Name="StepsBeforeLandingPanel" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Collapsed">
                 <Label Content="Steps Before Landing:" Width="150" VerticalAlignment="Center" FontSize="14"/>
                 <TextBox x:Name="StepsBeforeLandingTextBox" Width="230" Height="30" FontSize="14" 
-                         VerticalContentAlignment="Center" Text="8" TextChanged="StepsBeforeLandingTextBox_TextChanged"/>
+                         VerticalContentAlignment="Center" Text="8" TextChanged="StepsBeforeLandingTextBox_TextChanged"
+                         LostFocus="StepsBeforeLanding_LostFocus"
+                         ToolTip="Enter number of steps before landing. Press Enter or leave field to update."/>
             </StackPanel>
 
             <!-- Steps After Landing Result -->
