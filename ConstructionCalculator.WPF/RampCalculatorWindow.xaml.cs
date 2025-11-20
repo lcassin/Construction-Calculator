@@ -263,10 +263,6 @@ public partial class RampCalculatorWindow : Window
 
     private void LandingDepthTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        if (IncludeLandingsCheckBox.IsChecked == true)
-        {
-            CalculateButton_Click(sender, e);
-        }
     }
     
     private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

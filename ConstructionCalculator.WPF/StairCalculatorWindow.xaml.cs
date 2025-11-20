@@ -419,18 +419,10 @@ public partial class StairCalculatorWindow : Window
 
     private void LandingDepthTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        if (IncludeLandingCheckBox.IsChecked == true)
-        {
-            CalculateButton_Click(sender, e);
-        }
     }
 
     private void StepsBeforeLandingTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        if (IncludeLandingCheckBox.IsChecked == true)
-        {
-            CalculateButton_Click(sender, e);
-        }
     }
     
     private void SpaceConstraint_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
