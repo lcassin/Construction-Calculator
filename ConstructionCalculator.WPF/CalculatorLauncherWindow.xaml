@@ -5,7 +5,7 @@
         Title="Calculator Launcher" Height="600" Width="800"
         WindowStartupLocation="CenterOwner"
         Icon="Assets/app.ico"
-        local:HelpBehavior.CalculatorKind="Main">
+        PreviewKeyDown="Window_PreviewKeyDown">
 
 	<Grid Margin="20" UseLayoutRounding="True">
 		<Grid.RowDefinitions>
@@ -71,7 +71,9 @@
 				</ItemsControl.ItemContainerStyle>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Grid>
+						<Grid x:Name="TileRoot"
+						      MouseEnter="Tile_MouseEnter"
+						      MouseLeave="Tile_MouseLeave">
 							<Button x:Name="TileButton"
 							        Click="CalculatorTile_Click"
 	                                Tag="{Binding}"
@@ -167,7 +169,10 @@
 							        Cursor="Hand"
 							        Click="HelpButton_Click"
 							        Tag="{Binding}"
-							        Panel.ZIndex="100">
+							        Panel.ZIndex="100"
+							        Focusable="False"
+							        IsTabStop="False"
+							        FocusVisualStyle="{x:Null}">
 								<Button.Resources>
 									<Style TargetType="Border">
 										<Setter Property="CornerRadius" Value="14"/>
@@ -180,7 +185,7 @@
 									<Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
 										<Setter Property="Visibility" Value="Collapsed"/>
 										<Style.Triggers>
-											<DataTrigger Binding="{Binding ElementName=TileButton, Path=IsMouseOver}" Value="True">
+											<DataTrigger Binding="{Binding ElementName=TileRoot, Path=IsMouseOver}" Value="True">
 												<Setter Property="Visibility" Value="Visible"/>
 											</DataTrigger>
 										</Style.Triggers>
