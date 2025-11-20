@@ -1,0 +1,154 @@
+<Window x:Class="ConstructionCalculator.WPF.Calculators.Construction.Ramp.RampCalculatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ConstructionCalculator.WPF.Calculators.Construction.Ramp"
+        xmlns:help="clr-namespace:ConstructionCalculator.WPF.Shared.HelpSystem"
+        Title="Accessibility Ramp Calculator" Height="900" Width="450"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        help:HelpBehavior.CalculatorKind="Ramp">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Total Rise Input -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Total Rise:" Width="130" VerticalAlignment="Center" FontSize="14"/>
+                <TextBox x:Name="TotalRiseTextBox" Width="250" Height="30" FontSize="14" VerticalContentAlignment="Center"
+                         ToolTip="Enter as feet/inches (e.g., 3' 6&quot; or 42&quot;)"/>
+            </StackPanel>
+
+            <!-- Slope Ratio Input -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Slope Ratio (1:X):" Width="130" VerticalAlignment="Center" FontSize="14"/>
+                <TextBox x:Name="SlopeRatioTextBox" Width="250" Height="30" FontSize="14" VerticalContentAlignment="Center" Text="12"/>
+            </StackPanel>
+
+            <!-- Ramp Width Input -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Ramp Width:" Width="130" VerticalAlignment="Center" FontSize="14"/>
+                <TextBox x:Name="RampWidthTextBox" Width="250" Height="30" FontSize="14" VerticalContentAlignment="Center" Text="36&quot;"
+                         ToolTip="Enter as feet/inches (e.g., 3' or 36&quot;)"/>
+            </StackPanel>
+
+            <!-- Calculate Button -->
+            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,15">
+                <Button x:Name="CalculateButton" Content="Calculate" MinWidth="120"
+                        Style="{StaticResource PrimaryActionButtonStyle}"
+                        Click="CalculateButton_Click"/>
+            </StackPanel>
+
+            <!-- Required Run Result -->
+            <Border Grid.Row="4" BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+                <TextBlock x:Name="RequiredRunLabel" Text="" FontSize="16" FontWeight="Bold" 
+                           TextAlignment="Center" TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Landings Required Result -->
+            <Border Grid.Row="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+                <TextBlock x:Name="LandingsRequiredLabel" Text="" FontSize="16" FontWeight="Bold" 
+                           TextAlignment="Center" TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Compliance Message -->
+            <TextBlock Grid.Row="6" x:Name="ComplianceLabel" Text="" FontSize="12" 
+                       TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,15" Foreground="Gray"/>
+
+            <!-- Space Constraints Section -->
+            <Label Grid.Row="7" Content="Space Constraints (Optional):" FontSize="14" FontWeight="Bold" Margin="0,10,0,5"/>
+            
+            <!-- Available Length Input -->
+            <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Available Length:" Width="130" VerticalAlignment="Center" FontSize="14"/>
+                <TextBox x:Name="AvailableLengthTextBox" Width="250" Height="30" FontSize="14" 
+                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"
+                         LostFocus="AvailableLength_LostFocus"
+                         ToolTip="Enter as feet/inches (e.g., 30' or 25' 6&quot;)"/>
+            </StackPanel>
+            
+            <!-- Available Width Input -->
+            <StackPanel Grid.Row="9" Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Available Width:" Width="130" VerticalAlignment="Center" FontSize="14"/>
+                <TextBox x:Name="AvailableWidthTextBox" Width="250" Height="30" FontSize="14" 
+                         VerticalContentAlignment="Center" TextChanged="SpaceConstraint_TextChanged"
+                         LostFocus="AvailableWidth_LostFocus"
+                         ToolTip="Enter as feet/inches (e.g., 11' or 10' 8&quot;)"/>
+            </StackPanel>
+            
+            <!-- Space Fit Result -->
+            <Border Grid.Row="10" x:Name="SpaceFitBorder" BorderBrush="Gray" BorderThickness="1" 
+                    Padding="10" Margin="0,0,0,15" Visibility="Collapsed">
+                <TextBlock x:Name="SpaceFitLabel" Text="" FontSize="14" FontWeight="Bold"
+                           TextAlignment="Center" TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Include Landings Checkbox -->
+            <CheckBox Grid.Row="11" x:Name="IncludeLandingsCheckBox" Content="Configure Landings" 
+                      FontSize="14" FontWeight="Bold" Margin="0,0,0,10" 
+                      Checked="IncludeLandingsCheckBox_CheckedChanged" 
+                      Unchecked="IncludeLandingsCheckBox_CheckedChanged"/>
+
+            <!-- Landing Type Selector -->
+            <StackPanel Grid.Row="12" x:Name="LandingTypePanel" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Collapsed">
+                <Label Content="Landing Type:" Width="130" VerticalAlignment="Center" FontSize="14"/>
+                <ComboBox x:Name="LandingTypeComboBox" Width="250" Height="30" FontSize="14" 
+                          VerticalContentAlignment="Center" SelectionChanged="LandingTypeComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Straight (No Turn)" IsSelected="True"/>
+                    <ComboBoxItem Content="Right Angle (L-Shaped)"/>
+                    <ComboBoxItem Content="Full Return (U-Shaped)"/>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- Landing Depth Input -->
+            <StackPanel Grid.Row="13" x:Name="LandingDepthPanel" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Collapsed">
+                <Label Content="Landing Depth:" Width="130" VerticalAlignment="Center" FontSize="14"/>
+                <TextBox x:Name="LandingDepthTextBox" Width="250" Height="30" FontSize="14" 
+                         VerticalContentAlignment="Center" TextChanged="LandingDepthTextBox_TextChanged"
+                         LostFocus="LandingDepth_LostFocus"
+                         ToolTip="Enter as feet/inches (e.g., 6' or 72&quot;). Press Enter or leave field to update."/>
+            </StackPanel>
+
+            <!-- Overall Dimensions Result -->
+            <Border Grid.Row="14" x:Name="OverallDimensionsBorder" BorderBrush="Gray" BorderThickness="1" 
+                    Padding="10" Margin="0,0,0,10" Visibility="Collapsed" Background="LightCyan">
+                <StackPanel>
+                    <TextBlock x:Name="OverallLengthLabel" Text="" FontSize="14" FontWeight="Bold" 
+                               TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="OverallWidthLabel" Text="" FontSize="14" FontWeight="Bold" 
+                               TextAlignment="Center" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Visual Diagram Label -->
+            <Label Grid.Row="15" Content="Ramp Configuration:" FontSize="14" FontWeight="Bold" Margin="0,10,0,5"/>
+
+            <!-- Visual Diagram Display -->
+            <Border Grid.Row="16" BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="250">
+                    <TextBox x:Name="VisualDiagramTextBox" FontFamily="Consolas" FontSize="11" 
+                             IsReadOnly="True" TextWrapping="NoWrap" BorderThickness="0"
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Window>

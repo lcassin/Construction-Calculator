@@ -3,11 +3,11 @@
 ; Requires .NET 10 self-contained publish output
 
 #define MyAppName "Construction Calculator"
-#define MyAppVersion "2.0.0"
+#define MyAppVersion "2.0.2"
 #define MyAppPublisher "Lee Cassin"
 #define MyAppURL "https://github.com/lcassin/Construction-Calculator"
 #define MyAppExeName "ConstructionCalculator.WPF.exe"
-#define PublishDir "bin\Release\net10.0-windows\"
+#define PublishDir "bin\Release\net10.0-windows\publish"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -32,6 +32,12 @@ ArchitecturesInstallIn64BitMode=x64
 PrivilegesRequired=lowest
 SetupIconFile=Assets\app.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
+; Upgrade behavior settings
+UsePreviousAppDir=yes
+UsePreviousGroup=yes
+UsePreviousTasks=yes
+CloseApplications=yes
+RestartApplications=no
 LicenseFile=..\LICENSE
 ; Uncomment the following line if you have a code signing certificate
 ; SignTool=signtool
@@ -45,14 +51,16 @@ Name: "desktopicon"; Description: "Create a &desktop shortcut"; GroupDescription
 [Files]
 ; Install the self-contained executable and all dependencies
 Source: "{#PublishDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Install the high-resolution icon file for shortcuts to reference directly
+Source: "Assets\app.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: The publish output includes all .NET runtime dependencies, so no separate runtime installation is needed
 
 [Icons]
-; Start Menu shortcut
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"
+; Start Menu shortcut (uses explicit icon file for crisp display)
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\app.ico"; WorkingDir: "{app}"
 Name: "{group}\Uninstall {#MyAppName}"; Filename: "{uninstallexe}"
-; Desktop shortcut (optional, based on user selection)
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; Tasks: desktopicon
+; Desktop shortcut (optional, based on user selection, uses explicit icon file)
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\app.ico"; WorkingDir: "{app}"; Tasks: desktopicon
 
 [Run]
 ; Option to launch the application after installation
