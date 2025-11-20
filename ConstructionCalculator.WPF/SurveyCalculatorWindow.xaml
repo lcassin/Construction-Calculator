@@ -1,8 +1,10 @@
 <Window x:Class="ConstructionCalculator.WPF.SurveyCalculatorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ConstructionCalculator.WPF"
         Title="Survey Calculator" Height="779" Width="478"
-        ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        local:HelpBehavior.CalculatorKind="Survey">
 
 	<!-- Button styles now defined in App.xaml -->
 
