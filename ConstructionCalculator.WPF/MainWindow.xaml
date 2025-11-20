@@ -82,10 +82,14 @@
                      Grid.Row="2"
                      Text="0&quot;"
                      FontFamily="Consolas"
-                     FontSize="36"
+                     FontSize="42"
                      FontWeight="Bold"
                      TextAlignment="Right"
                      Padding="10"
+					 BorderThickness="2"
+					 SelectionBrush="AliceBlue"
+					 CaretBrush="Transparent"
+					 SelectionOpacity="0.2"
                      Margin="0,0,0,15"
                      VerticalContentAlignment="Center"
                      KeyDown="DisplayTextBox_KeyDown" Background="#FFE6E6E6"/>
@@ -132,14 +136,14 @@
 
 				<!-- Row 3: 0, ', ", +, M- -->
 				<Button Grid.Row="3" Grid.Column="0" Content="0" Style="{StaticResource NumberButtonStyle}" Click="Button_Click"/>
-				<Button Grid.Row="4" Grid.Column="2" Content="'" Style="{StaticResource EditorButtonStyle}" Click="Button_Click" Margin="5,6,5,4"/>
-				<Button Grid.Row="3" Grid.Column="2" Content="&quot;" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
+				<Button Grid.Row="4" Grid.Column="2" Content="' (ft)" Style="{StaticResource EditorButtonStyle}" Click="Button_Click" Margin="5,6,5,4"/>
+				<Button Grid.Row="3" Grid.Column="2" Content="&quot; (in)" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
 				<Button Grid.Row="3" Grid.Column="3" Content="+" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
 				<Button Grid.Row="3" Grid.Column="4" Content="M-" Style="{StaticResource MemoryButtonStyle}" Click="Button_Click"/>
 
 				<!-- Row 4: Space, /, ., =, (empty) -->
 				<Button Grid.Row="4" Grid.Column="0" Content="Space" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
-				<Button Grid.Row="4" Grid.Column="1" Content="/" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
+				<Button Grid.Row="4" Grid.Column="1" Content="/ (frac)" Style="{StaticResource EditorButtonStyle}" Click="Button_Click"/>
 				<Button Grid.Row="3" Grid.Column="1" Content="." Style="{StaticResource NumberButtonStyle}" Click="Button_Click" Margin="5,5,5,5" Background="#FFD0D0D0"/>
 				<Button Grid.Row="4" Grid.Column="3" Content="=" Style="{StaticResource OperatorButtonStyle}" Click="Button_Click"/>
 
