@@ -1,8 +1,10 @@
 ﻿<Window x:Class="ConstructionCalculator.WPF.BoardFeetCalculatorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ConstructionCalculator.WPF"
         Title="Board Feet Calculator" Height="650" Width="550"
-        ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        local:HelpBehavior.CalculatorKind="BoardFeet">
 
 	<Grid Margin="20">
 		<Grid.RowDefinitions>
