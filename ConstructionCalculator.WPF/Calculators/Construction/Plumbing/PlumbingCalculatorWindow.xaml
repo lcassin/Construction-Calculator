@@ -8,7 +8,8 @@
         Icon="pack://application:,,,/Assets/app.ico"
         help:HelpBehavior.CalculatorKind="Plumbing">
 
-    <Grid Margin="20">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -22,7 +23,7 @@
         <TextBlock Grid.Row="0" Text="Calculate pipe sizing, flow rates, and drainage requirements.&#x0a;Select calculation type and enter parameters for plumbing system design." 
                    FontSize="12" FontStyle="Italic" Foreground="Gray" TextWrapping="Wrap" Margin="0,0,0,15"/>
 
-        <TabControl Grid.Row="1" Height="600">
+        <TabControl Grid.Row="1">
             <TabItem Header="Pipe Sizing (Water Supply)">
                 <Grid Margin="15">
                     <Grid.RowDefinitions>
@@ -224,5 +225,6 @@
         <Button Grid.Row="2" Content="Copy Results" 
                 Style="{StaticResource ActionButtonStyle}"
                 Height="32" Margin="0,10,0,0" Click="CopyResultsButton_Click"/>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Window>
