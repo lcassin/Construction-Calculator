@@ -6,10 +6,16 @@ namespace ConstructionCalculator.WPF.Calculators.Materials.Flooring;
 public partial class FlooringCalculatorWindow : Window
 {
     private readonly List<SectionData> sections = new();
+    private bool _isInitialized = false;
 
     public FlooringCalculatorWindow()
     {
         InitializeComponent();
+        Loaded += (_, __) => 
+        { 
+            _isInitialized = true; 
+            UpdateTotals(); 
+        };
     }
 
     private void AddSectionButton_Click(object sender, RoutedEventArgs e)
@@ -141,11 +147,15 @@ public partial class FlooringCalculatorWindow : Window
 
     private void CostPerUnitTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
+        if (!_isInitialized) return;
         UpdateTotals();
     }
 
     private void UpdateTotals()
     {
+        if (TotalAreaLabel == null || MaterialNeededLabel == null || TotalCostLabel == null || CostPerUnitTextBox == null)
+            return;
+
         double totalArea = sections.Sum(s => s.AreaSqFt);
         double totalWithWaste = sections.Sum(s => s.AreaWithWasteSqFt);
 
