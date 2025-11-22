@@ -30,7 +30,7 @@
                        Margin="0,0,0,10"/>
             
             <!-- Version -->
-            <TextBlock Text="Version 2.0.2 (WPF with Fluent Theme)"
+            <TextBlock Text="Version 2.0.3 (WPF with Fluent Theme)"
                        FontSize="16"
                        HorizontalAlignment="Center"
                        Foreground="Gray"
@@ -83,6 +83,12 @@
                 <TextBlock Text="• Concrete Calculator for volume and materials" 
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Roofing Calculator for area and materials" 
+                           FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• HVAC Calculator for heating/cooling BTU and duct sizing" 
+                           FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• Plumbing Calculator for pipe sizing and flow rates" 
+                           FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• Flooring &amp; Counter Calculator with waste factors" 
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Paint/Coverage Calculator" 
                            FontSize="13" Margin="0,3,0,3"/>
