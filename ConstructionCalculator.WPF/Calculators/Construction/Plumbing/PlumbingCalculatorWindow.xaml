@@ -1,0 +1,228 @@
+<Window x:Class="ConstructionCalculator.WPF.Calculators.Construction.Plumbing.PlumbingCalculatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ConstructionCalculator.WPF.Calculators.Construction.Plumbing"
+        xmlns:help="clr-namespace:ConstructionCalculator.WPF.Shared.HelpSystem"
+        Title="Plumbing Calculator" Height="750" Width="650"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        Icon="pack://application:,,,/Assets/app.ico"
+        help:HelpBehavior.CalculatorKind="Plumbing">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Calculate pipe sizing, flow rates, and drainage requirements.&#x0a;Select calculation type and enter parameters for plumbing system design." 
+                   FontSize="12" FontStyle="Italic" Foreground="Gray" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+        <TabControl Grid.Row="1" Height="600">
+            <TabItem Header="Pipe Sizing (Water Supply)">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Calculate required pipe size based on fixture units and flow requirements." 
+                               FontSize="12" Foreground="Gray" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                    <GroupBox Grid.Row="1" Header="Fixture Units" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Total Fixture Units:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="FixtureUnitsTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="10" ToolTip="Sum of all fixture unit values"/>
+                            </StackPanel>
+                            <TextBlock Text="Common fixture units: Toilet (3), Sink (1), Shower (2), Bathtub (2), Washing Machine (2)" 
+                                       FontSize="11" Foreground="Gray" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="2" Header="System Parameters" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Pipe Length:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="PipeLengthTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="50" ToolTip="Total pipe run length in feet"/>
+                                <Label Content="ft" Width="30" VerticalAlignment="Center" FontSize="13" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Pipe Material:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <ComboBox x:Name="PipeMaterialComboBox" Width="200" Height="28" FontSize="13" SelectedIndex="0">
+                                    <ComboBoxItem Content="Copper (Type L)"/>
+                                    <ComboBoxItem Content="PEX"/>
+                                    <ComboBoxItem Content="CPVC"/>
+                                    <ComboBoxItem Content="Galvanized Steel"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Water Pressure:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="WaterPressureTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="60" ToolTip="Available water pressure in PSI"/>
+                                <Label Content="PSI" Width="40" VerticalAlignment="Center" FontSize="13" Margin="5,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <Button Grid.Row="3" Content="Calculate Pipe Size" 
+                            Style="{StaticResource PrimaryActionButtonStyle}"
+                            Height="35" Margin="0,10,0,15" Click="CalculatePipeSizeButton_Click"/>
+
+                    <Border Grid.Row="4" BorderBrush="Gray" BorderThickness="2" Padding="15" Background="#F5F5F5">
+                        <StackPanel>
+                            <TextBlock Text="Results:" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBlock x:Name="FlowRateLabel" Text="Required Flow Rate: 0 GPM" 
+                                       FontSize="13" Margin="0,0,0,5"/>
+                            <TextBlock x:Name="RecommendedPipeSizeLabel" Text="Recommended Pipe Size: Not calculated" 
+                                       FontSize="14" FontWeight="SemiBold" Margin="0,5,0,5" Foreground="DarkGreen"/>
+                            <TextBlock x:Name="VelocityLabel" Text="Flow Velocity: 0 ft/s" 
+                                       FontSize="13" Margin="0,5,0,5"/>
+                            <TextBlock x:Name="PressureLossLabel" Text="Estimated Pressure Loss: 0 PSI" 
+                                       FontSize="13" Margin="0,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Drain/Waste/Vent (DWV)">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Calculate drain pipe sizing based on drainage fixture units (DFU)." 
+                               FontSize="12" Foreground="Gray" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                    <GroupBox Grid.Row="1" Header="Drainage Fixture Units" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Total DFU:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="DFUTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="6" ToolTip="Sum of all drainage fixture units"/>
+                            </StackPanel>
+                            <TextBlock Text="Common DFU values: Toilet (3), Sink (1), Shower (2), Bathtub (2), Washing Machine (2)" 
+                                       FontSize="11" Foreground="Gray" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="2" Header="Drain Configuration" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Drain Type:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <ComboBox x:Name="DrainTypeComboBox" Width="200" Height="28" FontSize="13" SelectedIndex="0">
+                                    <ComboBoxItem Content="Horizontal Branch"/>
+                                    <ComboBoxItem Content="Vertical Stack"/>
+                                    <ComboBoxItem Content="Building Drain"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Slope:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <ComboBox x:Name="SlopeComboBox" Width="200" Height="28" FontSize="13" SelectedIndex="0">
+                                    <ComboBoxItem Content="1/8&quot; per foot"/>
+                                    <ComboBoxItem Content="1/4&quot; per foot (standard)"/>
+                                    <ComboBoxItem Content="1/2&quot; per foot"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <Button Grid.Row="3" Content="Calculate Drain Size" 
+                            Style="{StaticResource PrimaryActionButtonStyle}"
+                            Height="35" Margin="0,10,0,15" Click="CalculateDrainSizeButton_Click"/>
+
+                    <Border Grid.Row="4" BorderBrush="Gray" BorderThickness="2" Padding="15" Background="#F5F5F5">
+                        <StackPanel>
+                            <TextBlock Text="Results:" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBlock x:Name="DrainSizeLabel" Text="Recommended Drain Size: Not calculated" 
+                                       FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="DarkGreen"/>
+                            <TextBlock x:Name="VentSizeLabel" Text="Recommended Vent Size: Not calculated" 
+                                       FontSize="13" Margin="0,5,0,5"/>
+                            <TextBlock x:Name="DrainCapacityLabel" Text="Drain Capacity: 0 DFU" 
+                                       FontSize="13" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Flow Rate Calculator">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Calculate flow rate through pipes based on size and pressure." 
+                               FontSize="12" Foreground="Gray" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                    <GroupBox Grid.Row="1" Header="Pipe Parameters" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Pipe Diameter:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <ComboBox x:Name="FlowPipeDiameterComboBox" Width="150" Height="28" FontSize="13" SelectedIndex="2">
+                                    <ComboBoxItem Content="1/2&quot;"/>
+                                    <ComboBoxItem Content="3/4&quot;"/>
+                                    <ComboBoxItem Content="1&quot;"/>
+                                    <ComboBoxItem Content="1-1/4&quot;"/>
+                                    <ComboBoxItem Content="1-1/2&quot;"/>
+                                    <ComboBoxItem Content="2&quot;"/>
+                                    <ComboBoxItem Content="3&quot;"/>
+                                    <ComboBoxItem Content="4&quot;"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Pressure:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="FlowPressureTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="50" ToolTip="Water pressure in PSI"/>
+                                <Label Content="PSI" Width="40" VerticalAlignment="Center" FontSize="13" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Pipe Length:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="FlowPipeLengthTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="100" ToolTip="Pipe length in feet"/>
+                                <Label Content="ft" Width="30" VerticalAlignment="Center" FontSize="13" Margin="5,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <Button Grid.Row="2" Content="Calculate Flow Rate" 
+                            Style="{StaticResource PrimaryActionButtonStyle}"
+                            Height="35" Margin="0,10,0,15" Click="CalculateFlowRateButton_Click"/>
+
+                    <Border Grid.Row="3" BorderBrush="Gray" BorderThickness="2" Padding="15" Background="#F5F5F5">
+                        <StackPanel>
+                            <TextBlock Text="Results:" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBlock x:Name="CalculatedFlowRateLabel" Text="Flow Rate: 0 GPM" 
+                                       FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="DarkGreen"/>
+                            <TextBlock x:Name="FlowVelocityLabel" Text="Flow Velocity: 0 ft/s" 
+                                       FontSize="13" Margin="0,5,0,5"/>
+                            <TextBlock x:Name="FlowPressureLossLabel" Text="Pressure Loss: 0 PSI" 
+                                       FontSize="13" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Button Grid.Row="2" Content="Copy Results" 
+                Style="{StaticResource ActionButtonStyle}"
+                Height="32" Margin="0,10,0,0" Click="CopyResultsButton_Click"/>
+    </Grid>
+</Window>

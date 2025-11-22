@@ -8,11 +8,14 @@ using ConstructionCalculator.WPF.Calculators.Construction.Stair;
 using ConstructionCalculator.WPF.Calculators.Construction.Ramp;
 using ConstructionCalculator.WPF.Calculators.Construction.Drywall;
 using ConstructionCalculator.WPF.Calculators.Construction.Grading;
+using ConstructionCalculator.WPF.Calculators.Construction.HVAC;
+using ConstructionCalculator.WPF.Calculators.Construction.Plumbing;
 using ConstructionCalculator.WPF.Calculators.Geometry.Area;
 using ConstructionCalculator.WPF.Calculators.Geometry.Angle;
 using ConstructionCalculator.WPF.Calculators.Geometry.Roofing;
 using ConstructionCalculator.WPF.Calculators.Materials.Paint;
 using ConstructionCalculator.WPF.Calculators.Materials.BoardFeet;
+using ConstructionCalculator.WPF.Calculators.Materials.Flooring;
 using ConstructionCalculator.WPF.Calculators.Survey;
 using ConstructionCalculator.WPF.Calculators.SeatingLayout;
 using ConstructionCalculator.WPF.Shared.HelpSystem;
@@ -834,6 +837,24 @@ public partial class MainWindow : Window
         gradingCalculator.ShowDialog();
     }
 
+    private void HVACCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var hvacCalculator = new HVACCalculatorWindow { Owner = this };
+        hvacCalculator.ShowDialog();
+    }
+
+    private void PlumbingCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var plumbingCalculator = new PlumbingCalculatorWindow { Owner = this };
+        plumbingCalculator.ShowDialog();
+    }
+
+    private void FlooringCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var flooringCalculator = new FlooringCalculatorWindow { Owner = this };
+        flooringCalculator.ShowDialog();
+    }
+
     private void LightTheme_Click(object sender, RoutedEventArgs e)
     {
         Application.Current.ThemeMode = ThemeMode.Light;
@@ -942,6 +963,24 @@ public partial class MainWindow : Window
     private void HelpGrading_Click(object sender, RoutedEventArgs e)
     {
         var helpWindow = new HelpWindow(CalculatorKind.Grading) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpHVAC_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.HVAC) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpPlumbing_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Plumbing) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpFlooring_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Flooring) { Owner = this };
         helpWindow.Show();
     }
 

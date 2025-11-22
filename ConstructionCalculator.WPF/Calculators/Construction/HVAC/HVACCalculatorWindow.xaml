@@ -1,0 +1,148 @@
+<Window x:Class="ConstructionCalculator.WPF.Calculators.Construction.HVAC.HVACCalculatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ConstructionCalculator.WPF.Calculators.Construction.HVAC"
+        xmlns:help="clr-namespace:ConstructionCalculator.WPF.Shared.HelpSystem"
+        Title="HVAC Calculator" Height="700" Width="600"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        Icon="pack://application:,,,/Assets/app.ico"
+        help:HelpBehavior.CalculatorKind="HVAC">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Calculate heating and cooling requirements for rooms and buildings.&#x0a;Enter room dimensions and conditions to determine BTU needs and tonnage." 
+                   FontSize="12" FontStyle="Italic" Foreground="Gray" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+        <GroupBox Grid.Row="1" Header="Room Dimensions" Padding="10" Margin="0,0,0,10">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Label Content="Length:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <TextBox x:Name="LengthTextBox" Width="150" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                             ToolTip="Room length in feet"/>
+                    <Label Content="ft" Width="30" VerticalAlignment="Center" FontSize="13" Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Label Content="Width:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <TextBox x:Name="WidthTextBox" Width="150" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                             ToolTip="Room width in feet"/>
+                    <Label Content="ft" Width="30" VerticalAlignment="Center" FontSize="13" Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Ceiling Height:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <TextBox x:Name="HeightTextBox" Width="150" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                             Text="8" ToolTip="Ceiling height in feet"/>
+                    <Label Content="ft" Width="30" VerticalAlignment="Center" FontSize="13" Margin="5,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Header="Room Conditions" Padding="10" Margin="0,0,0,10">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Label Content="Insulation:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <ComboBox x:Name="InsulationComboBox" Width="200" Height="28" FontSize="13" SelectedIndex="1">
+                        <ComboBoxItem Content="Poor (old/minimal)"/>
+                        <ComboBoxItem Content="Average (standard)"/>
+                        <ComboBoxItem Content="Good (modern/upgraded)"/>
+                        <ComboBoxItem Content="Excellent (high-efficiency)"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Label Content="Sun Exposure:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <ComboBox x:Name="SunExposureComboBox" Width="200" Height="28" FontSize="13" SelectedIndex="1">
+                        <ComboBoxItem Content="Shaded (north-facing)"/>
+                        <ComboBoxItem Content="Moderate"/>
+                        <ComboBoxItem Content="High (south/west-facing)"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Label Content="Climate Zone:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <ComboBox x:Name="ClimateZoneComboBox" Width="200" Height="28" FontSize="13" SelectedIndex="1">
+                        <ComboBoxItem Content="Cold (Zone 1-3)"/>
+                        <ComboBoxItem Content="Moderate (Zone 4-5)"/>
+                        <ComboBoxItem Content="Hot (Zone 6-8)"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Number of Windows:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <TextBox x:Name="WindowsTextBox" Width="80" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                             Text="2" ToolTip="Number of windows in room"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="3" Header="Additional Factors" Padding="10" Margin="0,0,0,10">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Label Content="Occupants:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <TextBox x:Name="OccupantsTextBox" Width="80" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                             Text="2" ToolTip="Typical number of people in room"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Kitchen/Appliances:" Width="150" VerticalAlignment="Center" FontSize="13"/>
+                    <CheckBox x:Name="KitchenCheckBox" VerticalAlignment="Center" 
+                              Content="Room has kitchen or heat-generating appliances"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <Button Grid.Row="4" Content="Calculate BTU Requirements" 
+                Style="{StaticResource PrimaryActionButtonStyle}"
+                Height="35" Margin="0,10,0,15" Click="CalculateButton_Click"/>
+
+        <Border Grid.Row="5" BorderBrush="Gray" BorderThickness="2" Padding="15" Background="#F5F5F5" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="Results:" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                <TextBlock x:Name="RoomVolumeLabel" Text="Room Volume: 0 cubic feet" 
+                           FontSize="13" Margin="0,0,0,5"/>
+                <TextBlock x:Name="BTUHeatingLabel" Text="Heating BTU Required: 0 BTU/hr" 
+                           FontSize="14" FontWeight="SemiBold" Margin="0,5,0,5" Foreground="DarkRed"/>
+                <TextBlock x:Name="BTUCoolingLabel" Text="Cooling BTU Required: 0 BTU/hr" 
+                           FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="DarkBlue"/>
+                <TextBlock x:Name="TonnageLabel" Text="AC Tonnage Required: 0.0 tons" 
+                           FontSize="14" FontWeight="SemiBold" Margin="0,5,0,5" Foreground="DarkGreen"/>
+                <TextBlock x:Name="CFMLabel" Text="Recommended CFM: 0 CFM" 
+                           FontSize="13" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <GroupBox Grid.Row="6" Header="Duct Sizing (Rectangular)" Padding="10" Margin="0,0,0,10">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Label Content="Required CFM:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <TextBox x:Name="DuctCFMTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                             Text="400" ToolTip="Airflow in cubic feet per minute"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Label Content="Velocity (FPM):" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                    <TextBox x:Name="VelocityTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                             Text="800" ToolTip="Air velocity in feet per minute (typical: 600-900)"/>
+                </StackPanel>
+                <Button Content="Calculate Duct Size" 
+                        Style="{StaticResource ActionButtonStyle}"
+                        Height="30" Click="CalculateDuctButton_Click"/>
+                <TextBlock x:Name="DuctSizeLabel" Text="Duct Size: Not calculated" 
+                           FontSize="13" FontWeight="SemiBold" Margin="0,10,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <Button Grid.Row="7" Content="Copy Results" 
+                Style="{StaticResource ActionButtonStyle}"
+                Height="32" Margin="0,0,0,10" Click="CopyResultsButton_Click"/>
+
+        <TextBlock Grid.Row="8" Text="Note: These are estimates. Consult with an HVAC professional for final sizing and installation." 
+                   FontSize="11" FontStyle="Italic" Foreground="Gray" TextWrapping="Wrap"/>
+    </Grid>
+</Window>
