@@ -9,11 +9,14 @@ using ConstructionCalculator.WPF.Calculators.Construction.Stair;
 using ConstructionCalculator.WPF.Calculators.Construction.Ramp;
 using ConstructionCalculator.WPF.Calculators.Construction.Drywall;
 using ConstructionCalculator.WPF.Calculators.Construction.Grading;
+using ConstructionCalculator.WPF.Calculators.Construction.HVAC;
+using ConstructionCalculator.WPF.Calculators.Construction.Plumbing;
 using ConstructionCalculator.WPF.Calculators.Geometry.Area;
 using ConstructionCalculator.WPF.Calculators.Geometry.Angle;
 using ConstructionCalculator.WPF.Calculators.Geometry.Roofing;
 using ConstructionCalculator.WPF.Calculators.Materials.Paint;
 using ConstructionCalculator.WPF.Calculators.Materials.BoardFeet;
+using ConstructionCalculator.WPF.Calculators.Materials.Flooring;
 using ConstructionCalculator.WPF.Calculators.Survey;
 using ConstructionCalculator.WPF.Calculators.SeatingLayout;
 using ConstructionCalculator.WPF.Shared.HelpSystem;
@@ -156,6 +159,33 @@ public partial class CalculatorLauncherWindow : Window
                 Icon = "⛰",
                 HelpKind = CalculatorKind.Grading,
                 OpenAction = () => new GradingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
+                Name = "HVAC Calculator",
+                Category = "Construction",
+                Description = "Calculate BTU, tonnage, CFM, and duct sizing",
+                Icon = "❄",
+                HelpKind = CalculatorKind.HVAC,
+                OpenAction = () => new HVACCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
+                Name = "Plumbing Calculator",
+                Category = "Construction",
+                Description = "Calculate pipe sizing, flow rates, and drain capacity",
+                Icon = "🚰",
+                HelpKind = CalculatorKind.Plumbing,
+                OpenAction = () => new PlumbingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
+                Name = "Flooring & Counter",
+                Category = "Materials",
+                Description = "Calculate material quantities with waste for flooring and counters",
+                Icon = "🔲",
+                HelpKind = CalculatorKind.Flooring,
+                OpenAction = () => new FlooringCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             }
         };
     }

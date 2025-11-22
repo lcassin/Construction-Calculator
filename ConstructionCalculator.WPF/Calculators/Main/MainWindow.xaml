@@ -41,6 +41,11 @@
 					<MenuItem Header="Board Feet Calculator" Click="BoardFeetCalculator_Click"/>
 					<MenuItem Header="Drywall Calculator" Click="DrywallCalculator_Click"/>
 					<MenuItem Header="Grading/Slope Calculator" Click="GradingCalculator_Click"/>
+					<MenuItem Header="HVAC Calculator" Click="HVACCalculator_Click"/>
+					<MenuItem Header="Plumbing Calculator" Click="PlumbingCalculator_Click"/>
+				</MenuItem>
+				<MenuItem Header="Materials">
+					<MenuItem Header="Flooring &amp; Counter Calculator" Click="FlooringCalculator_Click"/>
 				</MenuItem>
 				<Separator/>
 				<MenuItem Header="Theme">
@@ -72,6 +77,11 @@
 						<MenuItem Header="Help: Board Feet Calculator" Click="HelpBoardFeet_Click"/>
 						<MenuItem Header="Help: Drywall Calculator" Click="HelpDrywall_Click"/>
 						<MenuItem Header="Help: Grading/Slope Calculator" Click="HelpGrading_Click"/>
+						<MenuItem Header="Help: HVAC Calculator" Click="HelpHVAC_Click"/>
+						<MenuItem Header="Help: Plumbing Calculator" Click="HelpPlumbing_Click"/>
+					</MenuItem>
+					<MenuItem Header="Materials">
+						<MenuItem Header="Help: Flooring &amp; Counter Calculator" Click="HelpFlooring_Click"/>
 					</MenuItem>
 				</MenuItem>
 				<Separator/>

@@ -22,6 +22,9 @@ public static class HelpContentProvider
             CalculatorKind.BoardFeet => GetBoardFeetCalculatorHelp(),
             CalculatorKind.Drywall => GetDrywallCalculatorHelp(),
             CalculatorKind.Grading => GetGradingCalculatorHelp(),
+            CalculatorKind.HVAC => GetHVACCalculatorHelp(),
+            CalculatorKind.Plumbing => GetPlumbingCalculatorHelp(),
+            CalculatorKind.Flooring => GetFlooringCalculatorHelp(),
             _ => new HelpTopic { Title = "Help", Summary = "No help available for this calculator." }
         };
     }
@@ -397,6 +400,150 @@ public static class HelpContentProvider
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
             Examples = new List<ExampleItem> { new("Run: 100', Rise: 2'", "2% grade", "Minimum drainage slope") },
             Tips = new List<string> { "Minimum grade for drainage: 2%", "1% grade = 1 foot rise per 100 feet run" }
+        };
+    }
+
+    private static HelpTopic GetHVACCalculatorHelp()
+    {
+        return new HelpTopic
+        {
+            Title = "HVAC Calculator",
+            IconGlyph = "❄",
+            IconFontFamily = "Segoe UI Emoji",
+            Summary = "Calculate heating and cooling requirements including BTU, tonnage, CFM, and duct sizing for residential and commercial spaces.",
+            ExpectedInputs = new List<string>
+            {
+                "Room Length (feet)",
+                "Room Width (feet)",
+                "Room Height (feet, typically 8-10')",
+                "Insulation Level (Poor/Average/Good/Excellent)",
+                "Sun Exposure (Shaded/Moderate/High)",
+                "Climate Zone (Cold/Moderate/Hot/Very Hot)",
+                "Number of Windows",
+                "Number of Occupants",
+                "Kitchen (Yes/No checkbox)",
+                "For Duct Sizing: CFM and Air Velocity"
+            },
+            Shortcuts = new List<ShortcutItem>
+            {
+                new("F1", "Show this help"),
+                new("Tab", "Navigate between fields")
+            },
+            Examples = new List<ExampleItem>
+            {
+                new("20' × 15' × 8' room, Average insulation, Moderate sun, Moderate climate, 2 windows, 2 occupants", "Heating: 7,200 BTU, Cooling: 8,400 BTU, 0.7 tons, 280 CFM", "Standard living room"),
+                new("12' × 10' × 8' kitchen, Good insulation, High sun, Hot climate, 1 window, 2 occupants, Kitchen=Yes", "Heating: 5,040 BTU, Cooling: 8,280 BTU, 0.69 tons, 276 CFM", "Kitchen with cooking load"),
+                new("Duct Sizing: 400 CFM at 900 FPM", "6\" round or 6×8\" rectangular duct", "Supply duct sizing")
+            },
+            Tips = new List<string>
+            {
+                "Base calculation: 20 BTU per square foot",
+                "Insulation multipliers: Poor (1.3×), Average (1.0×), Good (0.85×), Excellent (0.7×)",
+                "Sun exposure multipliers: Shaded (0.9×), Moderate (1.0×), High (1.15×)",
+                "Climate multipliers: Cold (0.9×), Moderate (1.0×), Hot (1.1×), Very Hot (1.2×)",
+                "Add 1,000 BTU per window",
+                "Add 400 BTU per occupant (heating), 600 BTU per occupant (cooling)",
+                "Add 2,000 BTU (heating) or 4,000 BTU (cooling) for kitchens",
+                "Tonnage = Cooling BTU ÷ 12,000",
+                "CFM = Cooling BTU ÷ 30",
+                "Standard air velocity: 700-900 FPM for supply ducts, 500-700 FPM for return ducts",
+                "Round duct is more efficient than rectangular for same area",
+                "Always round up equipment size to next available unit",
+                "Consider zoning for large or multi-story buildings"
+            }
+        };
+    }
+
+    private static HelpTopic GetPlumbingCalculatorHelp()
+    {
+        return new HelpTopic
+        {
+            Title = "Plumbing Calculator",
+            IconGlyph = "🚰",
+            IconFontFamily = "Segoe UI Emoji",
+            Summary = "Calculate pipe sizing, flow rates, pressure loss, and drain/vent sizing for plumbing systems. Includes three calculation modes: Pipe Sizing, DWV (Drain-Waste-Vent), and Flow Rate.",
+            ExpectedInputs = new List<string>
+            {
+                "Pipe Sizing Tab: Fixture Units, Pipe Length, Material, Pressure",
+                "DWV Tab: Drainage Fixture Units (DFU), Drain Type, Slope",
+                "Flow Rate Tab: Pipe Diameter, Pressure, Pipe Length"
+            },
+            Shortcuts = new List<ShortcutItem>
+            {
+                new("F1", "Show this help"),
+                new("Tab", "Navigate between fields"),
+                new("Ctrl+Tab", "Switch between tabs")
+            },
+            Examples = new List<ExampleItem>
+            {
+                new("Pipe Sizing: 10 fixture units, 50' copper pipe, 60 PSI", "3/4\" pipe, 12.6 GPM, 5.2 ft/s, 8.5 PSI loss", "Residential branch line"),
+                new("DWV: 20 DFU, Horizontal Branch, 1/4\" per foot slope", "3\" drain, 2\" vent, 42 DFU capacity", "Bathroom group drain"),
+                new("Flow Rate: 1\" pipe, 60 PSI, 100' length", "15.8 GPM, 5.1 ft/s, 12.3 PSI loss", "Supply line flow")
+            },
+            Tips = new List<string>
+            {
+                "Fixture Units: Standardized load values (toilet=4 FU, sink=1 FU, shower=2 FU)",
+                "Flow rate formula: √(Fixture Units) × 4.0 GPM",
+                "Pipe sizing: 1/2\" (≤4 GPM), 3/4\" (≤10 GPM), 1\" (≤20 GPM), 1-1/4\" (≤35 GPM), 1-1/2\" (≤50 GPM)",
+                "Friction factors: Copper (0.85), PEX (0.75), CPVC (0.90), Galvanized (1.2)",
+                "Velocity should be 5-8 ft/s for supply lines",
+                "Maximum pressure loss: 5-10 PSI per 100 feet",
+                "DFU (Drainage Fixture Units): Similar to supply fixture units but for drains",
+                "Drain types: Horizontal Branch, Vertical Stack, Building Drain",
+                "Minimum drain slope: 1/4\" per foot for 3\" and smaller, 1/8\" per foot for 4\" and larger",
+                "Vent sizing: Typically 1/2 the drain size, minimum 1-1/4\"",
+                "Horizontal branch: Short runs connecting fixtures to stacks",
+                "Vertical stack: Main vertical drain pipe",
+                "Building drain: Main horizontal drain below fixtures",
+                "Always check local plumbing codes for specific requirements"
+            }
+        };
+    }
+
+    private static HelpTopic GetFlooringCalculatorHelp()
+    {
+        return new HelpTopic
+        {
+            Title = "Flooring & Counter Calculator",
+            IconGlyph = "🔲",
+            IconFontFamily = "Segoe UI Emoji",
+            Summary = "Calculate material quantities needed for flooring and countertop installations including waste/overage factors and cost estimation. Supports multiple sections and various material types.",
+            ExpectedInputs = new List<string>
+            {
+                "Length (feet and inches)",
+                "Width (feet and inches)",
+                "Material Type (Tile, Hardwood, Laminate, Vinyl, Carpet, Granite/Quartz, etc.)",
+                "Waste Factor (percentage, auto-set based on material)",
+                "Cost per Square Foot (optional, for cost estimation)"
+            },
+            Shortcuts = new List<ShortcutItem>
+            {
+                new("F1", "Show this help"),
+                new("Tab", "Navigate between fields"),
+                new("Enter", "Add section")
+            },
+            Examples = new List<ExampleItem>
+            {
+                new("Kitchen: 12' × 10', Tile 12×12, 10% waste", "120 sq ft area, 132 sq ft material needed", "Ceramic tile floor"),
+                new("Living Room: 20' × 15', Hardwood, 7% waste", "300 sq ft area, 321 sq ft material needed", "Hardwood flooring"),
+                new("Counter: 8' × 2', Granite, 15% waste", "16 sq ft area, 18.4 sq ft material needed", "Kitchen countertop"),
+                new("Multiple sections: Kitchen 120 sq ft + Dining 150 sq ft", "270 sq ft total, 297 sq ft with 10% waste", "Combined areas")
+            },
+            Tips = new List<string>
+            {
+                "Smart waste defaults: Tile (10%), Hardwood/Laminate/Vinyl (7%), Carpet (5%), Granite/Quartz (15%)",
+                "Tile waste accounts for cuts, breakage, and pattern matching",
+                "Hardwood waste covers end cuts and board defects",
+                "Carpet waste is lower due to large roll sizes",
+                "Granite/Quartz waste is higher due to seams and fabrication",
+                "Add multiple sections for rooms with different areas",
+                "Material types: Tile 12×12, Tile 18×18, Tile 24×24, Hardwood, Laminate, Vinyl, Carpet, Granite/Quartz, Custom",
+                "Always round up when ordering materials",
+                "Consider extra material for future repairs",
+                "Cost calculation: Total Material Needed × Cost per Sq Ft",
+                "Remove sections individually or clear all at once",
+                "Copy results to clipboard for easy sharing"
+            }
         };
     }
 }
