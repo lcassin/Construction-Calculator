@@ -1,15 +1,18 @@
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ConstructionCalculator.WPF.Calculators.Construction.HVAC;
 
 public partial class HVACCalculatorWindow : Window
 {
+    private readonly List<ZoneData> zones = new();
+
     public HVACCalculatorWindow()
     {
         InitializeComponent();
     }
 
-    private void CalculateButton_Click(object sender, RoutedEventArgs e)
+    private void AddZoneButton_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -43,65 +46,176 @@ public partial class HVACCalculatorWindow : Window
                 return;
             }
 
-            double roomVolume = length * width * height;
-            double squareFeet = length * width;
+            string zoneName = string.IsNullOrWhiteSpace(ZoneNameTextBox.Text) ? $"Zone {zones.Count + 1}" : ZoneNameTextBox.Text;
 
-            double baseBTUPerSqFt = 20.0;
+            var zoneData = CalculateZoneLoad(zoneName, length, width, height, windows, occupants,
+                InsulationComboBox.SelectedIndex, SunExposureComboBox.SelectedIndex,
+                ClimateZoneComboBox.SelectedIndex, KitchenCheckBox.IsChecked == true);
 
-            double insulationMultiplier = InsulationComboBox.SelectedIndex switch
-            {
-                0 => 1.3,
-                1 => 1.0,
-                2 => 0.85,
-                3 => 0.7,
-                _ => 1.0
-            };
+            zones.Add(zoneData);
 
-            double sunExposureMultiplier = SunExposureComboBox.SelectedIndex switch
-            {
-                0 => 0.9,
-                1 => 1.0,
-                2 => 1.15,
-                _ => 1.0
-            };
+            string displayText = $"{zoneName}: {zoneData.SquareFeet:F0} sq ft | Heating: {zoneData.HeatingBTU:F0} BTU | Cooling: {zoneData.CoolingBTU:F0} BTU | {zoneData.CFM:F0} CFM";
+            ZonesListBox.Items.Add(displayText);
 
-            double climateMultiplier = ClimateZoneComboBox.SelectedIndex switch
-            {
-                0 => 0.9,
-                1 => 1.0,
-                2 => 1.2,
-                _ => 1.0
-            };
+            UpdateTotals();
 
-            double heatingBTU = squareFeet * baseBTUPerSqFt * insulationMultiplier * climateMultiplier;
-            heatingBTU += windows * 1000;
-            heatingBTU += occupants * 400;
-
-            double coolingBTU = squareFeet * baseBTUPerSqFt * insulationMultiplier * sunExposureMultiplier * climateMultiplier;
-            coolingBTU += windows * 1000;
-            coolingBTU += occupants * 600;
-
-            if (KitchenCheckBox.IsChecked == true)
-            {
-                coolingBTU += 4000;
-                heatingBTU += 2000;
-            }
-
-            double tonnage = coolingBTU / 12000.0;
-
-            double cfm = coolingBTU / 30.0;
-
-            RoomVolumeLabel.Text = $"Room Volume: {roomVolume:F0} cubic feet ({squareFeet:F0} sq ft)";
-            BTUHeatingLabel.Text = $"Heating BTU Required: {heatingBTU:F0} BTU/hr";
-            BTUCoolingLabel.Text = $"Cooling BTU Required: {coolingBTU:F0} BTU/hr";
-            TonnageLabel.Text = $"AC Tonnage Required: {tonnage:F2} tons (recommend {Math.Ceiling(tonnage * 2) / 2:F1} ton unit)";
-            CFMLabel.Text = $"Recommended CFM: {cfm:F0} CFM";
-
-            DuctCFMTextBox.Text = cfm.ToString("F0");
+            ZoneNameTextBox.Clear();
+            LengthTextBox.Clear();
+            WidthTextBox.Clear();
+            WindowsTextBox.Text = "2";
+            OccupantsTextBox.Text = "2";
+            ZoneNameTextBox.Focus();
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Error: {ex.Message}", "Calculation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void RemoveZoneButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (ZonesListBox.SelectedIndex >= 0)
+        {
+            int index = ZonesListBox.SelectedIndex;
+            zones.RemoveAt(index);
+            ZonesListBox.Items.RemoveAt(index);
+            UpdateTotals();
+        }
+        else
+        {
+            MessageBox.Show("Please select a zone to remove.", "Selection Required", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+
+    private void ClearAllZonesButton_Click(object sender, RoutedEventArgs e)
+    {
+        zones.Clear();
+        ZonesListBox.Items.Clear();
+        UpdateTotals();
+    }
+
+    private ZoneData CalculateZoneLoad(string name, double length, double width, double height, int windows, int occupants,
+        int insulationIndex, int sunExposureIndex, int climateIndex, bool hasKitchen)
+    {
+        double roomVolume = length * width * height;
+        double squareFeet = length * width;
+
+        double baseBTUPerSqFt = 20.0;
+
+        double insulationMultiplier = insulationIndex switch
+        {
+            0 => 1.3,
+            1 => 1.0,
+            2 => 0.85,
+            3 => 0.7,
+            _ => 1.0
+        };
+
+        double sunExposureMultiplier = sunExposureIndex switch
+        {
+            0 => 0.9,
+            1 => 1.0,
+            2 => 1.15,
+            _ => 1.0
+        };
+
+        double climateMultiplier = climateIndex switch
+        {
+            0 => 0.9,
+            1 => 1.0,
+            2 => 1.2,
+            _ => 1.0
+        };
+
+        double heatingBTU = squareFeet * baseBTUPerSqFt * insulationMultiplier * climateMultiplier;
+        heatingBTU += windows * 1000;
+        heatingBTU += occupants * 400;
+
+        double coolingBTU = squareFeet * baseBTUPerSqFt * insulationMultiplier * sunExposureMultiplier * climateMultiplier;
+        coolingBTU += windows * 1000;
+        coolingBTU += occupants * 600;
+
+        if (hasKitchen)
+        {
+            coolingBTU += 4000;
+            heatingBTU += 2000;
+        }
+
+        double cfm = coolingBTU / 30.0;
+
+        return new ZoneData
+        {
+            Name = name,
+            Length = length,
+            Width = width,
+            Height = height,
+            RoomVolume = roomVolume,
+            SquareFeet = squareFeet,
+            HeatingBTU = heatingBTU,
+            CoolingBTU = coolingBTU,
+            CFM = cfm
+        };
+    }
+
+    private void UpdateTotals()
+    {
+        if (zones.Count == 0)
+        {
+            TotalSquareFeetLabel.Text = "Total Area: 0 sq ft";
+            TotalHeatingBTULabel.Text = "Total Heating BTU: 0 BTU/hr";
+            TotalCoolingBTULabel.Text = "Total Cooling BTU: 0 BTU/hr";
+            TotalTonnageLabel.Text = "Total AC Tonnage: 0.0 tons";
+            TotalCFMLabel.Text = "Total CFM: 0 CFM";
+            DiversityHeatingLabel.Text = "";
+            DiversityCoolingLabel.Text = "";
+            DiversityTonnageLabel.Text = "";
+            return;
+        }
+
+        double totalSquareFeet = zones.Sum(z => z.SquareFeet);
+        double totalHeatingBTU = zones.Sum(z => z.HeatingBTU);
+        double totalCoolingBTU = zones.Sum(z => z.CoolingBTU);
+        double totalCFM = zones.Sum(z => z.CFM);
+        double totalTonnage = totalCoolingBTU / 12000.0;
+
+        TotalSquareFeetLabel.Text = $"Total Area: {totalSquareFeet:F0} sq ft ({zones.Count} zones)";
+        TotalHeatingBTULabel.Text = $"Total Heating BTU: {totalHeatingBTU:F0} BTU/hr";
+        TotalCoolingBTULabel.Text = $"Total Cooling BTU: {totalCoolingBTU:F0} BTU/hr";
+        TotalTonnageLabel.Text = $"Total AC Tonnage: {totalTonnage:F2} tons (recommend {Math.Ceiling(totalTonnage * 2) / 2:F1} ton unit)";
+        TotalCFMLabel.Text = $"Total CFM: {totalCFM:F0} CFM";
+
+        if (DiversityFactorCheckBox?.IsChecked == true && double.TryParse(DiversityFactorTextBox?.Text, out double diversityFactor))
+        {
+            double factor = diversityFactor / 100.0;
+            double diversityHeatingBTU = totalHeatingBTU * factor;
+            double diversityCoolingBTU = totalCoolingBTU * factor;
+            double diversityTonnage = diversityCoolingBTU / 12000.0;
+
+            DiversityHeatingLabel.Text = $"With {diversityFactor}% diversity: {diversityHeatingBTU:F0} BTU/hr heating";
+            DiversityCoolingLabel.Text = $"With {diversityFactor}% diversity: {diversityCoolingBTU:F0} BTU/hr cooling";
+            DiversityTonnageLabel.Text = $"With {diversityFactor}% diversity: {diversityTonnage:F2} tons (recommend {Math.Ceiling(diversityTonnage * 2) / 2:F1} ton unit)";
+        }
+        else
+        {
+            if (DiversityHeatingLabel != null) DiversityHeatingLabel.Text = "";
+            if (DiversityCoolingLabel != null) DiversityCoolingLabel.Text = "";
+            if (DiversityTonnageLabel != null) DiversityTonnageLabel.Text = "";
+        }
+
+        if (DuctCFMTextBox != null)
+            DuctCFMTextBox.Text = totalCFM.ToString("F0");
+    }
+
+    private void DiversityFactorCheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+    {
+        UpdateTotals();
+    }
+
+    private void DiversityFactorTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (DiversityFactorCheckBox?.IsChecked == true)
+        {
+            UpdateTotals();
         }
     }
 
@@ -147,8 +261,38 @@ public partial class HVACCalculatorWindow : Window
 
     private void CopyResultsButton_Click(object sender, RoutedEventArgs e)
     {
-        string results = $"{RoomVolumeLabel.Text}\n{BTUHeatingLabel.Text}\n{BTUCoolingLabel.Text}\n{TonnageLabel.Text}\n{CFMLabel.Text}";
-        
+        if (zones.Count == 0)
+        {
+            MessageBox.Show("Please add at least one zone first.", "No Zones", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        string results = "HVAC Multi-Zone Calculation Results\n";
+        results += "=====================================\n\n";
+
+        foreach (var zone in zones)
+        {
+            results += $"{zone.Name}:\n";
+            results += $"  Area: {zone.SquareFeet:F0} sq ft\n";
+            results += $"  Heating: {zone.HeatingBTU:F0} BTU/hr\n";
+            results += $"  Cooling: {zone.CoolingBTU:F0} BTU/hr\n";
+            results += $"  CFM: {zone.CFM:F0}\n\n";
+        }
+
+        results += "TOTALS:\n";
+        results += $"{TotalSquareFeetLabel.Text}\n";
+        results += $"{TotalHeatingBTULabel.Text}\n";
+        results += $"{TotalCoolingBTULabel.Text}\n";
+        results += $"{TotalTonnageLabel.Text}\n";
+        results += $"{TotalCFMLabel.Text}\n";
+
+        if (!string.IsNullOrEmpty(DiversityHeatingLabel.Text))
+        {
+            results += $"\n{DiversityHeatingLabel.Text}\n";
+            results += $"{DiversityCoolingLabel.Text}\n";
+            results += $"{DiversityTonnageLabel.Text}\n";
+        }
+
         if (DuctSizeLabel.Text != "Duct Size: Not calculated")
         {
             results += $"\n{DuctSizeLabel.Text}";
@@ -156,5 +300,18 @@ public partial class HVACCalculatorWindow : Window
 
         Clipboard.SetText(results);
         MessageBox.Show("Results copied to clipboard!", "Copied", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private class ZoneData
+    {
+        public string Name { get; set; } = "";
+        public double Length { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public double RoomVolume { get; set; }
+        public double SquareFeet { get; set; }
+        public double HeatingBTU { get; set; }
+        public double CoolingBTU { get; set; }
+        public double CFM { get; set; }
     }
 }
