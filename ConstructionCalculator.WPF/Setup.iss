@@ -1,13 +1,13 @@
 ; Inno Setup Script for Construction Calculator (WPF Version)
 ; This script creates a Windows installer for the Construction Calculator WPF application
-; Requires .NET 10 self-contained publish output
+; Uses self-contained .NET 10 publish (includes runtime, no separate installation needed)
 
 #define MyAppName "Construction Calculator"
 #define MyAppVersion "2.0.3"
 #define MyAppPublisher "Lee Cassin"
 #define MyAppURL "https://github.com/lcassin/Construction-Calculator"
 #define MyAppExeName "ConstructionCalculator.WPF.exe"
-#define PublishDir "bin\Release\net10.0-windows\publish"
+#define PublishDir "bin\Release\net10.0-windows\win-x64\publish"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
