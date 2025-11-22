@@ -20,6 +20,20 @@ public partial class App : Application
     public static void ApplyTheme(string theme)
     {
         ConstructionCalculator.WPF.Properties.Settings.Default.ThemePreference = theme;
+        
+        switch (theme)
+        {
+            case "Light":
+                Application.Current.ThemeMode = ThemeMode.Light;
+                break;
+            case "Dark":
+                Application.Current.ThemeMode = ThemeMode.Dark;
+                break;
+            case "System":
+            default:
+                Application.Current.ThemeMode = ThemeMode.System;
+                break;
+        }
     }
 }
 
