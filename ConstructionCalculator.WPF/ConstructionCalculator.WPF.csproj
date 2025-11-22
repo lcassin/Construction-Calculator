@@ -18,6 +18,15 @@
     <Version>2.0.3</Version>
   </PropertyGroup>
 
+  <!-- Self-contained publish settings for Release builds -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>false</PublishTrimmed>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <SplashScreen Include="Assets\splash.png" />
     <Resource Include="Assets\app.ico" />
