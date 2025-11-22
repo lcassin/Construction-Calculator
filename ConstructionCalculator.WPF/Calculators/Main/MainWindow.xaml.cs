@@ -857,17 +857,26 @@ public partial class MainWindow : Window
 
     private void LightTheme_Click(object sender, RoutedEventArgs e)
     {
-        Application.Current.ThemeMode = ThemeMode.Light;
+        App.ApplyTheme("Light");
+        ConstructionCalculator.WPF.Properties.Settings.Default.Save();
+        MessageBox.Show("Light theme preference saved. Theme switching will be fully implemented in a future update.", 
+            "Theme Saved", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void DarkTheme_Click(object sender, RoutedEventArgs e)
     {
-        Application.Current.ThemeMode = ThemeMode.Dark;
+        App.ApplyTheme("Dark");
+        ConstructionCalculator.WPF.Properties.Settings.Default.Save();
+        MessageBox.Show("Dark theme preference saved. Theme switching will be fully implemented in a future update.", 
+            "Theme Saved", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void SystemTheme_Click(object sender, RoutedEventArgs e)
     {
-        Application.Current.ThemeMode = ThemeMode.System;
+        App.ApplyTheme("System");
+        ConstructionCalculator.WPF.Properties.Settings.Default.Save();
+        MessageBox.Show("System theme preference saved. Theme switching will be fully implemented in a future update.", 
+            "Theme Saved", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void About_Click(object sender, RoutedEventArgs e)

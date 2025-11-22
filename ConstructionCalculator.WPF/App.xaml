@@ -2,8 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ConstructionCalculator.WPF"
-             StartupUri="Calculators/Main/MainWindow.xaml"
-             ThemeMode="System">
+             StartupUri="Calculators/Main/MainWindow.xaml">
     <Application.Resources>
         <!-- Base Rounded Button Style with ControlTemplate -->
         <Style x:Key="RoundedButtonBase" TargetType="Button">
