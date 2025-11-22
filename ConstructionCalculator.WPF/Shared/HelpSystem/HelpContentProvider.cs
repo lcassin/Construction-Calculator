@@ -407,49 +407,58 @@ public static class HelpContentProvider
     {
         return new HelpTopic
         {
-            Title = "HVAC Calculator",
+            Title = "HVAC Multi-Zone Calculator",
             IconGlyph = "❄",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate heating and cooling requirements including BTU, tonnage, CFM, and duct sizing for residential and commercial spaces.",
+            Summary = "Calculate heating and cooling requirements for multiple zones including BTU, tonnage, CFM, and duct sizing. Add multiple zones with different conditions to determine total system requirements with optional diversity factor.",
             ExpectedInputs = new List<string>
             {
+                "Zone Name (optional, e.g., 'Living Room', 'Bedroom 1')",
                 "Room Length (feet)",
                 "Room Width (feet)",
                 "Room Height (feet, typically 8-10')",
                 "Insulation Level (Poor/Average/Good/Excellent)",
                 "Sun Exposure (Shaded/Moderate/High)",
-                "Climate Zone (Cold/Moderate/Hot/Very Hot)",
+                "Climate Zone (Cold/Moderate/Hot)",
                 "Number of Windows",
                 "Number of Occupants",
-                "Kitchen (Yes/No checkbox)",
+                "Kitchen/Appliances (Yes/No checkbox)",
+                "Diversity Factor (optional, typically 80-90% for multi-zone)",
                 "For Duct Sizing: CFM and Air Velocity"
             },
             Shortcuts = new List<ShortcutItem>
             {
                 new("F1", "Show this help"),
-                new("Tab", "Navigate between fields")
+                new("Tab", "Navigate between fields"),
+                new("Enter", "Add zone (when in Add Zone section)")
             },
             Examples = new List<ExampleItem>
             {
-                new("20' × 15' × 8' room, Average insulation, Moderate sun, Moderate climate, 2 windows, 2 occupants", "Heating: 7,200 BTU, Cooling: 8,400 BTU, 0.7 tons, 280 CFM", "Standard living room"),
-                new("12' × 10' × 8' kitchen, Good insulation, High sun, Hot climate, 1 window, 2 occupants, Kitchen=Yes", "Heating: 5,040 BTU, Cooling: 8,280 BTU, 0.69 tons, 276 CFM", "Kitchen with cooking load"),
-                new("Duct Sizing: 400 CFM at 900 FPM", "6\" round or 6×8\" rectangular duct", "Supply duct sizing")
+                new("Living Room: 20' × 15' × 8', Average insulation, Moderate sun, 2 windows, 2 occupants", "Heating: 7,200 BTU, Cooling: 8,400 BTU, 280 CFM", "Standard living room zone"),
+                new("Kitchen: 12' × 10' × 8', Good insulation, High sun, 1 window, 2 occupants, Kitchen=Yes", "Heating: 5,040 BTU, Cooling: 8,280 BTU, 276 CFM", "Kitchen zone with cooking load"),
+                new("3 zones totaling 1,200 sq ft with 85% diversity", "Total: 28,800 BTU cooling → 24,480 BTU with diversity (2.04 tons)", "Multi-zone system with diversity"),
+                new("Duct Sizing: 800 CFM at 800 FPM", "10×14\" rectangular duct", "Main trunk duct sizing")
             },
             Tips = new List<string>
             {
+                "Add multiple zones: Enter each zone's details and click 'Add Zone'",
+                "Zone names help identify rooms in results (optional, auto-numbered if blank)",
                 "Base calculation: 20 BTU per square foot",
                 "Insulation multipliers: Poor (1.3×), Average (1.0×), Good (0.85×), Excellent (0.7×)",
                 "Sun exposure multipliers: Shaded (0.9×), Moderate (1.0×), High (1.15×)",
-                "Climate multipliers: Cold (0.9×), Moderate (1.0×), Hot (1.1×), Very Hot (1.2×)",
+                "Climate multipliers: Cold (0.9×), Moderate (1.0×), Hot (1.2×)",
                 "Add 1,000 BTU per window",
                 "Add 400 BTU per occupant (heating), 600 BTU per occupant (cooling)",
                 "Add 2,000 BTU (heating) or 4,000 BTU (cooling) for kitchens",
+                "Diversity factor: Not all zones peak simultaneously (typically 80-90%)",
+                "Apply diversity factor for more realistic multi-zone system sizing",
                 "Tonnage = Cooling BTU ÷ 12,000",
                 "CFM = Cooling BTU ÷ 30",
+                "Total CFM auto-fills duct sizing calculator",
                 "Standard air velocity: 700-900 FPM for supply ducts, 500-700 FPM for return ducts",
-                "Round duct is more efficient than rectangular for same area",
                 "Always round up equipment size to next available unit",
-                "Consider zoning for large or multi-story buildings"
+                "Remove zones individually or clear all at once",
+                "Copy results includes all zones and totals for easy sharing"
             }
         };
     }
