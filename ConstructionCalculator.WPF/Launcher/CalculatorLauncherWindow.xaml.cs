@@ -11,6 +11,7 @@ using ConstructionCalculator.WPF.Calculators.Construction.Drywall;
 using ConstructionCalculator.WPF.Calculators.Construction.Grading;
 using ConstructionCalculator.WPF.Calculators.Construction.HVAC;
 using ConstructionCalculator.WPF.Calculators.Construction.Plumbing;
+using ConstructionCalculator.WPF.Calculators.Construction.Electrical;
 using ConstructionCalculator.WPF.Calculators.Geometry.Area;
 using ConstructionCalculator.WPF.Calculators.Geometry.Angle;
 using ConstructionCalculator.WPF.Calculators.Geometry.Roofing;
@@ -190,6 +191,15 @@ public partial class CalculatorLauncherWindow : Window
                 Icon = "🚰",
                 HelpKind = CalculatorKind.Plumbing,
                 OpenAction = () => new PlumbingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
+                Name = "Electrical Load Calculator",
+                Category = "Systems (HVAC & Plumbing)",
+                Description = "Calculate panel load, wire sizing, and circuit requirements per NEC",
+                Icon = "⚡",
+                HelpKind = CalculatorKind.Electrical,
+                OpenAction = () => new ElectricalCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             }
         };
     }

@@ -58,5 +58,6 @@ public enum CalculatorKind
     Grading,
     HVAC,
     Plumbing,
+    Electrical,
     Flooring
 }
