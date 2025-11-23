@@ -7,6 +7,7 @@ namespace ConstructionCalculator.WPF.Calculators.Construction.Concrete;
 public partial class ConcreteCalculatorWindow : Window
 {
     private bool _isInitializing;
+    private int lastCalculatedYards = 0;
 
     public ConcreteCalculatorWindow()
     {
@@ -75,6 +76,9 @@ public partial class ConcreteCalculatorWindow : Window
                                   $"Base: {cubicYards:F2} cubic yards\n" +
                                   $"With {wastePercent}% waste: {cubicYardsWithWaste:F2} cubic yards\n" +
                                   $"Order: {roundedYards} cubic yards";
+            
+            lastCalculatedYards = roundedYards;
+            UpdateCost();
         }
         catch (Exception ex)
         {
@@ -124,5 +128,23 @@ public partial class ConcreteCalculatorWindow : Window
         double radiusFeet = (diameterInches / 2.0) / 12.0;
         double volumePerColumn = Math.PI * radiusFeet * radiusFeet * heightFeet;
         return volumePerColumn * quantity;
+    }
+
+    private void CostPerYardTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        UpdateCost();
+    }
+
+    private void UpdateCost()
+    {
+        if (double.TryParse(CostPerYardTextBox.Text, out double costPerYard) && lastCalculatedYards > 0)
+        {
+            double totalCost = lastCalculatedYards * costPerYard;
+            TotalCostLabel.Text = $"Estimated Total Cost: ${totalCost:F2}";
+        }
+        else
+        {
+            TotalCostLabel.Text = "Estimated Total Cost: $0.00";
+        }
     }
 }

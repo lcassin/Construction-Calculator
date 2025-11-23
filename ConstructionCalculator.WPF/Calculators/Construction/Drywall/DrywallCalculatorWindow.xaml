@@ -72,12 +72,22 @@
 
 			<!-- Result Display -->
 			<Border Grid.Row="3" BorderBrush="Gray" BorderThickness="1" Padding="15" Margin="0,0,0,15">
-				<TextBlock x:Name="ResultTextBlock" 
-                           Text="" 
-                           FontSize="14" 
-                           FontWeight="Bold"
-                           TextWrapping="Wrap"
-                           MinHeight="100"/>
+				<StackPanel>
+					<TextBlock x:Name="ResultTextBlock" 
+							   Text="" 
+							   FontSize="14" 
+							   FontWeight="Bold"
+							   TextWrapping="Wrap"
+							   MinHeight="80"/>
+					<StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+						<Label Content="Cost per Sheet ($):" Width="140" VerticalAlignment="Center" FontSize="13"/>
+						<TextBox x:Name="CostPerSheetTextBox" Width="100" Height="28" FontSize="13" 
+								 VerticalContentAlignment="Center" Text="0"
+								 TextChanged="CostPerSheetTextBox_TextChanged"/>
+					</StackPanel>
+					<TextBlock x:Name="TotalCostLabel" Text="Estimated Total Cost: $0.00" 
+							   FontSize="16" FontWeight="Bold" Foreground="DarkGreen" Margin="0,8,0,0"/>
+				</StackPanel>
 			</Border>
 
 			<!-- Instructions -->

@@ -6,6 +6,8 @@ namespace ConstructionCalculator.WPF.Calculators.Construction.Drywall;
 
 public partial class DrywallCalculatorWindow : Window
 {
+    private int lastCalculatedSheets = 0;
+
     public DrywallCalculatorWindow()
     {
         InitializeComponent();
@@ -41,6 +43,9 @@ public partial class DrywallCalculatorWindow : Window
                                   $"Sheets Needed: {sheetsNeeded:F2}\n" +
                                   $"With {wastePercent}% waste: {sheetsWithWaste:F2}\n" +
                                   $"Order: {roundedSheets} sheets";
+            
+            lastCalculatedSheets = roundedSheets;
+            UpdateCost();
         }
         catch (Exception ex)
         {
@@ -73,5 +78,23 @@ public partial class DrywallCalculatorWindow : Window
             if (content.Contains("4' × 12'")) return "4' × 12'";
         }
         return "4' × 8'";
+    }
+
+    private void CostPerSheetTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        UpdateCost();
+    }
+
+    private void UpdateCost()
+    {
+        if (double.TryParse(CostPerSheetTextBox.Text, out double costPerSheet) && lastCalculatedSheets > 0)
+        {
+            double totalCost = lastCalculatedSheets * costPerSheet;
+            TotalCostLabel.Text = $"Estimated Total Cost: ${totalCost:F2}";
+        }
+        else
+        {
+            TotalCostLabel.Text = "Estimated Total Cost: $0.00";
+        }
     }
 }

@@ -5,6 +5,8 @@ namespace ConstructionCalculator.WPF.Calculators.Geometry.Roofing;
 
 public partial class RoofingCalculatorWindow : Window
 {
+    private int lastCalculatedBundles = 0;
+
     public RoofingCalculatorWindow()
     {
         InitializeComponent();
@@ -40,6 +42,9 @@ public partial class RoofingCalculatorWindow : Window
                                   $"Pitch Angle: {angle:F1}°\n\n" +
                                   $"Squares Needed: {squaresWithWaste:F2} ({roundedSquares} rounded)\n" +
                                   $"Bundles Needed: {totalBundles}";
+            
+            lastCalculatedBundles = totalBundles;
+            UpdateCost();
         }
         catch (Exception ex)
         {
@@ -70,5 +75,23 @@ public partial class RoofingCalculatorWindow : Window
         double run = double.Parse(parts[1].Trim());
         
         return Math.Atan(rise / run) * (180.0 / Math.PI);
+    }
+
+    private void CostPerBundleTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        UpdateCost();
+    }
+
+    private void UpdateCost()
+    {
+        if (double.TryParse(CostPerBundleTextBox.Text, out double costPerBundle) && lastCalculatedBundles > 0)
+        {
+            double totalCost = lastCalculatedBundles * costPerBundle;
+            TotalCostLabel.Text = $"Estimated Total Cost: ${totalCost:F2}";
+        }
+        else
+        {
+            TotalCostLabel.Text = "Estimated Total Cost: $0.00";
+        }
     }
 }
