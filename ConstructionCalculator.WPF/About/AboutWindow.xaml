@@ -26,11 +26,11 @@
                        FontSize="28"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
-                       Foreground="{DynamicResource SystemAccentColorBrush}"
+                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                        Margin="0,0,0,10"/>
             
             <!-- Version -->
-            <TextBlock Text="Version 2.0.2 (WPF with Fluent Theme)"
+            <TextBlock Text="Version 2.0.5 (WPF with Fluent Theme)"
                        FontSize="16"
                        HorizontalAlignment="Center"
                        Foreground="Gray"
@@ -60,37 +60,64 @@
                        Margin="0,20,0,10"/>
             
             <StackPanel Margin="20,0,20,0">
+                <!-- Main Calculator -->
                 <TextBlock Text="• Basic calculations with chainable operations" 
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Percentage, square root, and squared operations" 
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Memory functions (MC, MR, M+, M-)" 
                            FontSize="13" Margin="0,3,0,3"/>
+                
+                <!-- Common Tools -->
+                <TextBlock Text="Common Tools:" 
+                           FontSize="13" FontWeight="SemiBold" Margin="0,10,0,3"/>
                 <TextBlock Text="• Unit Converter for length, area, volume, weight, temperature" 
                            FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• Area Calculator for complex floor plans" 
+                           FontSize="13" Margin="0,3,0,3"/>
+                
+                <!-- Geometry & Site -->
+                <TextBlock Text="Geometry &amp; Site:" 
+                           FontSize="13" FontWeight="SemiBold" Margin="0,10,0,3"/>
                 <TextBlock Text="• Angle Calculator with trigonometry solver" 
                            FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• Survey Calculator for bearing/azimuth and coordinates"
+                           FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• Grading/Slope Calculator" 
+                           FontSize="13" Margin="0,3,0,3"/>
+                
+                <!-- Building Elements & Layout -->
+                <TextBlock Text="Building Elements &amp; Layout:" 
+                           FontSize="13" FontWeight="SemiBold" Margin="0,10,0,3"/>
                 <TextBlock Text="• Stair Calculator with code compliance" 
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Accessibility Ramp Calculator with ADA compliance" 
                            FontSize="13" Margin="0,3,0,3"/>
-                <TextBlock Text="• Survey Calculator for bearing/azimuth and coordinates"
-                           FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Seating Layout Calculator for auditoriums" 
                            FontSize="13" Margin="0,3,0,3"/>
-                <TextBlock Text="• Area Calculator for complex floor plans" 
-                           FontSize="13" Margin="0,3,0,3"/>
+                
+                <!-- Materials & Estimating -->
+                <TextBlock Text="Materials &amp; Estimating:" 
+                           FontSize="13" FontWeight="SemiBold" Margin="0,10,0,3"/>
                 <TextBlock Text="• Concrete Calculator for volume and materials" 
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Roofing Calculator for area and materials" 
                            FontSize="13" Margin="0,3,0,3"/>
-                <TextBlock Text="• Paint/Coverage Calculator" 
+                <TextBlock Text="• Drywall Calculator for materials" 
+                           FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• Paint Calculator for coverage and materials" 
+                           FontSize="13" Margin="0,3,0,3"/>
+                <TextBlock Text="• Flooring &amp; Countertops Calculator with waste factors" 
                            FontSize="13" Margin="0,3,0,3"/>
                 <TextBlock Text="• Board Feet Calculator for lumber" 
                            FontSize="13" Margin="0,3,0,3"/>
-                <TextBlock Text="• Drywall Calculator for materials" 
+                
+                <!-- Systems (HVAC & Plumbing) -->
+                <TextBlock Text="Systems (HVAC &amp; Plumbing):" 
+                           FontSize="13" FontWeight="SemiBold" Margin="0,10,0,3"/>
+                <TextBlock Text="• HVAC Calculator for heating/cooling BTU and duct sizing" 
                            FontSize="13" Margin="0,3,0,3"/>
-                <TextBlock Text="• Grading/Slope Calculator" 
+                <TextBlock Text="• Plumbing Calculator for pipe sizing and flow rates" 
                            FontSize="13" Margin="0,3,0,3"/>
             </StackPanel>
             

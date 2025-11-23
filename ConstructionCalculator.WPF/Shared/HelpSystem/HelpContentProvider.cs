@@ -22,6 +22,9 @@ public static class HelpContentProvider
             CalculatorKind.BoardFeet => GetBoardFeetCalculatorHelp(),
             CalculatorKind.Drywall => GetDrywallCalculatorHelp(),
             CalculatorKind.Grading => GetGradingCalculatorHelp(),
+            CalculatorKind.HVAC => GetHVACCalculatorHelp(),
+            CalculatorKind.Plumbing => GetPlumbingCalculatorHelp(),
+            CalculatorKind.Flooring => GetFlooringCalculatorHelp(),
             _ => new HelpTopic { Title = "Help", Summary = "No help available for this calculator." }
         };
     }
@@ -126,13 +129,14 @@ public static class HelpContentProvider
             Title = "Concrete Calculator",
             IconGlyph = "🏗",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate the amount of concrete needed for slabs, footings, walls, and other concrete pours. Accounts for waste percentage.",
+            Summary = "Calculate the amount of concrete needed for slabs, footings, walls, and other concrete pours. Accounts for waste percentage and includes cost estimation.",
             ExpectedInputs = new List<string>
             {
                 "Length: in feet (e.g., 20)",
                 "Width: in feet (e.g., 10)",
                 "Depth/Thickness: in inches (e.g., 4)",
                 "Waste %: percentage for overage (default: 10%)",
+                "Cost per Cubic Yard: optional, for cost estimation",
                 "All fields accept decimal values"
             },
             Shortcuts = new List<ShortcutItem>
@@ -143,13 +147,16 @@ public static class HelpContentProvider
             {
                 new("20' × 10' × 4\" slab", "2.47 cubic yards", "With 10% waste"),
                 new("30' × 3' × 12\" footing", "3.33 cubic yards", "With 10% waste"),
-                new("100' × 8\" × 8\" wall", "19.75 cubic yards", "With 10% waste")
+                new("100' × 8\" × 8\" wall", "19.75 cubic yards", "With 10% waste"),
+                new("3 cubic yards at $150/yard", "$450 total cost", "Cost estimation")
             },
             Tips = new List<string>
             {
                 "Default waste percentage is 10% - adjust based on your needs",
                 "Depth/thickness is always in inches, length and width in feet",
                 "Result is shown in cubic yards (standard concrete ordering unit)",
+                "Enter cost per cubic yard to see estimated total cost",
+                "Cost updates automatically as you type",
                 "Always round up when ordering concrete",
                 "Consider adding extra for spillage and uneven subgrade"
             }
@@ -332,11 +339,11 @@ public static class HelpContentProvider
             Title = "Roofing Calculator",
             IconGlyph = "🏠",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate roofing materials needed including shingles and underlayment.",
-            ExpectedInputs = new List<string> { "Roof length and width", "Roof pitch (e.g., 6:12)", "Waste percentage" },
+            Summary = "Calculate roofing materials needed including shingles and underlayment with cost estimation.",
+            ExpectedInputs = new List<string> { "Roof length and width", "Roof pitch (e.g., 6:12)", "Waste percentage", "Cost per Bundle: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
-            Examples = new List<ExampleItem> { new("30' × 40' roof, 6:12 pitch", "13.42 squares", "With 10% waste") },
-            Tips = new List<string> { "1 square = 100 square feet", "Steeper pitches require more material" }
+            Examples = new List<ExampleItem> { new("30' × 40' roof, 6:12 pitch", "13.42 squares", "With 10% waste"), new("40 bundles at $35/bundle", "$1,400 total cost", "Cost estimation") },
+            Tips = new List<string> { "1 square = 100 square feet", "Steeper pitches require more material", "Enter cost per bundle to see estimated total cost", "Cost updates automatically as you type" }
         };
     }
 
@@ -347,11 +354,11 @@ public static class HelpContentProvider
             Title = "Paint Calculator",
             IconGlyph = "🎨",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate paint needed for walls, ceilings, and trim.",
-            ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Number of coats", "Coverage rate" },
+            Summary = "Calculate paint needed for walls, ceilings, and trim with cost estimation.",
+            ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Number of coats", "Coverage rate", "Cost per Gallon: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
-            Examples = new List<ExampleItem> { new("12' × 10' × 8' room, 2 coats", "~3 gallons", "Standard room") },
-            Tips = new List<string> { "Standard coverage: 350-400 sq ft per gallon", "Always buy slightly more" }
+            Examples = new List<ExampleItem> { new("12' × 10' × 8' room, 2 coats", "~3 gallons", "Standard room"), new("3 gallons at $40/gallon", "$120 total cost", "Cost estimation") },
+            Tips = new List<string> { "Standard coverage: 350-400 sq ft per gallon", "Enter cost per gallon to see estimated total cost", "Cost updates automatically as you type", "Always buy slightly more" }
         };
     }
 
@@ -377,11 +384,11 @@ public static class HelpContentProvider
             Title = "Drywall Calculator",
             IconGlyph = "🧱",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate drywall sheets needed for walls and ceilings.",
-            ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Sheet size (4×8, 4×10, 4×12)", "Waste percentage" },
+            Summary = "Calculate drywall sheets needed for walls and ceilings with cost estimation.",
+            ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Sheet size (4×8, 4×10, 4×12)", "Waste percentage", "Cost per Sheet: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
-            Examples = new List<ExampleItem> { new("12' × 8' wall, 4×8 sheets", "3 sheets", "With 10% waste") },
-            Tips = new List<string> { "Standard sheet: 4' × 8' (32 sq ft)", "Add 10-15% for waste" }
+            Examples = new List<ExampleItem> { new("12' × 8' wall, 4×8 sheets", "3 sheets", "With 10% waste"), new("15 sheets at $12/sheet", "$180 total cost", "Cost estimation") },
+            Tips = new List<string> { "Standard sheet: 4' × 8' (32 sq ft)", "Add 10-15% for waste", "Enter cost per sheet to see estimated total cost", "Cost updates automatically as you type" }
         };
     }
 
@@ -397,6 +404,159 @@ public static class HelpContentProvider
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
             Examples = new List<ExampleItem> { new("Run: 100', Rise: 2'", "2% grade", "Minimum drainage slope") },
             Tips = new List<string> { "Minimum grade for drainage: 2%", "1% grade = 1 foot rise per 100 feet run" }
+        };
+    }
+
+    private static HelpTopic GetHVACCalculatorHelp()
+    {
+        return new HelpTopic
+        {
+            Title = "HVAC Multi-Zone Calculator",
+            IconGlyph = "❄",
+            IconFontFamily = "Segoe UI Emoji",
+            Summary = "Calculate heating and cooling requirements for multiple zones including BTU, tonnage, CFM, and duct sizing. Add multiple zones with different conditions to determine total system requirements with optional diversity factor.",
+            ExpectedInputs = new List<string>
+            {
+                "Zone Name (optional, e.g., 'Living Room', 'Bedroom 1')",
+                "Room Length (feet)",
+                "Room Width (feet)",
+                "Room Height (feet, typically 8-10')",
+                "Insulation Level (Poor/Average/Good/Excellent)",
+                "Sun Exposure (Shaded/Moderate/High)",
+                "Climate Zone (Cold/Moderate/Hot)",
+                "Number of Windows",
+                "Number of Occupants",
+                "Kitchen/Appliances (Yes/No checkbox)",
+                "Diversity Factor (optional, typically 80-90% for multi-zone)",
+                "For Duct Sizing: CFM and Air Velocity"
+            },
+            Shortcuts = new List<ShortcutItem>
+            {
+                new("F1", "Show this help"),
+                new("Tab", "Navigate between fields"),
+                new("Enter", "Add zone (when in Add Zone section)")
+            },
+            Examples = new List<ExampleItem>
+            {
+                new("Living Room: 20' × 15' × 8', Average insulation, Moderate sun, 2 windows, 2 occupants", "Heating: 7,200 BTU, Cooling: 8,400 BTU, 280 CFM", "Standard living room zone"),
+                new("Kitchen: 12' × 10' × 8', Good insulation, High sun, 1 window, 2 occupants, Kitchen=Yes", "Heating: 5,040 BTU, Cooling: 8,280 BTU, 276 CFM", "Kitchen zone with cooking load"),
+                new("3 zones totaling 1,200 sq ft with 85% diversity", "Total: 28,800 BTU cooling → 24,480 BTU with diversity (2.04 tons)", "Multi-zone system with diversity"),
+                new("Duct Sizing: 800 CFM at 800 FPM", "10×14\" rectangular duct", "Main trunk duct sizing")
+            },
+            Tips = new List<string>
+            {
+                "Add multiple zones: Enter each zone's details and click 'Add Zone'",
+                "Zone names help identify rooms in results (optional, auto-numbered if blank)",
+                "Base calculation: 20 BTU per square foot",
+                "Insulation multipliers: Poor (1.3×), Average (1.0×), Good (0.85×), Excellent (0.7×)",
+                "Sun exposure multipliers: Shaded (0.9×), Moderate (1.0×), High (1.15×)",
+                "Climate multipliers: Cold (0.9×), Moderate (1.0×), Hot (1.2×)",
+                "Add 1,000 BTU per window",
+                "Add 400 BTU per occupant (heating), 600 BTU per occupant (cooling)",
+                "Add 2,000 BTU (heating) or 4,000 BTU (cooling) for kitchens",
+                "Diversity factor: Not all zones peak simultaneously (typically 80-90%)",
+                "Apply diversity factor for more realistic multi-zone system sizing",
+                "Tonnage = Cooling BTU ÷ 12,000",
+                "CFM = Cooling BTU ÷ 30",
+                "Total CFM auto-fills duct sizing calculator",
+                "Standard air velocity: 700-900 FPM for supply ducts, 500-700 FPM for return ducts",
+                "Always round up equipment size to next available unit",
+                "Remove zones individually or clear all at once",
+                "Copy results includes all zones and totals for easy sharing"
+            }
+        };
+    }
+
+    private static HelpTopic GetPlumbingCalculatorHelp()
+    {
+        return new HelpTopic
+        {
+            Title = "Plumbing Calculator",
+            IconGlyph = "🚰",
+            IconFontFamily = "Segoe UI Emoji",
+            Summary = "Calculate pipe sizing, flow rates, pressure loss, and drain/vent sizing for plumbing systems. Includes three calculation modes: Pipe Sizing, DWV (Drain-Waste-Vent), and Flow Rate.",
+            ExpectedInputs = new List<string>
+            {
+                "Pipe Sizing Tab: Fixture Units, Pipe Length, Material, Pressure",
+                "DWV Tab: Drainage Fixture Units (DFU), Drain Type, Slope",
+                "Flow Rate Tab: Pipe Diameter, Pressure, Pipe Length"
+            },
+            Shortcuts = new List<ShortcutItem>
+            {
+                new("F1", "Show this help"),
+                new("Tab", "Navigate between fields"),
+                new("Ctrl+Tab", "Switch between tabs")
+            },
+            Examples = new List<ExampleItem>
+            {
+                new("Pipe Sizing: 10 fixture units, 50' copper pipe, 60 PSI", "3/4\" pipe, 12.6 GPM, 5.2 ft/s, 8.5 PSI loss", "Residential branch line"),
+                new("DWV: 20 DFU, Horizontal Branch, 1/4\" per foot slope", "3\" drain, 2\" vent, 42 DFU capacity", "Bathroom group drain"),
+                new("Flow Rate: 1\" pipe, 60 PSI, 100' length", "15.8 GPM, 5.1 ft/s, 12.3 PSI loss", "Supply line flow")
+            },
+            Tips = new List<string>
+            {
+                "Fixture Units: Standardized load values (toilet=4 FU, sink=1 FU, shower=2 FU)",
+                "Flow rate formula: √(Fixture Units) × 4.0 GPM",
+                "Pipe sizing: 1/2\" (≤4 GPM), 3/4\" (≤10 GPM), 1\" (≤20 GPM), 1-1/4\" (≤35 GPM), 1-1/2\" (≤50 GPM)",
+                "Friction factors: Copper (0.85), PEX (0.75), CPVC (0.90), Galvanized (1.2)",
+                "Velocity should be 5-8 ft/s for supply lines",
+                "Maximum pressure loss: 5-10 PSI per 100 feet",
+                "DFU (Drainage Fixture Units): Similar to supply fixture units but for drains",
+                "Drain types: Horizontal Branch, Vertical Stack, Building Drain",
+                "Minimum drain slope: 1/4\" per foot for 3\" and smaller, 1/8\" per foot for 4\" and larger",
+                "Vent sizing: Typically 1/2 the drain size, minimum 1-1/4\"",
+                "Horizontal branch: Short runs connecting fixtures to stacks",
+                "Vertical stack: Main vertical drain pipe",
+                "Building drain: Main horizontal drain below fixtures",
+                "Always check local plumbing codes for specific requirements"
+            }
+        };
+    }
+
+    private static HelpTopic GetFlooringCalculatorHelp()
+    {
+        return new HelpTopic
+        {
+            Title = "Flooring & Counter Calculator",
+            IconGlyph = "🔲",
+            IconFontFamily = "Segoe UI Emoji",
+            Summary = "Calculate material quantities needed for flooring and countertop installations including waste/overage factors and cost estimation. Supports multiple sections and various material types.",
+            ExpectedInputs = new List<string>
+            {
+                "Length (feet and inches)",
+                "Width (feet and inches)",
+                "Material Type (Tile, Hardwood, Laminate, Vinyl, Carpet, Granite/Quartz, etc.)",
+                "Waste Factor (percentage, auto-set based on material)",
+                "Cost per Square Foot (optional, for cost estimation)"
+            },
+            Shortcuts = new List<ShortcutItem>
+            {
+                new("F1", "Show this help"),
+                new("Tab", "Navigate between fields"),
+                new("Enter", "Add section")
+            },
+            Examples = new List<ExampleItem>
+            {
+                new("Kitchen: 12' × 10', Tile 12×12, 10% waste", "120 sq ft area, 132 sq ft material needed", "Ceramic tile floor"),
+                new("Living Room: 20' × 15', Hardwood, 7% waste", "300 sq ft area, 321 sq ft material needed", "Hardwood flooring"),
+                new("Counter: 8' × 2', Granite, 15% waste", "16 sq ft area, 18.4 sq ft material needed", "Kitchen countertop"),
+                new("Multiple sections: Kitchen 120 sq ft + Dining 150 sq ft", "270 sq ft total, 297 sq ft with 10% waste", "Combined areas")
+            },
+            Tips = new List<string>
+            {
+                "Smart waste defaults: Tile (10%), Hardwood/Laminate/Vinyl (7%), Carpet (5%), Granite/Quartz (15%)",
+                "Tile waste accounts for cuts, breakage, and pattern matching",
+                "Hardwood waste covers end cuts and board defects",
+                "Carpet waste is lower due to large roll sizes",
+                "Granite/Quartz waste is higher due to seams and fabrication",
+                "Add multiple sections for rooms with different areas",
+                "Material types: Tile 12×12, Tile 18×18, Tile 24×24, Hardwood, Laminate, Vinyl, Carpet, Granite/Quartz, Custom",
+                "Always round up when ordering materials",
+                "Consider extra material for future repairs",
+                "Cost calculation: Total Material Needed × Cost per Sq Ft",
+                "Remove sections individually or clear all at once",
+                "Copy results to clipboard for easy sharing"
+            }
         };
     }
 }

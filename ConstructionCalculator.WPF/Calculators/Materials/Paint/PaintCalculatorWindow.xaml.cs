@@ -5,6 +5,8 @@ namespace ConstructionCalculator.WPF.Calculators.Materials.Paint;
 
 public partial class PaintCalculatorWindow : Window
 {
+    private int lastCalculatedGallons = 0;
+
     public PaintCalculatorWindow()
     {
         InitializeComponent();
@@ -42,6 +44,9 @@ public partial class PaintCalculatorWindow : Window
                                   $"Total with {coats} coat(s): {totalAreaWithCoats:F2} sq ft\n" +
                                   $"Gallons Needed: {gallonsNeeded:F2}\n" +
                                   $"Order: {roundedGallons} gallon(s)";
+            
+            lastCalculatedGallons = roundedGallons;
+            UpdateCost();
         }
         catch (Exception ex)
         {
@@ -49,6 +54,26 @@ public partial class PaintCalculatorWindow : Window
                           "Calculation Error", 
                           MessageBoxButton.OK, 
                           MessageBoxImage.Error);
+        }
+    }
+
+    private void CostPerGallonTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        UpdateCost();
+    }
+
+    private void UpdateCost()
+    {
+        if (TotalCostLabel == null || CostPerGallonTextBox == null) return;
+        
+        if (double.TryParse(CostPerGallonTextBox.Text, out double costPerGallon) && lastCalculatedGallons > 0)
+        {
+            double totalCost = lastCalculatedGallons * costPerGallon;
+            TotalCostLabel.Text = $"Estimated Total Cost: ${totalCost:F2}";
+        }
+        else
+        {
+            TotalCostLabel.Text = "Estimated Total Cost: $0.00";
         }
     }
 }
