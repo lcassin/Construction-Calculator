@@ -13,9 +13,9 @@
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <NoWarn>$(NoWarn);WPF0001</NoWarn>
     <ApplicationIcon>Assets\app.ico</ApplicationIcon>
-    <AssemblyVersion>2.0.4.0</AssemblyVersion>
-    <FileVersion>2.0.4.0</FileVersion>
-    <Version>2.0.4</Version>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <FileVersion>2.0.5.0</FileVersion>
+    <Version>2.0.5</Version>
   </PropertyGroup>
 
   <!-- Self-contained publish settings for Release builds -->
