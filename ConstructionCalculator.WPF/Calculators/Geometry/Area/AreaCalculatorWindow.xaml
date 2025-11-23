@@ -9,17 +9,18 @@
 
 	<!-- Button styles now defined in App.xaml -->
 
-	<Grid Margin="20">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
+		<Grid Margin="20">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
 
 		<!-- Instructions -->
 		<TextBlock Grid.Row="0" Text="Calculate total square footage by adding multiple rectangular sections.&#x0a;Break complex floor plans into rectangles." 
@@ -80,5 +81,6 @@
 			<TextBlock x:Name="TotalAreaLabel" Text="Total Area: 0.00 sq ft" FontSize="20" FontWeight="Bold" 
                        TextAlignment="Center"/>
 		</Border>
-	</Grid>
+		</Grid>
+	</ScrollViewer>
 </Window>

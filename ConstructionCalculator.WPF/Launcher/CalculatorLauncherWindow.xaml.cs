@@ -9,11 +9,14 @@ using ConstructionCalculator.WPF.Calculators.Construction.Stair;
 using ConstructionCalculator.WPF.Calculators.Construction.Ramp;
 using ConstructionCalculator.WPF.Calculators.Construction.Drywall;
 using ConstructionCalculator.WPF.Calculators.Construction.Grading;
+using ConstructionCalculator.WPF.Calculators.Construction.HVAC;
+using ConstructionCalculator.WPF.Calculators.Construction.Plumbing;
 using ConstructionCalculator.WPF.Calculators.Geometry.Area;
 using ConstructionCalculator.WPF.Calculators.Geometry.Angle;
 using ConstructionCalculator.WPF.Calculators.Geometry.Roofing;
 using ConstructionCalculator.WPF.Calculators.Materials.Paint;
 using ConstructionCalculator.WPF.Calculators.Materials.BoardFeet;
+using ConstructionCalculator.WPF.Calculators.Materials.Flooring;
 using ConstructionCalculator.WPF.Calculators.Survey;
 using ConstructionCalculator.WPF.Calculators.SeatingLayout;
 using ConstructionCalculator.WPF.Shared.HelpSystem;
@@ -39,7 +42,7 @@ public partial class CalculatorLauncherWindow : Window
             new CalculatorDescriptor
             {
                 Name = "Unit Converter",
-                Category = "Common",
+                Category = "Common Tools",
                 Description = "Convert between units: length, area, volume, weight, temperature",
                 Icon = "⇄",
                 HelpKind = CalculatorKind.UnitConverter,
@@ -48,26 +51,18 @@ public partial class CalculatorLauncherWindow : Window
             new CalculatorDescriptor
             {
                 Name = "Area Calculator",
-                Category = "Common",
+                Category = "Common Tools",
                 Description = "Calculate areas of multiple sections and sum totals",
                 Icon = "⬛",
                 IconFontFamily = "Segoe UI Symbol",
                 HelpKind = CalculatorKind.Area,
                 OpenAction = () => new AreaCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
-            new CalculatorDescriptor
-            {
-                Name = "Concrete Calculator",
-                Category = "Construction",
-                Description = "Calculate cubic yards for slabs, footings, and columns",
-                Icon = "🏗",
-                HelpKind = CalculatorKind.Concrete,
-                OpenAction = () => new ConcreteCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
-            },
+            
             new CalculatorDescriptor
             {
                 Name = "Angle Calculator",
-                Category = "Measurement & Layout",
+                Category = "Geometry & Site",
                 Description = "Calculate angles from rise/run and solve right triangles",
                 Icon = "∠",
                 HelpKind = CalculatorKind.Angle,
@@ -76,7 +71,7 @@ public partial class CalculatorLauncherWindow : Window
             new CalculatorDescriptor
             {
                 Name = "Survey Calculator",
-                Category = "Measurement & Layout",
+                Category = "Geometry & Site",
                 Description = "Convert bearings/azimuths and calculate coordinates",
                 Icon = "🧭",
                 HelpKind = CalculatorKind.Survey,
@@ -84,17 +79,18 @@ public partial class CalculatorLauncherWindow : Window
             },
             new CalculatorDescriptor
             {
-                Name = "Seating Layout",
-                Category = "Measurement & Layout",
-                Description = "Calculate seating arrangements and spacing",
-                Icon = "💺",
-                HelpKind = CalculatorKind.SeatingLayout,
-                OpenAction = () => new SeatingLayoutCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+                Name = "Grading/Slope",
+                Category = "Geometry & Site",
+                Description = "Convert between rise/run, percent, and angle",
+                Icon = "⛰",
+                HelpKind = CalculatorKind.Grading,
+                OpenAction = () => new GradingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             },
+            
             new CalculatorDescriptor
             {
                 Name = "Stair Calculator",
-                Category = "Construction",
+                Category = "Building Elements & Layout",
                 Description = "Calculate stair dimensions, rise, run, and stringers",
                 Icon = "⇧",
                 IconFontFamily = "Segoe UI Symbol",
@@ -104,7 +100,7 @@ public partial class CalculatorLauncherWindow : Window
             new CalculatorDescriptor
             {
                 Name = "Accessibility Ramp",
-                Category = "Construction",
+                Category = "Building Elements & Layout",
                 Description = "Calculate ADA-compliant ramp dimensions and landings",
                 Icon = "♿",
                 IconFontFamily = "Segoe UI Symbol",
@@ -113,8 +109,27 @@ public partial class CalculatorLauncherWindow : Window
             },
             new CalculatorDescriptor
             {
+                Name = "Seating Layout",
+                Category = "Building Elements & Layout",
+                Description = "Calculate seating arrangements and spacing",
+                Icon = "💺",
+                HelpKind = CalculatorKind.SeatingLayout,
+                OpenAction = () => new SeatingLayoutCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            
+            new CalculatorDescriptor
+            {
+                Name = "Concrete Calculator",
+                Category = "Materials & Estimating",
+                Description = "Calculate cubic yards for slabs, footings, and columns",
+                Icon = "🏗",
+                HelpKind = CalculatorKind.Concrete,
+                OpenAction = () => new ConcreteCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
                 Name = "Roofing Calculator",
-                Category = "Construction",
+                Category = "Materials & Estimating",
                 Description = "Calculate roof area, pitch, and shingle requirements",
                 Icon = "🏠",
                 HelpKind = CalculatorKind.Roofing,
@@ -122,27 +137,8 @@ public partial class CalculatorLauncherWindow : Window
             },
             new CalculatorDescriptor
             {
-                Name = "Paint/Coverage",
-                Category = "Construction",
-                Description = "Calculate paint needed for walls and ceilings",
-                Icon = "🎨",
-                HelpKind = CalculatorKind.Paint,
-                OpenAction = () => new PaintCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
-            },
-            new CalculatorDescriptor
-            {
-                Name = "Board Feet",
-                Category = "Construction",
-                Description = "Calculate board feet for lumber. One Board Foot Equals 1'W x 1'L x 1\"D",
-                Icon = "📏",
-                IconFontFamily = "Segoe UI Emoji",
-                HelpKind = CalculatorKind.BoardFeet,
-                OpenAction = () => new BoardFeetCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
-            },
-            new CalculatorDescriptor
-            {
                 Name = "Drywall Calculator",
-                Category = "Construction",
+                Category = "Materials & Estimating",
                 Description = "Calculate drywall sheets needed for rooms",
                 Icon = "🧱",
                 HelpKind = CalculatorKind.Drywall,
@@ -150,12 +146,50 @@ public partial class CalculatorLauncherWindow : Window
             },
             new CalculatorDescriptor
             {
-                Name = "Grading/Slope",
-                Category = "Construction",
-                Description = "Convert between rise/run, percent, and angle",
-                Icon = "⛰",
-                HelpKind = CalculatorKind.Grading,
-                OpenAction = () => new GradingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+                Name = "Paint Calculator",
+                Category = "Materials & Estimating",
+                Description = "Calculate paint needed for walls and ceilings",
+                Icon = "🎨",
+                HelpKind = CalculatorKind.Paint,
+                OpenAction = () => new PaintCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
+                Name = "Flooring & Countertops",
+                Category = "Materials & Estimating",
+                Description = "Calculate material quantities with waste for flooring and counters",
+                Icon = "🔲",
+                HelpKind = CalculatorKind.Flooring,
+                OpenAction = () => new FlooringCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
+                Name = "Board Feet",
+                Category = "Materials & Estimating",
+                Description = "Calculate board feet for lumber",
+                Icon = "📏",
+                IconFontFamily = "Segoe UI Emoji",
+                HelpKind = CalculatorKind.BoardFeet,
+                OpenAction = () => new BoardFeetCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            
+            new CalculatorDescriptor
+            {
+                Name = "HVAC Calculator",
+                Category = "Systems (HVAC & Plumbing)",
+                Description = "Calculate BTU, tonnage, CFM, and duct sizing",
+                Icon = "❄",
+                HelpKind = CalculatorKind.HVAC,
+                OpenAction = () => new HVACCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
+            },
+            new CalculatorDescriptor
+            {
+                Name = "Plumbing Calculator",
+                Category = "Systems (HVAC & Plumbing)",
+                Description = "Calculate pipe sizing, flow rates, and drain capacity",
+                Icon = "🚰",
+                HelpKind = CalculatorKind.Plumbing,
+                OpenAction = () => new PlumbingCalculatorWindow { Owner = Application.Current.MainWindow }.Show()
             }
         };
     }
@@ -173,7 +207,10 @@ public partial class CalculatorLauncherWindow : Window
         
         var grouped = filtered
             .GroupBy(c => c.Category)
-            .OrderBy(g => g.Key == "Common" ? 0 : g.Key == "Measurement & Layout" ? 1 : 2)
+            .OrderBy(g => g.Key == "Common Tools" ? 0 : 
+                         g.Key == "Geometry & Site" ? 1 : 
+                         g.Key == "Building Elements & Layout" ? 2 : 
+                         g.Key == "Materials & Estimating" ? 3 : 4)
             .SelectMany(g => g.OrderBy(c => c.Name))
             .ToList();
         

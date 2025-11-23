@@ -55,5 +55,8 @@ public enum CalculatorKind
     Paint,
     BoardFeet,
     Drywall,
-    Grading
+    Grading,
+    HVAC,
+    Plumbing,
+    Flooring
 }

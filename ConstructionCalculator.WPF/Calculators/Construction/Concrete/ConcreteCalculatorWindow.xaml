@@ -115,6 +115,14 @@
                                FontWeight="Bold"
                                TextWrapping="Wrap"
                                MinHeight="80"/>
+					<StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+						<Label Content="Cost per Cubic Yard ($):" Width="160" VerticalAlignment="Center" FontSize="13"/>
+						<TextBox x:Name="CostPerYardTextBox" Width="100" Height="28" FontSize="13" 
+								 VerticalContentAlignment="Center" Text="0"
+								 TextChanged="CostPerYardTextBox_TextChanged"/>
+					</StackPanel>
+					<TextBlock x:Name="TotalCostLabel" Text="Estimated Total Cost: $0.00" 
+							   FontSize="16" FontWeight="Bold" Foreground="DarkGreen" Margin="0,8,0,0"/>
 				</StackPanel>
 			</Border>
 

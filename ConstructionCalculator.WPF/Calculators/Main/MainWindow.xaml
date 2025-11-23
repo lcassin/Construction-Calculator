@@ -23,24 +23,31 @@
 			<MenuItem Header="Tools">
 				<MenuItem Header="Calculator Launcher..." Click="CalculatorLauncher_Click" FontWeight="Bold"/>
 				<Separator/>
-				<MenuItem Header="Common">
+				<MenuItem Header="Common Tools">
 					<MenuItem Header="Unit Converter" Click="UnitConverter_Click"/>
 					<MenuItem Header="Area Calculator" Click="AreaCalculator_Click"/>
 				</MenuItem>
-				<MenuItem Header="Measurement &amp; Layout ">
+				<MenuItem Header="Geometry &amp; Site">
 					<MenuItem Header="Angle Calculator" Click="AngleCalculator_Click"/>
 					<MenuItem Header="Survey Calculator" Click="SurveyCalculator_Click"/>
-					<MenuItem Header="Seating Layout Calculator" Click="SeatingLayoutCalculator_Click"/>
+					<MenuItem Header="Grading/Slope Calculator" Click="GradingCalculator_Click"/>
 				</MenuItem>
-				<MenuItem Header="Construction">
-					<MenuItem Header="Concrete Calculator" Click="ConcreteCalculator_Click"/>
+				<MenuItem Header="Building Elements &amp; Layout">
 					<MenuItem Header="Stair Calculator" Click="StairCalculator_Click"/>
 					<MenuItem Header="Accessibility Ramp Calculator" Click="RampCalculator_Click"/>
+					<MenuItem Header="Seating Layout Calculator" Click="SeatingLayoutCalculator_Click"/>
+				</MenuItem>
+				<MenuItem Header="Materials &amp; Estimating">
+					<MenuItem Header="Concrete Calculator" Click="ConcreteCalculator_Click"/>
 					<MenuItem Header="Roofing Calculator" Click="RoofingCalculator_Click"/>
-					<MenuItem Header="Paint/Coverage Calculator" Click="PaintCalculator_Click"/>
-					<MenuItem Header="Board Feet Calculator" Click="BoardFeetCalculator_Click"/>
 					<MenuItem Header="Drywall Calculator" Click="DrywallCalculator_Click"/>
-					<MenuItem Header="Grading/Slope Calculator" Click="GradingCalculator_Click"/>
+					<MenuItem Header="Paint Calculator" Click="PaintCalculator_Click"/>
+					<MenuItem Header="Flooring &amp; Countertops Calculator" Click="FlooringCalculator_Click"/>
+					<MenuItem Header="Board Feet Calculator" Click="BoardFeetCalculator_Click"/>
+				</MenuItem>
+				<MenuItem Header="Systems (HVAC &amp; Plumbing)">
+					<MenuItem Header="HVAC Calculator" Click="HVACCalculator_Click"/>
+					<MenuItem Header="Plumbing Calculator" Click="PlumbingCalculator_Click"/>
 				</MenuItem>
 				<Separator/>
 				<MenuItem Header="Theme">
@@ -53,25 +60,32 @@
 				<MenuItem Header="Help for This Calculator (F1)" Click="HelpThisCalculator_Click" FontWeight="Bold"/>
 				<Separator/>
 				<MenuItem Header="Calculators">
-					<MenuItem Header="Common">
+					<MenuItem Header="Common Tools">
 						<MenuItem Header="Help: Main Calculator" Click="HelpMain_Click"/>
 						<MenuItem Header="Help: Unit Converter" Click="HelpUnitConverter_Click"/>
 						<MenuItem Header="Help: Area Calculator" Click="HelpArea_Click"/>
 					</MenuItem>
-					<MenuItem Header="Measurement &amp; Layout">
+					<MenuItem Header="Geometry &amp; Site">
 						<MenuItem Header="Help: Angle Calculator" Click="HelpAngle_Click"/>
 						<MenuItem Header="Help: Survey Calculator" Click="HelpSurvey_Click"/>
-						<MenuItem Header="Help: Seating Layout Calculator" Click="HelpSeatingLayout_Click"/>
+						<MenuItem Header="Help: Grading/Slope Calculator" Click="HelpGrading_Click"/>
 					</MenuItem>
-					<MenuItem Header="Construction">
-						<MenuItem Header="Help: Concrete Calculator" Click="HelpConcrete_Click"/>
+					<MenuItem Header="Building Elements &amp; Layout">
 						<MenuItem Header="Help: Stair Calculator" Click="HelpStair_Click"/>
 						<MenuItem Header="Help: Accessibility Ramp Calculator" Click="HelpRamp_Click"/>
+						<MenuItem Header="Help: Seating Layout Calculator" Click="HelpSeatingLayout_Click"/>
+					</MenuItem>
+					<MenuItem Header="Materials &amp; Estimating">
+						<MenuItem Header="Help: Concrete Calculator" Click="HelpConcrete_Click"/>
 						<MenuItem Header="Help: Roofing Calculator" Click="HelpRoofing_Click"/>
-						<MenuItem Header="Help: Paint/Coverage Calculator" Click="HelpPaint_Click"/>
-						<MenuItem Header="Help: Board Feet Calculator" Click="HelpBoardFeet_Click"/>
 						<MenuItem Header="Help: Drywall Calculator" Click="HelpDrywall_Click"/>
-						<MenuItem Header="Help: Grading/Slope Calculator" Click="HelpGrading_Click"/>
+						<MenuItem Header="Help: Paint Calculator" Click="HelpPaint_Click"/>
+						<MenuItem Header="Help: Flooring &amp; Countertops Calculator" Click="HelpFlooring_Click"/>
+						<MenuItem Header="Help: Board Feet Calculator" Click="HelpBoardFeet_Click"/>
+					</MenuItem>
+					<MenuItem Header="Systems (HVAC &amp; Plumbing)">
+						<MenuItem Header="Help: HVAC Calculator" Click="HelpHVAC_Click"/>
+						<MenuItem Header="Help: Plumbing Calculator" Click="HelpPlumbing_Click"/>
 					</MenuItem>
 				</MenuItem>
 				<Separator/>
@@ -80,14 +94,15 @@
 		</Menu>
 
 		<!-- Main Content -->
-		<Grid Margin="20,10,20,20">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
+			<Grid Margin="20,10,20,20">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
 
 			<!-- Mode Label -->
 			<TextBlock x:Name="ModeLabel" 
@@ -202,6 +217,7 @@
                 <LineBreak/>
                 <Run Text="Press F1 for help" FontWeight="SemiBold"/>
 			</TextBlock>
-		</Grid>
+			</Grid>
+		</ScrollViewer>
 	</DockPanel>
 </Window>
