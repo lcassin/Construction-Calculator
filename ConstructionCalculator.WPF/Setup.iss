@@ -3,7 +3,7 @@
 ; Uses self-contained .NET 10 publish (includes runtime, no separate installation needed)
 
 #define MyAppName "Construction Calculator"
-#define MyAppVersion "2.0.3"
+#define MyAppVersion "2.0.4"
 #define MyAppPublisher "Lee Cassin"
 #define MyAppURL "https://github.com/lcassin/Construction-Calculator"
 #define MyAppExeName "ConstructionCalculator.WPF.exe"
