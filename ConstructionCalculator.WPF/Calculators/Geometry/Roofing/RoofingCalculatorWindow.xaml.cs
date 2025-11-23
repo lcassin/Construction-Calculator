@@ -84,7 +84,7 @@ public partial class RoofingCalculatorWindow : Window
 
     private void UpdateCost()
     {
-        if (TotalCostLabel == null) return;
+        if (TotalCostLabel == null || CostPerBundleTextBox == null) return;
         
         if (double.TryParse(CostPerBundleTextBox.Text, out double costPerBundle) && lastCalculatedBundles > 0)
         {
