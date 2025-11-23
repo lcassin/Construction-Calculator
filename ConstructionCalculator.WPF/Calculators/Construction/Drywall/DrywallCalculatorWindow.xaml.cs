@@ -87,7 +87,7 @@ public partial class DrywallCalculatorWindow : Window
 
     private void UpdateCost()
     {
-        if (TotalCostLabel == null) return;
+        if (TotalCostLabel == null || CostPerSheetTextBox == null) return;
         
         if (double.TryParse(CostPerSheetTextBox.Text, out double costPerSheet) && lastCalculatedSheets > 0)
         {

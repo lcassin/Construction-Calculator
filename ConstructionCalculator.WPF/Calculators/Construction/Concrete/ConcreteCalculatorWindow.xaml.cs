@@ -137,7 +137,7 @@ public partial class ConcreteCalculatorWindow : Window
 
     private void UpdateCost()
     {
-        if (TotalCostLabel == null) return;
+        if (TotalCostLabel == null || CostPerYardTextBox == null) return;
         
         if (double.TryParse(CostPerYardTextBox.Text, out double costPerYard) && lastCalculatedYards > 0)
         {

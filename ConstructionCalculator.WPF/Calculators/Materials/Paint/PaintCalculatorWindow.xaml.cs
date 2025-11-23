@@ -64,7 +64,7 @@ public partial class PaintCalculatorWindow : Window
 
     private void UpdateCost()
     {
-        if (TotalCostLabel == null) return;
+        if (TotalCostLabel == null || CostPerGallonTextBox == null) return;
         
         if (double.TryParse(CostPerGallonTextBox.Text, out double costPerGallon) && lastCalculatedGallons > 0)
         {
