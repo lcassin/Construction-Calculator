@@ -90,14 +90,15 @@
 		</Menu>
 
 		<!-- Main Content -->
-		<Grid Margin="20,10,20,20">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
+			<Grid Margin="20,10,20,20">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
 
 			<!-- Mode Label -->
 			<TextBlock x:Name="ModeLabel" 
@@ -208,6 +209,7 @@
                 <LineBreak/>
                 <Run Text="Press F1 for help" FontWeight="SemiBold"/>
 			</TextBlock>
-		</Grid>
+			</Grid>
+		</ScrollViewer>
 	</DockPanel>
 </Window>

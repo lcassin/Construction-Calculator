@@ -8,18 +8,19 @@
         Icon="pack://application:,,,/Assets/app.ico"
         help:HelpBehavior.CalculatorKind="Flooring">
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="Calculate material quantities for flooring, counters, tile, carpet, etc.&#x0a;Enter dimensions, select material type, and get quantity with waste allowance." 
                    FontSize="12" FontStyle="Italic" Foreground="Gray" TextWrapping="Wrap" Margin="0,0,0,15"/>
@@ -66,7 +67,7 @@
         <Label Grid.Row="5" Content="Sections:" FontSize="14" FontWeight="Bold" Margin="0,5,0,5"/>
 
         <Border Grid.Row="6" BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10">
-            <ListBox x:Name="SectionsListBox" FontFamily="Consolas" FontSize="11"/>
+            <ListBox x:Name="SectionsListBox" FontFamily="Consolas" FontSize="11" MaxHeight="150"/>
         </Border>
 
         <Grid Grid.Row="7" Margin="0,0,0,15">
@@ -102,5 +103,6 @@
                            FontSize="16" FontWeight="Bold" Foreground="DarkGreen" Margin="0,8,0,0"/>
             </StackPanel>
         </Border>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Window>
