@@ -129,13 +129,14 @@ public static class HelpContentProvider
             Title = "Concrete Calculator",
             IconGlyph = "🏗",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate the amount of concrete needed for slabs, footings, walls, and other concrete pours. Accounts for waste percentage.",
+            Summary = "Calculate the amount of concrete needed for slabs, footings, walls, and other concrete pours. Accounts for waste percentage and includes cost estimation.",
             ExpectedInputs = new List<string>
             {
                 "Length: in feet (e.g., 20)",
                 "Width: in feet (e.g., 10)",
                 "Depth/Thickness: in inches (e.g., 4)",
                 "Waste %: percentage for overage (default: 10%)",
+                "Cost per Cubic Yard: optional, for cost estimation",
                 "All fields accept decimal values"
             },
             Shortcuts = new List<ShortcutItem>
@@ -146,13 +147,16 @@ public static class HelpContentProvider
             {
                 new("20' × 10' × 4\" slab", "2.47 cubic yards", "With 10% waste"),
                 new("30' × 3' × 12\" footing", "3.33 cubic yards", "With 10% waste"),
-                new("100' × 8\" × 8\" wall", "19.75 cubic yards", "With 10% waste")
+                new("100' × 8\" × 8\" wall", "19.75 cubic yards", "With 10% waste"),
+                new("3 cubic yards at $150/yard", "$450 total cost", "Cost estimation")
             },
             Tips = new List<string>
             {
                 "Default waste percentage is 10% - adjust based on your needs",
                 "Depth/thickness is always in inches, length and width in feet",
                 "Result is shown in cubic yards (standard concrete ordering unit)",
+                "Enter cost per cubic yard to see estimated total cost",
+                "Cost updates automatically as you type",
                 "Always round up when ordering concrete",
                 "Consider adding extra for spillage and uneven subgrade"
             }
@@ -335,11 +339,11 @@ public static class HelpContentProvider
             Title = "Roofing Calculator",
             IconGlyph = "🏠",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate roofing materials needed including shingles and underlayment.",
-            ExpectedInputs = new List<string> { "Roof length and width", "Roof pitch (e.g., 6:12)", "Waste percentage" },
+            Summary = "Calculate roofing materials needed including shingles and underlayment with cost estimation.",
+            ExpectedInputs = new List<string> { "Roof length and width", "Roof pitch (e.g., 6:12)", "Waste percentage", "Cost per Bundle: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
-            Examples = new List<ExampleItem> { new("30' × 40' roof, 6:12 pitch", "13.42 squares", "With 10% waste") },
-            Tips = new List<string> { "1 square = 100 square feet", "Steeper pitches require more material" }
+            Examples = new List<ExampleItem> { new("30' × 40' roof, 6:12 pitch", "13.42 squares", "With 10% waste"), new("40 bundles at $35/bundle", "$1,400 total cost", "Cost estimation") },
+            Tips = new List<string> { "1 square = 100 square feet", "Steeper pitches require more material", "Enter cost per bundle to see estimated total cost", "Cost updates automatically as you type" }
         };
     }
 
@@ -350,11 +354,11 @@ public static class HelpContentProvider
             Title = "Paint Calculator",
             IconGlyph = "🎨",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate paint needed for walls, ceilings, and trim.",
-            ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Number of coats", "Coverage rate" },
+            Summary = "Calculate paint needed for walls, ceilings, and trim with cost estimation.",
+            ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Number of coats", "Coverage rate", "Cost per Gallon: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
-            Examples = new List<ExampleItem> { new("12' × 10' × 8' room, 2 coats", "~3 gallons", "Standard room") },
-            Tips = new List<string> { "Standard coverage: 350-400 sq ft per gallon", "Always buy slightly more" }
+            Examples = new List<ExampleItem> { new("12' × 10' × 8' room, 2 coats", "~3 gallons", "Standard room"), new("3 gallons at $40/gallon", "$120 total cost", "Cost estimation") },
+            Tips = new List<string> { "Standard coverage: 350-400 sq ft per gallon", "Enter cost per gallon to see estimated total cost", "Cost updates automatically as you type", "Always buy slightly more" }
         };
     }
 
@@ -380,11 +384,11 @@ public static class HelpContentProvider
             Title = "Drywall Calculator",
             IconGlyph = "🧱",
             IconFontFamily = "Segoe UI Emoji",
-            Summary = "Calculate drywall sheets needed for walls and ceilings.",
-            ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Sheet size (4×8, 4×10, 4×12)", "Waste percentage" },
+            Summary = "Calculate drywall sheets needed for walls and ceilings with cost estimation.",
+            ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Sheet size (4×8, 4×10, 4×12)", "Waste percentage", "Cost per Sheet: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
-            Examples = new List<ExampleItem> { new("12' × 8' wall, 4×8 sheets", "3 sheets", "With 10% waste") },
-            Tips = new List<string> { "Standard sheet: 4' × 8' (32 sq ft)", "Add 10-15% for waste" }
+            Examples = new List<ExampleItem> { new("12' × 8' wall, 4×8 sheets", "3 sheets", "With 10% waste"), new("15 sheets at $12/sheet", "$180 total cost", "Cost estimation") },
+            Tips = new List<string> { "Standard sheet: 4' × 8' (32 sq ft)", "Add 10-15% for waste", "Enter cost per sheet to see estimated total cost", "Cost updates automatically as you type" }
         };
     }
 
