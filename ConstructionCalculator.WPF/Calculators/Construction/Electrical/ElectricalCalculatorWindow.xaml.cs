@@ -385,6 +385,7 @@ public partial class ElectricalCalculatorWindow : Window
         {
             double load;
             double amperage;
+            int voltage = WireSizingVoltageComboBox.SelectedIndex == 0 ? 120 : 240;
             
             if (WireSizingUnitComboBox.SelectedIndex == 0) // Watts
             {
@@ -394,7 +395,6 @@ public partial class ElectricalCalculatorWindow : Window
                     return;
                 }
                 
-                int voltage = WireSizingVoltageComboBox.SelectedIndex == 0 ? 120 : 240;
                 amperage = load / voltage;
             }
             else // Amps
@@ -411,8 +411,6 @@ public partial class ElectricalCalculatorWindow : Window
                 MessageBox.Show("Please enter a valid wire length.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
-            int voltage = WireSizingVoltageComboBox.SelectedIndex == 0 ? 120 : 240;
             bool isCopper = WireTypeComboBox.SelectedIndex == 0;
 
             (string wireSize, int breakerSize) = DetermineWireAndBreaker(amperage, voltage, length, isCopper);
