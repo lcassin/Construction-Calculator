@@ -1227,10 +1227,14 @@ public partial class MainWindow : Window
         if (memoryValue != null)
         {
             Title = "Construction Calculator [M]";
+            MemoryLabel.Visibility = Visibility.Visible;
+            MemoryLabel.Text = "Memory: " + (isDecimalMode ? memoryValue.ToDecimalString() : memoryValue.ToFractionString());
         }
         else
         {
             Title = "Construction Calculator";
+            MemoryLabel.Visibility = Visibility.Collapsed;
+            MemoryLabel.Text = "";
         }
     }
 }

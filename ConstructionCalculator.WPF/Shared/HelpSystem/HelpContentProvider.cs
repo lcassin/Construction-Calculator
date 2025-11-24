@@ -78,9 +78,31 @@ public static class HelpContentProvider
             {
                 "Use the Space, /, ', \" buttons for easier input of measurements",
                 "The / button is for fractions (1/2), not division. Use ÷ for division",
-                "Memory buttons (MC, MR, M+, M-) work with feet/inches measurements",
                 "Percentage operations: A + B% adds B% of A, A - B% subtracts B% of A, A × B% multiplies by B%, A ÷ B% divides by B%",
-                "Press Mode or Ctrl+M to switch between feet/inches and decimal display"
+                "Press Mode or Ctrl+M to switch between feet/inches and decimal display",
+                "",
+                "USING MEMORY KEYS (MC, MR, M+, M-):",
+                "Memory keys help you handle grouped calculations like (3+6+5)×3 + (8+2)×4",
+                "When memory is active, you'll see 'Memory: [value]' displayed above the calculator in green",
+                "The memory indicator shows the exact value stored, in the same format as your display (feet/inches or decimal)",
+                "",
+                "MC (Memory Clear): Clears the memory to zero. The green memory indicator disappears.",
+                "MR (Memory Recall): Displays the value stored in memory. Use this to see your accumulated total.",
+                "M+ (Memory Add): Adds the current display value to memory. Use this to accumulate subtotals.",
+                "M- (Memory Subtract): Subtracts the current display value from memory.",
+                "",
+                "EXAMPLE: Calculate (3+6+5)×3 + (8+2)×4",
+                "1. Enter: 3 + 6 + 5 = 14",
+                "2. Enter: × 3 = 42",
+                "3. Press M+ (stores 42, you'll see 'Memory: 42' in green)",
+                "4. Enter: 8 + 2 = 10",
+                "5. Enter: × 4 = 40",
+                "6. Press M+ (adds 40 to memory, now shows 'Memory: 82')",
+                "7. Press MR to see the final result: 82",
+                "8. Press MC when done to clear memory",
+                "",
+                "Memory works with feet/inches measurements too! Example: (12' 6\" + 8' 3\")×2 + (5' 9\" + 3' 4\")×3",
+                "The memory indicator always shows the stored value so you don't have to remember it"
             }
         };
     }
