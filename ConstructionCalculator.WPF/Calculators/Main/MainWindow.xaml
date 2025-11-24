@@ -48,6 +48,7 @@
 				<MenuItem Header="Systems (HVAC &amp; Plumbing)">
 					<MenuItem Header="HVAC Calculator" Click="HVACCalculator_Click"/>
 					<MenuItem Header="Plumbing Calculator" Click="PlumbingCalculator_Click"/>
+					<MenuItem Header="Electrical Load Calculator" Click="ElectricalCalculator_Click"/>
 				</MenuItem>
 				<Separator/>
 				<MenuItem Header="Theme">
@@ -86,6 +87,7 @@
 					<MenuItem Header="Systems (HVAC &amp; Plumbing)">
 						<MenuItem Header="Help: HVAC Calculator" Click="HelpHVAC_Click"/>
 						<MenuItem Header="Help: Plumbing Calculator" Click="HelpPlumbing_Click"/>
+						<MenuItem Header="Help: Electrical Load Calculator" Click="HelpElectrical_Click"/>
 					</MenuItem>
 				</MenuItem>
 				<Separator/>

@@ -10,6 +10,7 @@ using ConstructionCalculator.WPF.Calculators.Construction.Drywall;
 using ConstructionCalculator.WPF.Calculators.Construction.Grading;
 using ConstructionCalculator.WPF.Calculators.Construction.HVAC;
 using ConstructionCalculator.WPF.Calculators.Construction.Plumbing;
+using ConstructionCalculator.WPF.Calculators.Construction.Electrical;
 using ConstructionCalculator.WPF.Calculators.Geometry.Area;
 using ConstructionCalculator.WPF.Calculators.Geometry.Angle;
 using ConstructionCalculator.WPF.Calculators.Geometry.Roofing;
@@ -849,6 +850,12 @@ public partial class MainWindow : Window
         plumbingCalculator.ShowDialog();
     }
 
+    private void ElectricalCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var electricalCalculator = new ElectricalCalculatorWindow { Owner = this };
+        electricalCalculator.ShowDialog();
+    }
+
     private void FlooringCalculator_Click(object sender, RoutedEventArgs e)
     {
         var flooringCalculator = new FlooringCalculatorWindow { Owner = this };
@@ -981,6 +988,12 @@ public partial class MainWindow : Window
     private void HelpPlumbing_Click(object sender, RoutedEventArgs e)
     {
         var helpWindow = new HelpWindow(CalculatorKind.Plumbing) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpElectrical_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Electrical) { Owner = this };
         helpWindow.Show();
     }
 
