@@ -24,6 +24,7 @@ public static class HelpContentProvider
             CalculatorKind.Grading => GetGradingCalculatorHelp(),
             CalculatorKind.HVAC => GetHVACCalculatorHelp(),
             CalculatorKind.Plumbing => GetPlumbingCalculatorHelp(),
+            CalculatorKind.Electrical => GetElectricalCalculatorHelp(),
             CalculatorKind.Flooring => GetFlooringCalculatorHelp(),
             _ => new HelpTopic { Title = "Help", Summary = "No help available for this calculator." }
         };
@@ -77,9 +78,31 @@ public static class HelpContentProvider
             {
                 "Use the Space, /, ', \" buttons for easier input of measurements",
                 "The / button is for fractions (1/2), not division. Use ÷ for division",
-                "Memory buttons (MC, MR, M+, M-) work with feet/inches measurements",
                 "Percentage operations: A + B% adds B% of A, A - B% subtracts B% of A, A × B% multiplies by B%, A ÷ B% divides by B%",
-                "Press Mode or Ctrl+M to switch between feet/inches and decimal display"
+                "Press Mode or Ctrl+M to switch between feet/inches and decimal display",
+                "",
+                "USING MEMORY KEYS (MC, MR, M+, M-):",
+                "Memory keys help you handle grouped calculations like (3+6+5)×3 + (8+2)×4",
+                "When memory is active, you'll see 'Memory: [value]' displayed above the calculator in green",
+                "The memory indicator shows the exact value stored, in the same format as your display (feet/inches or decimal)",
+                "",
+                "MC (Memory Clear): Clears the memory to zero. The green memory indicator disappears.",
+                "MR (Memory Recall): Displays the value stored in memory. Use this to see your accumulated total.",
+                "M+ (Memory Add): Adds the current display value to memory. Use this to accumulate subtotals.",
+                "M- (Memory Subtract): Subtracts the current display value from memory.",
+                "",
+                "EXAMPLE: Calculate (3+6+5)×3 + (8+2)×4",
+                "1. Enter: 3 + 6 + 5 = 14",
+                "2. Enter: × 3 = 42",
+                "3. Press M+ (stores 42, you'll see 'Memory: 42' in green)",
+                "4. Enter: 8 + 2 = 10",
+                "5. Enter: × 4 = 40",
+                "6. Press M+ (adds 40 to memory, now shows 'Memory: 82')",
+                "7. Press MR to see the final result: 82",
+                "8. Press MC when done to clear memory",
+                "",
+                "Memory works with feet/inches measurements too! Example: (12' 6\" + 8' 3\")×2 + (5' 9\" + 3' 4\")×3",
+                "The memory indicator always shows the stored value so you don't have to remember it"
             }
         };
     }
@@ -509,6 +532,60 @@ public static class HelpContentProvider
                 "Vertical stack: Main vertical drain pipe",
                 "Building drain: Main horizontal drain below fixtures",
                 "Always check local plumbing codes for specific requirements"
+            }
+        };
+    }
+
+    private static HelpTopic GetElectricalCalculatorHelp()
+    {
+        return new HelpTopic
+        {
+            Title = "Electrical Load Calculator",
+            IconGlyph = "⚡",
+            IconFontFamily = "Segoe UI Emoji",
+            Summary = "Calculate electrical panel load, circuit requirements, wire sizing, and breaker sizing based on NEC 2023. Add multiple circuits to determine total load, apply demand factors, and get panel sizing recommendations.",
+            ExpectedInputs = new List<string>
+            {
+                "Circuit Type: General Lighting, Small Appliance, Laundry, Appliances, HVAC, EV Charger, etc.",
+                "For Lighting: Square footage (NEC: 3 VA per sq ft)",
+                "For Appliances: Load in watts/VA and voltage (120V or 240V)",
+                "For Wire Sizing: Circuit load, voltage, wire length, wire type (copper/aluminum)"
+            },
+            Shortcuts = new List<ShortcutItem>
+            {
+                new("F1", "Show this help"),
+                new("Tab", "Navigate between fields"),
+                new("Enter", "Add circuit")
+            },
+            Examples = new List<ExampleItem>
+            {
+                new("General Lighting: 2000 sq ft", "6000 VA load, 120V, 50A, 12 AWG wire, 15A breaker", "Whole house lighting"),
+                new("Small Appliance: 2 circuits", "3000 VA load (1500 VA each), 120V, 12 AWG, 20A breaker", "Kitchen receptacles"),
+                new("Electric Range: 12000W, 240V", "12000 VA, 50A, 6 AWG wire, 50A breaker", "Kitchen range"),
+                new("EV Charger: 9600W, 240V", "9600 VA (min 7200 per NEC), 40A, 8 AWG, 40A breaker", "Level 2 EVSE"),
+                new("Total Panel: Multiple circuits", "200A service panel recommended", "Based on demand load calculation")
+            },
+            Tips = new List<string>
+            {
+                "NEC 2023 compliance: All calculations follow current National Electrical Code",
+                "Demand factors: Automatically applied per NEC Article 220",
+                "General lighting: 100% first 3kVA, 35% next 117kVA (NEC 220.42)",
+                "Small appliance circuits: Minimum 2 required for kitchen (NEC 220.52)",
+                "Laundry circuit: Minimum 1500 VA required (NEC 220.52)",
+                "EV Charger: Minimum 7200 VA or nameplate rating, whichever is larger (NEC 220.57)",
+                "Electric range: 80% demand factor typically applied (NEC Table 220.55)",
+                "Wire sizing: Based on NEC Table 310.16 ampacity ratings",
+                "Continuous loads: 125% factor applied for wire and breaker sizing",
+                "Voltage drop: Should not exceed 3% for branch circuits (NEC 210.19)",
+                "Standard breaker sizes: 15A, 20A, 30A, 40A, 50A, 60A, 70A, 80A, 90A, 100A, etc.",
+                "Copper vs Aluminum: Copper has better conductivity, aluminum requires larger wire",
+                "Wire sizes: 14 AWG (15A max), 12 AWG (20A max), 10 AWG (30A max), 8 AWG (40A max)",
+                "Panel sizing: 100A, 125A, 150A, 200A, 225A, 300A, 400A service panels",
+                "Add all circuits: Calculator sums loads and applies NEC demand factors",
+                "Individual wire sizing: Calculate wire size for any circuit based on load and length",
+                "Always consult licensed electrician: Final design must be reviewed by professional",
+                "Local codes: May have additional requirements beyond NEC",
+                "Copy results: Export complete calculation summary to clipboard"
             }
         };
     }
