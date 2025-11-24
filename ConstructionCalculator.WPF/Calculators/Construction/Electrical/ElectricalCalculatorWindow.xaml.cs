@@ -14,7 +14,14 @@ public partial class ElectricalCalculatorWindow : Window
 
     private void CircuitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (CircuitTypeComboBox == null) return;
+        // Guard against event firing during InitializeComponent before elements are initialized
+        if (!IsLoaded ||
+            LightingInputPanel == null ||
+            ApplianceInputPanel == null ||
+            CountInputPanel == null)
+        {
+            return;
+        }
 
         int selectedIndex = CircuitTypeComboBox.SelectedIndex;
 
