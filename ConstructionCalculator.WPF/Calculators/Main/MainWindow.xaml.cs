@@ -10,6 +10,7 @@ using ConstructionCalculator.WPF.Calculators.Construction.Drywall;
 using ConstructionCalculator.WPF.Calculators.Construction.Grading;
 using ConstructionCalculator.WPF.Calculators.Construction.HVAC;
 using ConstructionCalculator.WPF.Calculators.Construction.Plumbing;
+using ConstructionCalculator.WPF.Calculators.Construction.Electrical;
 using ConstructionCalculator.WPF.Calculators.Geometry.Area;
 using ConstructionCalculator.WPF.Calculators.Geometry.Angle;
 using ConstructionCalculator.WPF.Calculators.Geometry.Roofing;
@@ -756,43 +757,43 @@ public partial class MainWindow : Window
     private void AngleCalculator_Click(object sender, RoutedEventArgs e)
     {
         var angleCalculator = new AngleCalculatorWindow { Owner = this };
-        angleCalculator.ShowDialog();
+        angleCalculator.Show();
     }
 
     private void StairCalculator_Click(object sender, RoutedEventArgs e)
     {
         var stairCalculator = new StairCalculatorWindow { Owner = this };
-        stairCalculator.ShowDialog();
+        stairCalculator.Show();
     }
 
     private void RampCalculator_Click(object sender, RoutedEventArgs e)
     {
         var rampCalculator = new RampCalculatorWindow { Owner = this };
-        rampCalculator.ShowDialog();
+        rampCalculator.Show();
     }
 
     private void SurveyCalculator_Click(object sender, RoutedEventArgs e)
     {
         var surveyCalculator = new SurveyCalculatorWindow { Owner = this };
-        surveyCalculator.ShowDialog();
+        surveyCalculator.Show();
     }
 
     private void SeatingLayoutCalculator_Click(object sender, RoutedEventArgs e)
     {
         var seatingLayoutCalculator = new SeatingLayoutCalculatorWindow { Owner = this };
-        seatingLayoutCalculator.ShowDialog();
+        seatingLayoutCalculator.Show();
     }
 
     private void AreaCalculator_Click(object sender, RoutedEventArgs e)
     {
         var areaCalculator = new AreaCalculatorWindow { Owner = this };
-        areaCalculator.ShowDialog();
+        areaCalculator.Show();
     }
 
     private void UnitConverter_Click(object sender, RoutedEventArgs e)
     {
         var unitConverter = new UnitConverterWindow { Owner = this };
-        unitConverter.ShowDialog();
+        unitConverter.Show();
     }
 
     private void CalculatorLauncher_Click(object sender, RoutedEventArgs e)
@@ -804,55 +805,61 @@ public partial class MainWindow : Window
     private void ConcreteCalculator_Click(object sender, RoutedEventArgs e)
     {
         var concreteCalculator = new ConcreteCalculatorWindow { Owner = this };
-        concreteCalculator.ShowDialog();
+        concreteCalculator.Show();
     }
 
     private void RoofingCalculator_Click(object sender, RoutedEventArgs e)
     {
         var roofingCalculator = new RoofingCalculatorWindow { Owner = this };
-        roofingCalculator.ShowDialog();
+        roofingCalculator.Show();
     }
 
     private void PaintCalculator_Click(object sender, RoutedEventArgs e)
     {
         var paintCalculator = new PaintCalculatorWindow { Owner = this };
-        paintCalculator.ShowDialog();
+        paintCalculator.Show();
     }
 
     private void BoardFeetCalculator_Click(object sender, RoutedEventArgs e)
     {
         var boardFeetCalculator = new BoardFeetCalculatorWindow { Owner = this };
-        boardFeetCalculator.ShowDialog();
+        boardFeetCalculator.Show();
     }
 
     private void DrywallCalculator_Click(object sender, RoutedEventArgs e)
     {
         var drywallCalculator = new DrywallCalculatorWindow { Owner = this };
-        drywallCalculator.ShowDialog();
+        drywallCalculator.Show();
     }
 
     private void GradingCalculator_Click(object sender, RoutedEventArgs e)
     {
         var gradingCalculator = new GradingCalculatorWindow { Owner = this };
-        gradingCalculator.ShowDialog();
+        gradingCalculator.Show();
     }
 
     private void HVACCalculator_Click(object sender, RoutedEventArgs e)
     {
         var hvacCalculator = new HVACCalculatorWindow { Owner = this };
-        hvacCalculator.ShowDialog();
+        hvacCalculator.Show();
     }
 
     private void PlumbingCalculator_Click(object sender, RoutedEventArgs e)
     {
         var plumbingCalculator = new PlumbingCalculatorWindow { Owner = this };
-        plumbingCalculator.ShowDialog();
+        plumbingCalculator.Show();
+    }
+
+    private void ElectricalCalculator_Click(object sender, RoutedEventArgs e)
+    {
+        var electricalCalculator = new ElectricalCalculatorWindow { Owner = this };
+        electricalCalculator.Show();
     }
 
     private void FlooringCalculator_Click(object sender, RoutedEventArgs e)
     {
         var flooringCalculator = new FlooringCalculatorWindow { Owner = this };
-        flooringCalculator.ShowDialog();
+        flooringCalculator.Show();
     }
 
     private void LightTheme_Click(object sender, RoutedEventArgs e)
@@ -981,6 +988,12 @@ public partial class MainWindow : Window
     private void HelpPlumbing_Click(object sender, RoutedEventArgs e)
     {
         var helpWindow = new HelpWindow(CalculatorKind.Plumbing) { Owner = this };
+        helpWindow.Show();
+    }
+
+    private void HelpElectrical_Click(object sender, RoutedEventArgs e)
+    {
+        var helpWindow = new HelpWindow(CalculatorKind.Electrical) { Owner = this };
         helpWindow.Show();
     }
 
@@ -1214,10 +1227,14 @@ public partial class MainWindow : Window
         if (memoryValue != null)
         {
             Title = "Construction Calculator [M]";
+            MemoryLabel.Visibility = Visibility.Visible;
+            MemoryLabel.Text = "Memory: " + (isDecimalMode ? memoryValue.ToDecimalString() : memoryValue.ToFractionString());
         }
         else
         {
             Title = "Construction Calculator";
+            MemoryLabel.Visibility = Visibility.Collapsed;
+            MemoryLabel.Text = "";
         }
     }
 }

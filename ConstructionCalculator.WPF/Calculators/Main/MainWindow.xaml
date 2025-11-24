@@ -48,6 +48,7 @@
 				<MenuItem Header="Systems (HVAC &amp; Plumbing)">
 					<MenuItem Header="HVAC Calculator" Click="HVACCalculator_Click"/>
 					<MenuItem Header="Plumbing Calculator" Click="PlumbingCalculator_Click"/>
+					<MenuItem Header="Electrical Load Calculator" Click="ElectricalCalculator_Click"/>
 				</MenuItem>
 				<Separator/>
 				<MenuItem Header="Theme">
@@ -86,6 +87,7 @@
 					<MenuItem Header="Systems (HVAC &amp; Plumbing)">
 						<MenuItem Header="Help: HVAC Calculator" Click="HelpHVAC_Click"/>
 						<MenuItem Header="Help: Plumbing Calculator" Click="HelpPlumbing_Click"/>
+						<MenuItem Header="Help: Electrical Load Calculator" Click="HelpElectrical_Click"/>
 					</MenuItem>
 				</MenuItem>
 				<Separator/>
@@ -97,6 +99,7 @@
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
 			<Grid Margin="20,10,20,20">
 				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
@@ -121,9 +124,21 @@
                        Margin="0,0,0,5"
                        Height="30"/>
 
+
+		<!-- Memory Indicator -->
+		<TextBlock x:Name="MemoryLabel"
+                   Grid.Row="2"
+                   Text=""
+                   FontSize="11"
+                   FontWeight="SemiBold"
+                   Foreground="DarkGreen"
+                   TextAlignment="Right"
+                   Margin="0,0,0,2"
+                   Visibility="Collapsed"
+                   TextTrimming="CharacterEllipsis"/>
 			<!-- Display TextBox -->
 			<TextBox x:Name="DisplayTextBox"
-                     Grid.Row="2"
+                     Grid.Row="3"
                      Text="0&quot;"
                      FontFamily="Consolas"
                      FontSize="42"
@@ -139,7 +154,7 @@
                      KeyDown="DisplayTextBox_KeyDown" Background="#FFE6E6E6"/>
 
 			<!-- Button Grid -->
-			<Grid Grid.Row="3" Margin="0,0,0,20">
+			<Grid Grid.Row="4" Margin="0,0,0,20">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
@@ -205,7 +220,7 @@
 			</Grid>
 
 			<!-- Instructions -->
-			<TextBlock Grid.Row="4"
+			<TextBlock Grid.Row="5"
                        FontSize="10"
                        TextWrapping="Wrap"
                        Foreground="Gray">
