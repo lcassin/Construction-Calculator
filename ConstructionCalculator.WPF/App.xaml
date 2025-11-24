@@ -100,5 +100,8 @@
             <Setter Property="Background" Value="#606060"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
         </Style>
+        
+        <!-- Memory Indicator Brush (visible in both light and dark themes) -->
+        <SolidColorBrush x:Key="MemoryIndicatorBrush" Color="#00CED1"/>
     </Application.Resources>
 </Application>
