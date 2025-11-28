@@ -12,7 +12,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
-        Icon="pack://application:,,,/Assets/app.ico"
+        Icon="pack://application:,,,/Assets/app-new.ico"
         help:HelpBehavior.CalculatorKind="Main">
 
 	<!-- Button styles now defined in App.xaml -->

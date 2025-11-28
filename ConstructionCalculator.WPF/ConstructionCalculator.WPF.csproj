@@ -12,7 +12,7 @@
     <UseWPF>true</UseWPF>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <NoWarn>$(NoWarn);WPF0001</NoWarn>
-    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\app-new.ico</ApplicationIcon>
     <AssemblyVersion>2.0.6.0</AssemblyVersion>
     <FileVersion>2.0.6.0</FileVersion>
     <Version>2.0.6</Version>
@@ -29,6 +29,9 @@
   <ItemGroup>
     <SplashScreen Include="Assets\splash.png" />
     <Resource Include="Assets\app.ico" />
+    <Resource Include="Assets\app-new.ico" />
+    <Resource Include="Assets\appicon-new.png" />
+    <Resource Include="Assets\logo-main.png" />
   </ItemGroup>
 
   <ItemGroup>
