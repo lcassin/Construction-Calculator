@@ -5,7 +5,7 @@
         Height="650" Width="500"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        Icon="pack://application:,,,/Assets/app.ico">
+        Icon="pack://application:,,,/Assets/app-new.ico">
     
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="40,30,40,30" HorizontalAlignment="Center">
