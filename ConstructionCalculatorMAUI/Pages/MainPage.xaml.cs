@@ -9,6 +9,7 @@ public partial class MainPage : ContentPage
     private Measurement? _storedValue = null;
     private bool _shouldClearDisplay = false;
     private readonly List<string> _calculationChain = new();
+    private Measurement? _memoryValue = null;
 
     public MainPage()
     {
@@ -505,5 +506,252 @@ public partial class MainPage : ContentPage
     private void UpdateDisplay(Measurement measurement)
     {
         DisplayEntry.Text = _isDecimalMode ? measurement.ToDecimalString() : measurement.ToFractionString();
+    }
+
+    private void OnMemoryClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            string buttonText = button.Text;
+            
+            switch (buttonText)
+            {
+                case "MC":
+                    MemoryClear();
+                    break;
+                case "MR":
+                    MemoryRecall();
+                    break;
+                case "M+":
+                    MemoryAdd();
+                    break;
+                case "M-":
+                    MemorySubtract();
+                    break;
+            }
+        }
+    }
+
+    private void OnMathFunctionClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            string buttonText = button.Text;
+            
+            switch (buttonText)
+            {
+                case "√":
+                    PerformSquareRoot();
+                    break;
+                case "x²":
+                    PerformSquared();
+                    break;
+                case "%":
+                    PerformPercent();
+                    break;
+                case "+/-":
+                    ToggleSign();
+                    break;
+            }
+        }
+    }
+
+    private void MemoryClear()
+    {
+        _memoryValue = null;
+        UpdateMemoryIndicator();
+    }
+
+    private void MemoryRecall()
+    {
+        if (_memoryValue != null)
+        {
+            UpdateDisplay(_memoryValue);
+            _shouldClearDisplay = true;
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+    }
+
+    private async void MemoryAdd()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            if (_memoryValue == null)
+            {
+                _memoryValue = current;
+            }
+            else
+            {
+                _memoryValue = _memoryValue + current;
+            }
+            UpdateMemoryIndicator();
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Memory add error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void MemorySubtract()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            if (_memoryValue == null)
+            {
+                _memoryValue = Measurement.FromDecimalInches(-current.ToTotalInches());
+            }
+            else
+            {
+                _memoryValue = _memoryValue - current;
+            }
+            UpdateMemoryIndicator();
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Memory subtract error: {ex.Message}", "OK");
+        }
+    }
+
+    private void UpdateMemoryIndicator()
+    {
+        if (_memoryValue != null)
+        {
+            MemoryLabel.IsVisible = true;
+            MemoryLabel.Text = "Memory: " + (_isDecimalMode ? _memoryValue.ToDecimalString() : _memoryValue.ToFractionString());
+        }
+        else
+        {
+            MemoryLabel.IsVisible = false;
+            MemoryLabel.Text = "";
+        }
+    }
+
+    private async void PerformSquareRoot()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            
+            if (totalInches < 0)
+            {
+                await DisplayAlert("Error", "Cannot take square root of negative number", "OK");
+                return;
+            }
+            
+            double result = Math.Sqrt(totalInches);
+            Measurement resultMeasurement = Measurement.FromDecimalInches(result);
+            UpdateDisplay(resultMeasurement);
+            _shouldClearDisplay = true;
+            
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Square root error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void PerformSquared()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            double result = totalInches * totalInches;
+            
+            Measurement resultMeasurement = Measurement.FromDecimalInches(result);
+            UpdateDisplay(resultMeasurement);
+            _shouldClearDisplay = true;
+            
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Squared error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void PerformPercent()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            
+            if (_storedValue != null && !string.IsNullOrEmpty(_currentOperation))
+            {
+                double baseValue = _storedValue.ToTotalInches();
+                double percentValue = current.ToTotalInches();
+                double result;
+                
+                switch (_currentOperation)
+                {
+                    case "+":
+                    case "-":
+                        result = baseValue * (percentValue / 100.0);
+                        break;
+                    case "*":
+                    case "/":
+                        result = percentValue / 100.0;
+                        break;
+                    default:
+                        result = percentValue / 100.0;
+                        break;
+                }
+                
+                Measurement resultMeasurement = Measurement.FromDecimalInches(result);
+                UpdateDisplay(resultMeasurement);
+                _shouldClearDisplay = true;
+            }
+            else
+            {
+                double totalInches = current.ToTotalInches();
+                double result = totalInches / 100.0;
+                Measurement resultMeasurement = Measurement.FromDecimalInches(result);
+                UpdateDisplay(resultMeasurement);
+                _shouldClearDisplay = true;
+            }
+            
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Percent error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void ToggleSign()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            Measurement result = Measurement.FromDecimalInches(-totalInches);
+            UpdateDisplay(result);
+            
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Toggle sign error: {ex.Message}", "OK");
+        }
     }
 }

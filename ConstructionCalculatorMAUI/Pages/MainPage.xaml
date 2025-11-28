@@ -26,6 +26,16 @@
                    HorizontalOptions="End"
                    MinimumHeightRequest="30" />
 
+            <!-- Memory Indicator -->
+            <Label x:Name="MemoryLabel"
+                   Text=""
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#00CED1, Dark=#00CED1}"
+                   HorizontalOptions="End"
+                   IsVisible="False"
+                   MinimumHeightRequest="20" />
+
             <!-- Display Entry -->
             <Entry x:Name="DisplayEntry"
                    Text="0&quot;"
@@ -40,47 +50,57 @@
                    HeightRequest="60" />
 
             <!-- Calculator Buttons Grid -->
-            <Grid RowDefinitions="60,60,60,60,60,60"
-                  ColumnDefinitions="*,*,*,*"
+            <Grid RowDefinitions="60,60,60,60,60,60,60"
+                  ColumnDefinitions="*,*,*,*,*"
                   RowSpacing="10"
                   ColumnSpacing="10"
                   Margin="0,20,0,0">
 
-                <!-- Row 0: 7, 8, 9, ÷ -->
+                <!-- Row 0: 7, 8, 9, ÷, MC -->
                 <Button Text="7" Grid.Row="0" Grid.Column="0" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="8" Grid.Row="0" Grid.Column="1" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="9" Grid.Row="0" Grid.Column="2" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="÷" Grid.Row="0" Grid.Column="3" Clicked="OnOperatorClicked" CommandParameter="/" Style="{StaticResource OperatorButton}" />
+                <Button Text="MC" Grid.Row="0" Grid.Column="4" Clicked="OnMemoryClicked" Style="{StaticResource ActionButton}" />
 
-                <!-- Row 1: 4, 5, 6, × -->
+                <!-- Row 1: 4, 5, 6, ×, MR -->
                 <Button Text="4" Grid.Row="1" Grid.Column="0" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="5" Grid.Row="1" Grid.Column="1" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="6" Grid.Row="1" Grid.Column="2" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="×" Grid.Row="1" Grid.Column="3" Clicked="OnOperatorClicked" CommandParameter="*" Style="{StaticResource OperatorButton}" />
+                <Button Text="MR" Grid.Row="1" Grid.Column="4" Clicked="OnMemoryClicked" Style="{StaticResource ActionButton}" />
 
-                <!-- Row 2: 1, 2, 3, - -->
+                <!-- Row 2: 1, 2, 3, -, M+ -->
                 <Button Text="1" Grid.Row="2" Grid.Column="0" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="2" Grid.Row="2" Grid.Column="1" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="3" Grid.Row="2" Grid.Column="2" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="-" Grid.Row="2" Grid.Column="3" Clicked="OnOperatorClicked" Style="{StaticResource OperatorButton}" />
+                <Button Text="M+" Grid.Row="2" Grid.Column="4" Clicked="OnMemoryClicked" Style="{StaticResource ActionButton}" />
 
-                <!-- Row 3: 0, ', ", + -->
+                <!-- Row 3: 0, ', ", +, M- -->
                 <Button Text="0" Grid.Row="3" Grid.Column="0" Clicked="OnNumberClicked" Style="{StaticResource NumberButton}" />
                 <Button Text="'" Grid.Row="3" Grid.Column="1" Clicked="OnNumberClicked" />
                 <Button Text="&quot;" Grid.Row="3" Grid.Column="2" Clicked="OnNumberClicked" />
                 <Button Text="+" Grid.Row="3" Grid.Column="3" Clicked="OnOperatorClicked" Style="{StaticResource OperatorButton}" />
+                <Button Text="M-" Grid.Row="3" Grid.Column="4" Clicked="OnMemoryClicked" Style="{StaticResource ActionButton}" />
 
-                <!-- Row 4: Space, /, ., = -->
+                <!-- Row 4: Space, /, ., =, (empty) -->
                 <Button Text="Space" Grid.Row="4" Grid.Column="0" Clicked="OnSpaceClicked" />
                 <Button Text="/" Grid.Row="4" Grid.Column="1" Clicked="OnNumberClicked" />
                 <Button Text="." Grid.Row="4" Grid.Column="2" Clicked="OnNumberClicked" />
                 <Button Text="=" Grid.Row="4" Grid.Column="3" Clicked="OnEqualsClicked" Style="{StaticResource OperatorButton}" />
 
-                <!-- Row 5: C, CE, Copy, Mode -->
-                <Button Text="C" Grid.Row="5" Grid.Column="0" Clicked="OnClearClicked" Style="{StaticResource ActionButton}" />
-                <Button Text="CE" Grid.Row="5" Grid.Column="1" Clicked="OnClearEntryClicked" Style="{StaticResource ActionButton}" />
-                <Button Text="Copy" Grid.Row="5" Grid.Column="2" Clicked="OnCopyClicked" Style="{StaticResource ActionButton}" />
-                <Button Text="Mode" Grid.Row="5" Grid.Column="3" Clicked="OnModeClicked" Style="{StaticResource ActionButton}" />
+                <!-- Row 5: %, √, x², +/-, (empty) -->
+                <Button Text="%" Grid.Row="5" Grid.Column="0" Clicked="OnMathFunctionClicked" Style="{StaticResource OperatorButton}" />
+                <Button Text="√" Grid.Row="5" Grid.Column="1" Clicked="OnMathFunctionClicked" Style="{StaticResource OperatorButton}" />
+                <Button Text="x²" Grid.Row="5" Grid.Column="2" Clicked="OnMathFunctionClicked" Style="{StaticResource OperatorButton}" />
+                <Button Text="+/-" Grid.Row="5" Grid.Column="3" Clicked="OnMathFunctionClicked" Style="{StaticResource OperatorButton}" />
+
+                <!-- Row 6: C, CE, Copy, Mode, (empty) -->
+                <Button Text="C" Grid.Row="6" Grid.Column="0" Clicked="OnClearClicked" Style="{StaticResource ActionButton}" />
+                <Button Text="CE" Grid.Row="6" Grid.Column="1" Clicked="OnClearEntryClicked" Style="{StaticResource ActionButton}" />
+                <Button Text="Copy" Grid.Row="6" Grid.Column="2" Clicked="OnCopyClicked" Style="{StaticResource ActionButton}" />
+                <Button Text="Mode" Grid.Row="6" Grid.Column="3" Clicked="OnModeClicked" Style="{StaticResource ActionButton}" />
             </Grid>
 
             <!-- Instructions -->
