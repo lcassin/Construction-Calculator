@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionCalculatorMAUI", "ConstructionCalculatorMAUI.csproj", "{76C6711E-5DA3-4AD5-410E-474180001BA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionCalculator.Core", "..\ConstructionCalculator.Core\ConstructionCalculator.Core.csproj", "{4D711658-4076-43C3-ECD6-821FB7FAEDBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{76C6711E-5DA3-4AD5-410E-474180001BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76C6711E-5DA3-4AD5-410E-474180001BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76C6711E-5DA3-4AD5-410E-474180001BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D711658-4076-43C3-ECD6-821FB7FAEDBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D711658-4076-43C3-ECD6-821FB7FAEDBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D711658-4076-43C3-ECD6-821FB7FAEDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D711658-4076-43C3-ECD6-821FB7FAEDBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
