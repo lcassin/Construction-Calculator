@@ -4,6 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:ConstructionCalculatorMAUI.Pages"
+    xmlns:electrical="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Electrical"
+    xmlns:hvac="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.HVAC"
+    xmlns:plumbing="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Plumbing"
+    xmlns:materials="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Materials"
+    xmlns:geometry="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Geometry"
+    xmlns:unitconverter="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.UnitConverter"
     Title="Construction Calculator"
     Shell.BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#121212}"
     Shell.ForegroundColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
@@ -48,6 +54,66 @@
             Title="Area Calculator"
             ContentTemplate="{DataTemplate pages:AreaCalculatorPage}"
             Route="AreaCalculator" />
+        
+        <ShellContent
+            Title="HVAC Multi-Zone Calculator"
+            ContentTemplate="{DataTemplate hvac:HVACCalculatorPage}"
+            Route="HVACCalculator" />
+        
+        <ShellContent
+            Title="Plumbing Calculator"
+            ContentTemplate="{DataTemplate plumbing:PlumbingCalculatorPage}"
+            Route="PlumbingCalculator" />
+        
+        <ShellContent
+            Title="Electrical Load Calculator"
+            ContentTemplate="{DataTemplate electrical:ElectricalCalculatorPage}"
+            Route="ElectricalCalculator" />
+        
+        <ShellContent
+            Title="Paint Calculator"
+            ContentTemplate="{DataTemplate materials:PaintCalculatorPage}"
+            Route="PaintCalculator" />
+        
+        <ShellContent
+            Title="Concrete Calculator"
+            ContentTemplate="{DataTemplate materials:ConcreteCalculatorPage}"
+            Route="ConcreteCalculator" />
+        
+        <ShellContent
+            Title="Drywall Calculator"
+            ContentTemplate="{DataTemplate materials:DrywallCalculatorPage}"
+            Route="DrywallCalculator" />
+        
+        <ShellContent
+            Title="Flooring Calculator"
+            ContentTemplate="{DataTemplate materials:FlooringCalculatorPage}"
+            Route="FlooringCalculator" />
+        
+        <ShellContent
+            Title="Board Feet Calculator"
+            ContentTemplate="{DataTemplate materials:BoardFeetCalculatorPage}"
+            Route="BoardFeetCalculator" />
+        
+        <ShellContent
+            Title="Roofing Calculator"
+            ContentTemplate="{DataTemplate materials:RoofingCalculatorPage}"
+            Route="RoofingCalculator" />
+        
+        <ShellContent
+            Title="Ramp Calculator"
+            ContentTemplate="{DataTemplate geometry:RampCalculatorPage}"
+            Route="RampCalculator" />
+        
+        <ShellContent
+            Title="Grading/Slope Calculator"
+            ContentTemplate="{DataTemplate geometry:GradingCalculatorPage}"
+            Route="GradingCalculator" />
+        
+        <ShellContent
+            Title="Unit Converter"
+            ContentTemplate="{DataTemplate unitconverter:UnitConverterPage}"
+            Route="UnitConverter" />
     </FlyoutItem>
 
     <FlyoutItem Title="Settings">
