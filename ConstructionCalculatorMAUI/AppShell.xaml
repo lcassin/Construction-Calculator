@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:ConstructionCalculatorMAUI.Pages"
+    xmlns:electrical="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Electrical"
     Title="Construction Calculator"
     Shell.BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#121212}"
     Shell.ForegroundColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
@@ -48,6 +49,11 @@
             Title="Area Calculator"
             ContentTemplate="{DataTemplate pages:AreaCalculatorPage}"
             Route="AreaCalculator" />
+        
+        <ShellContent
+            Title="Electrical Load Calculator"
+            ContentTemplate="{DataTemplate electrical:ElectricalCalculatorPage}"
+            Route="ElectricalCalculator" />
     </FlyoutItem>
 
     <FlyoutItem Title="Settings">
