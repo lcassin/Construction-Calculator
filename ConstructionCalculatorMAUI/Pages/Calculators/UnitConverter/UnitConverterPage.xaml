@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.Calculators.UnitConverter.UnitConverterPage"
+             Title="Unit Converter">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Conversion Type -->
+            <Label Text="Conversion Type:" FontSize="14" FontAttributes="Bold" />
+            <Picker x:Name="ConversionTypePicker" FontSize="14" SelectedIndex="0"
+                    SelectedIndexChanged="ConversionTypePicker_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Measurement Format</x:String>
+                    <x:String>Length</x:String>
+                    <x:String>Area</x:String>
+                    <x:String>Volume</x:String>
+                    <x:String>Weight</x:String>
+                    <x:String>Temperature</x:String>
+                </Picker.Items>
+            </Picker>
+            
+            <!-- From Section -->
+            <Label Text="From:" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" />
+            <Grid ColumnDefinitions="*,20,*" ColumnSpacing="10">
+                <VerticalStackLayout Grid.Column="0" Spacing="5">
+                    <Label Text="Value:" FontSize="12" />
+                    <Entry x:Name="FromValueEntry" FontSize="16" 
+                           TextChanged="FromValueEntry_TextChanged" />
+                </VerticalStackLayout>
+                
+                <VerticalStackLayout Grid.Column="2" Spacing="5">
+                    <Label Text="Unit:" FontSize="12" />
+                    <Picker x:Name="FromUnitPicker" FontSize="14" 
+                            SelectedIndexChanged="ConversionChanged" />
+                </VerticalStackLayout>
+            </Grid>
+            
+            <!-- To Section -->
+            <Label Text="To:" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" />
+            <Grid ColumnDefinitions="*,20,*" ColumnSpacing="10">
+                <VerticalStackLayout Grid.Column="0" Spacing="5">
+                    <Label Text="Result:" FontSize="12" />
+                    <Entry x:Name="ToValueEntry" FontSize="16" IsReadOnly="True" 
+                           BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2C}" />
+                </VerticalStackLayout>
+                
+                <VerticalStackLayout Grid.Column="2" Spacing="5">
+                    <Label Text="Unit:" FontSize="12" />
+                    <Picker x:Name="ToUnitPicker" FontSize="14" 
+                            SelectedIndexChanged="ConversionChanged" />
+                </VerticalStackLayout>
+            </Grid>
+            
+            <!-- Action Buttons -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,10,0,10">
+                <Button Text="Copy Result" 
+                        Style="{StaticResource ActionButton}"
+                        WidthRequest="120"
+                        Clicked="CopyResult_Clicked" />
+                <Button Text="Clear" 
+                        Style="{StaticResource ActionButton}"
+                        WidthRequest="120"
+                        Clicked="Clear_Clicked" />
+            </HorizontalStackLayout>
+            
+            <!-- Common Conversions Reference -->
+            <Frame BorderColor="Gray" Padding="10" CornerRadius="5" 
+                   BackgroundColor="{AppThemeBinding Light=#F9F9F9, Dark=#1C1C1C}">
+                <ScrollView MaximumHeightRequest="200">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Common Conversions:" FontAttributes="Bold" FontSize="12" />
+                        <Label x:Name="ReferenceLabel" FontSize="11" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
