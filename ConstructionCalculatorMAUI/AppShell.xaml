@@ -8,6 +8,7 @@
     xmlns:hvac="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.HVAC"
     xmlns:plumbing="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Plumbing"
     xmlns:materials="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Materials"
+    xmlns:geometry="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Geometry"
     Title="Construction Calculator"
     Shell.BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#121212}"
     Shell.ForegroundColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
@@ -97,6 +98,16 @@
             Title="Roofing Calculator"
             ContentTemplate="{DataTemplate materials:RoofingCalculatorPage}"
             Route="RoofingCalculator" />
+        
+        <ShellContent
+            Title="Ramp Calculator"
+            ContentTemplate="{DataTemplate geometry:RampCalculatorPage}"
+            Route="RampCalculator" />
+        
+        <ShellContent
+            Title="Grading/Slope Calculator"
+            ContentTemplate="{DataTemplate geometry:GradingCalculatorPage}"
+            Route="GradingCalculator" />
     </FlyoutItem>
 
     <FlyoutItem Title="Settings">
