@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:ConstructionCalculatorMAUI.Pages"
     xmlns:electrical="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.Electrical"
+    xmlns:hvac="clr-namespace:ConstructionCalculatorMAUI.Pages.Calculators.HVAC"
     Title="Construction Calculator"
     Shell.BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#121212}"
     Shell.ForegroundColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
@@ -49,6 +50,11 @@
             Title="Area Calculator"
             ContentTemplate="{DataTemplate pages:AreaCalculatorPage}"
             Route="AreaCalculator" />
+        
+        <ShellContent
+            Title="HVAC Multi-Zone Calculator"
+            ContentTemplate="{DataTemplate hvac:HVACCalculatorPage}"
+            Route="HVACCalculator" />
         
         <ShellContent
             Title="Electrical Load Calculator"
