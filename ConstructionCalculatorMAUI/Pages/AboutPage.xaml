@@ -12,15 +12,15 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
             
-            <Image WidthRequest="200"
-                   HeightRequest="200"
+            <Image WidthRequest="250"
+                   HeightRequest="250"
                    HorizontalOptions="Center"
                    Aspect="AspectFit"
                    Margin="0,20,0,10">
                 <Image.Source>
                     <OnPlatform x:TypeArguments="ImageSource">
-                        <On Platform="WinUI">splashlogo.png</On>
-                        <On Platform="Android,iOS,MacCatalyst">splashlogo</On>
+                        <On Platform="WinUI">logo-main.png</On>
+                        <On Platform="Android,iOS,MacCatalyst">logo-main</On>
                     </OnPlatform>
                 </Image.Source>
             </Image>

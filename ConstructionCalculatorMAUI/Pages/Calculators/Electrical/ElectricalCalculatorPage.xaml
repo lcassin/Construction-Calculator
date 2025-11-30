@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.Calculators.Electrical.ElectricalCalculatorPage"
+             Title="Electrical Load Calculator">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Description -->
+            <Label Text="Calculate electrical panel load, circuit requirements, and wire sizing based on NEC 2023.&#x0a;Add circuits to determine total load, panel sizing, and per-circuit wire requirements."
+                   FontSize="12"
+                   FontAttributes="Italic"
+                   TextColor="Gray" />
+
+            <!-- Add Circuit/Load Section -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Add Circuit/Load" FontSize="16" FontAttributes="Bold" />
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Circuit Name:" WidthRequest="140" VerticalOptions="Center" />
+                        <Entry x:Name="CircuitNameEntry" WidthRequest="200" Placeholder="Optional name" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Circuit Type:" WidthRequest="140" VerticalOptions="Center" />
+                        <Picker x:Name="CircuitTypePicker" WidthRequest="200" SelectedIndexChanged="CircuitTypePicker_SelectedIndexChanged">
+                            <Picker.Items>
+                                <x:String>General Lighting</x:String>
+                                <x:String>Small Appliance (Kitchen)</x:String>
+                                <x:String>Laundry</x:String>
+                                <x:String>Bathroom Receptacle</x:String>
+                                <x:String>General Receptacle</x:String>
+                                <x:String>Electric Range/Oven</x:String>
+                                <x:String>Electric Dryer</x:String>
+                                <x:String>Dishwasher</x:String>
+                                <x:String>Garbage Disposal</x:String>
+                                <x:String>Microwave</x:String>
+                                <x:String>Refrigerator</x:String>
+                                <x:String>Water Heater</x:String>
+                                <x:String>HVAC (Heating)</x:String>
+                                <x:String>HVAC (Cooling/AC)</x:String>
+                                <x:String>Heat Pump</x:String>
+                                <x:String>EV Charger (EVSE)</x:String>
+                                <x:String>Pool/Spa Equipment</x:String>
+                                <x:String>Custom Appliance</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+
+                    <!-- Dynamic input based on circuit type -->
+                    <VerticalStackLayout x:Name="LightingInputPanel" IsVisible="True" Spacing="10">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Square Footage:" WidthRequest="140" VerticalOptions="Center" />
+                            <Entry x:Name="SquareFootageEntry" WidthRequest="100" Keyboard="Numeric" Placeholder="0" />
+                            <Label Text="sq ft" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout x:Name="ApplianceInputPanel" IsVisible="False" Spacing="10">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Voltage:" WidthRequest="140" VerticalOptions="Center" />
+                            <Picker x:Name="VoltagePicker" WidthRequest="100" SelectedIndex="0">
+                                <Picker.Items>
+                                    <x:String>120V</x:String>
+                                    <x:String>240V</x:String>
+                                </Picker.Items>
+                            </Picker>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Load (Watts or VA):" WidthRequest="140" VerticalOptions="Center" />
+                            <Entry x:Name="LoadWattsEntry" WidthRequest="100" Keyboard="Numeric" Placeholder="0" />
+                            <Label Text="W/VA" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout x:Name="CountInputPanel" IsVisible="False" Spacing="10">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Number of Circuits:" WidthRequest="140" VerticalOptions="Center" />
+                            <Entry x:Name="CircuitCountEntry" WidthRequest="100" Keyboard="Numeric" Text="2" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <Button Text="Add Circuit" 
+                            Style="{StaticResource PrimaryButton}"
+                            Clicked="AddCircuitButton_Clicked" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Circuits List -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Circuits" FontSize="16" FontAttributes="Bold" />
+                    <CollectionView x:Name="CircuitsCollectionView" HeightRequest="150" SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding .}" FontSize="12" Padding="5" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Button Text="Remove Selected Circuit" 
+                                WidthRequest="180"
+                                Style="{StaticResource ActionButton}"
+                                Clicked="RemoveCircuitButton_Clicked" />
+                        <Button Text="Clear All Circuits" 
+                                WidthRequest="140"
+                                Style="{StaticResource ActionButton}"
+                                Clicked="ClearAllCircuitsButton_Clicked" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Panel Load Summary -->
+            <Frame BorderColor="Gray" Padding="15" BackgroundColor="#F5F5F5" CornerRadius="5">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Panel Load Summary:" FontSize="16" FontAttributes="Bold" />
+                    <Label x:Name="TotalConnectedLoadLabel" Text="Total Connected Load: 0 VA" FontSize="13" />
+                    <Label x:Name="DemandLoadLabel" Text="Demand Load (with NEC factors): 0 VA" 
+                           FontSize="14" FontAttributes="Bold" TextColor="DarkBlue" />
+                    <Label x:Name="RequiredAmpsLabel" Text="Required Amperage: 0 A" 
+                           FontSize="14" FontAttributes="Bold" TextColor="DarkRed" />
+                    <Label x:Name="RecommendedPanelLabel" Text="Recommended Panel: Not calculated" 
+                           FontSize="14" FontAttributes="Bold" TextColor="DarkGreen" />
+                    <Label x:Name="MainBreakerLabel" Text="Main Breaker Size: Not calculated" FontSize="13" />
+                    
+                    <BoxView HeightRequest="1" Color="Gray" Margin="0,10,0,10" />
+                    
+                    <Label Text="NEC Demand Factors Applied:" FontSize="12" FontAttributes="Bold" />
+                    <Label x:Name="DemandFactorsLabel" Text="No circuits added yet" 
+                           FontSize="11" FontAttributes="Italic" TextColor="Gray" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Wire Sizing for Individual Circuit -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Wire Sizing for Individual Circuit" FontSize="16" FontAttributes="Bold" />
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Circuit Load:" WidthRequest="140" VerticalOptions="Center" />
+                        <Entry x:Name="WireSizingLoadEntry" WidthRequest="100" Keyboard="Numeric" Placeholder="0" />
+                        <Picker x:Name="WireSizingUnitPicker" WidthRequest="80" SelectedIndex="0">
+                            <Picker.Items>
+                                <x:String>Watts</x:String>
+                                <x:String>Amps</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Voltage:" WidthRequest="140" VerticalOptions="Center" />
+                        <Picker x:Name="WireSizingVoltagePicker" WidthRequest="100" SelectedIndex="0">
+                            <Picker.Items>
+                                <x:String>120V</x:String>
+                                <x:String>240V</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Wire Length (one-way):" WidthRequest="140" VerticalOptions="Center" />
+                        <Entry x:Name="WireLengthEntry" WidthRequest="100" Keyboard="Numeric" Text="50" />
+                        <Label Text="ft" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Wire Type:" WidthRequest="140" VerticalOptions="Center" />
+                        <Picker x:Name="WireTypePicker" WidthRequest="150" SelectedIndex="0">
+                            <Picker.Items>
+                                <x:String>Copper</x:String>
+                                <x:String>Aluminum</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+
+                    <Button Text="Calculate Wire Size" 
+                            Style="{StaticResource ActionButton}"
+                            Clicked="CalculateWireSizeButton_Clicked" />
+                    
+                    <Label x:Name="WireSizeResultLabel" Text="Wire Size: Not calculated" 
+                           FontSize="13" FontAttributes="Bold" Margin="0,10,0,0" />
+                    <Label x:Name="BreakerSizeResultLabel" Text="Breaker Size: Not calculated" FontSize="13" />
+                    <Label x:Name="VoltageDropLabel" Text="Voltage Drop: Not calculated" 
+                           FontSize="12" FontAttributes="Italic" TextColor="Gray" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Copy Results Button -->
+            <Button Text="Copy Results" 
+                    Style="{StaticResource ActionButton}"
+                    Clicked="CopyResultsButton_Clicked" />
+
+            <!-- Note -->
+            <Label Text="Note: Calculations based on NEC 2023. Always consult with a licensed electrician and local codes for final design and installation."
+                   FontSize="11"
+                   FontAttributes="Italic"
+                   TextColor="Gray" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

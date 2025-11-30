@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.Calculators.HVAC.HVACCalculatorPage"
+             Title="HVAC Multi-Zone Calculator">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Description -->
+            <Label Text="Calculate heating and cooling requirements for multiple zones.&#x0a;Add zones with their dimensions and conditions to determine total system requirements."
+                   FontSize="12"
+                   FontAttributes="Italic"
+                   TextColor="Gray" />
+
+            <!-- Add Zone Section -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Add Zone" FontSize="16" FontAttributes="Bold" />
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Zone Name:" WidthRequest="120" VerticalOptions="Center" />
+                        <Entry x:Name="ZoneNameEntry" WidthRequest="200" Placeholder="Optional name" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Length:" WidthRequest="120" VerticalOptions="Center" />
+                        <Entry x:Name="LengthEntry" WidthRequest="100" Keyboard="Numeric" Placeholder="0" />
+                        <Label Text="ft" VerticalOptions="Center" />
+                        <Label Text="Width:" WidthRequest="60" VerticalOptions="Center" Margin="10,0,0,0" />
+                        <Entry x:Name="WidthEntry" WidthRequest="100" Keyboard="Numeric" Placeholder="0" />
+                        <Label Text="ft" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Ceiling Height:" WidthRequest="120" VerticalOptions="Center" />
+                        <Entry x:Name="HeightEntry" WidthRequest="100" Keyboard="Numeric" Text="8" />
+                        <Label Text="ft" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Insulation:" WidthRequest="120" VerticalOptions="Center" />
+                        <Picker x:Name="InsulationPicker" WidthRequest="200" SelectedIndex="1">
+                            <Picker.Items>
+                                <x:String>Poor (old/minimal)</x:String>
+                                <x:String>Average (standard)</x:String>
+                                <x:String>Good (modern/upgraded)</x:String>
+                                <x:String>Excellent (high-efficiency)</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Sun Exposure:" WidthRequest="120" VerticalOptions="Center" />
+                        <Picker x:Name="SunExposurePicker" WidthRequest="200" SelectedIndex="1">
+                            <Picker.Items>
+                                <x:String>Shaded (north-facing)</x:String>
+                                <x:String>Moderate</x:String>
+                                <x:String>High (south/west-facing)</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Climate Zone:" WidthRequest="120" VerticalOptions="Center" />
+                        <Picker x:Name="ClimateZonePicker" WidthRequest="200" SelectedIndex="1">
+                            <Picker.Items>
+                                <x:String>Cold (Zone 1-3)</x:String>
+                                <x:String>Moderate (Zone 4-5)</x:String>
+                                <x:String>Hot (Zone 6-8)</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Windows:" WidthRequest="120" VerticalOptions="Center" />
+                        <Entry x:Name="WindowsEntry" WidthRequest="80" Keyboard="Numeric" Text="2" />
+                        <Label Text="Occupants:" WidthRequest="80" VerticalOptions="Center" Margin="10,0,0,0" />
+                        <Entry x:Name="OccupantsEntry" WidthRequest="80" Keyboard="Numeric" Text="2" />
+                    </HorizontalStackLayout>
+
+                    <CheckBox x:Name="KitchenCheckBox">
+                        <CheckBox.Behaviors>
+                            <DataTrigger TargetType="CheckBox" Binding="{Binding Source={x:Reference KitchenCheckBox}, Path=IsChecked}" Value="True">
+                                <Setter Property="Color" Value="{AppThemeBinding Light=#FF6B35, Dark=#FF6B35}" />
+                            </DataTrigger>
+                        </CheckBox.Behaviors>
+                    </CheckBox>
+                    <Label Text="Has kitchen or heat-generating appliances" VerticalOptions="Center" Margin="0,-35,0,0" Padding="40,0,0,0" />
+
+                    <Button Text="Add Zone" 
+                            Style="{StaticResource PrimaryButton}"
+                            Clicked="AddZoneButton_Clicked" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Zones List -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Zones" FontSize="16" FontAttributes="Bold" />
+                    <CollectionView x:Name="ZonesCollectionView" HeightRequest="120" SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding .}" FontSize="12" Padding="5" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Button Text="Remove Selected Zone" 
+                                WidthRequest="180"
+                                Style="{StaticResource ActionButton}"
+                                Clicked="RemoveZoneButton_Clicked" />
+                        <Button Text="Clear All Zones" 
+                                WidthRequest="140"
+                                Style="{StaticResource ActionButton}"
+                                Clicked="ClearAllZonesButton_Clicked" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- System Totals -->
+            <Frame BorderColor="Gray" Padding="15" BackgroundColor="#F5F5F5" CornerRadius="5">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="System Totals:" FontSize="16" FontAttributes="Bold" />
+                    <Label x:Name="TotalSquareFeetLabel" Text="Total Area: 0 sq ft" FontSize="13" />
+                    <Label x:Name="TotalHeatingBTULabel" Text="Total Heating BTU: 0 BTU/hr" 
+                           FontSize="14" FontAttributes="Bold" TextColor="DarkRed" />
+                    <Label x:Name="TotalCoolingBTULabel" Text="Total Cooling BTU: 0 BTU/hr" 
+                           FontSize="14" FontAttributes="Bold" TextColor="DarkBlue" />
+                    <Label x:Name="TotalTonnageLabel" Text="Total AC Tonnage: 0.0 tons" 
+                           FontSize="14" FontAttributes="Bold" TextColor="DarkGreen" />
+                    <Label x:Name="TotalCFMLabel" Text="Total CFM: 0 CFM" FontSize="13" />
+                    
+                    <BoxView HeightRequest="1" Color="Gray" Margin="0,5,0,5" />
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="DiversityFactorCheckBox" CheckedChanged="DiversityFactorCheckBox_CheckedChanged">
+                            <CheckBox.Behaviors>
+                                <DataTrigger TargetType="CheckBox" Binding="{Binding Source={x:Reference DiversityFactorCheckBox}, Path=IsChecked}" Value="True">
+                                    <Setter Property="Color" Value="{AppThemeBinding Light=#FF6B35, Dark=#FF6B35}" />
+                                </DataTrigger>
+                            </CheckBox.Behaviors>
+                        </CheckBox>
+                        <Label Text="Apply Diversity Factor:" VerticalOptions="Center" Margin="-10,0,0,0" />
+                        <Entry x:Name="DiversityFactorEntry" WidthRequest="60" Keyboard="Numeric" Text="85" 
+                               TextChanged="DiversityFactorEntry_TextChanged" />
+                        <Label Text="%" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Label x:Name="DiversityHeatingLabel" Text="" 
+                           FontSize="12" FontAttributes="Italic" TextColor="DarkRed" />
+                    <Label x:Name="DiversityCoolingLabel" Text="" 
+                           FontSize="12" FontAttributes="Italic" TextColor="DarkBlue" />
+                    <Label x:Name="DiversityTonnageLabel" Text="" 
+                           FontSize="12" FontAttributes="Italic" TextColor="DarkGreen" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Duct Sizing -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Duct Sizing (Rectangular)" FontSize="16" FontAttributes="Bold" />
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Required CFM:" WidthRequest="120" VerticalOptions="Center" />
+                        <Entry x:Name="DuctCFMEntry" WidthRequest="100" Keyboard="Numeric" Text="0" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Velocity (FPM):" WidthRequest="120" VerticalOptions="Center" />
+                        <Entry x:Name="VelocityEntry" WidthRequest="100" Keyboard="Numeric" Text="800" />
+                    </HorizontalStackLayout>
+
+                    <Button Text="Calculate Duct Size" 
+                            Style="{StaticResource ActionButton}"
+                            Clicked="CalculateDuctButton_Clicked" />
+                    
+                    <Label x:Name="DuctSizeLabel" Text="Duct Size: Not calculated" 
+                           FontSize="13" FontAttributes="Bold" Margin="0,10,0,0" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Copy Results Button -->
+            <Button Text="Copy Results" 
+                    Style="{StaticResource ActionButton}"
+                    Clicked="CopyResultsButton_Clicked" />
+
+            <!-- Note -->
+            <Label Text="Note: These are estimates for multi-zone systems. Consult with an HVAC professional for final sizing and installation."
+                   FontSize="11"
+                   FontAttributes="Italic"
+                   TextColor="Gray" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

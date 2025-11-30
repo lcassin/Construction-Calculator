@@ -27,7 +27,7 @@ namespace ConstructionCalculator.WPF.Calculators.Main;
 
 /// <summary>
 /// </summary>
-public partial class MainWindow : Window
+public partial class Calculator : Window
 {
     private bool isDecimalMode = false;
     private string currentOperation = "";
@@ -36,7 +36,7 @@ public partial class MainWindow : Window
     private readonly List<string> calculationChain = new();
     private Measurement? memoryValue = null;
 
-    public MainWindow()
+    public Calculator()
     {
         InitializeComponent();
         DisplayTextBox.Focus();

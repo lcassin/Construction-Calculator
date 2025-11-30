@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.Calculators.Materials.FlooringCalculatorPage"
+             Title="Flooring &amp; Counter Calculator">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Description -->
+            <Label Text="Calculate material quantities for flooring, counters, tile, carpet, etc.&#x0a;Enter dimensions, select material type, and get quantity with waste allowance."
+                   FontSize="12"
+                   FontAttributes="Italic"
+                   TextColor="Gray" />
+
+            <!-- Dimensions -->
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Length:" WidthRequest="120" VerticalOptions="Center" />
+                <Entry x:Name="LengthEntry" WidthRequest="180" Keyboard="Numeric" 
+                       Placeholder="e.g., 12.5" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Width:" WidthRequest="120" VerticalOptions="Center" />
+                <Entry x:Name="WidthEntry" WidthRequest="180" Keyboard="Numeric" 
+                       Placeholder="e.g., 10.25" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Material Type:" WidthRequest="120" VerticalOptions="Center" />
+                <Picker x:Name="MaterialTypePicker" WidthRequest="180" SelectedIndex="0"
+                        SelectedIndexChanged="MaterialTypePicker_SelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>Tile (12x12)</x:String>
+                        <x:String>Tile (18x18)</x:String>
+                        <x:String>Tile (24x24)</x:String>
+                        <x:String>Hardwood Flooring</x:String>
+                        <x:String>Laminate Flooring</x:String>
+                        <x:String>Vinyl Plank</x:String>
+                        <x:String>Carpet</x:String>
+                        <x:String>Granite/Quartz Counter</x:String>
+                        <x:String>Custom (sq ft)</x:String>
+                    </Picker.Items>
+                </Picker>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Waste Factor:" WidthRequest="120" VerticalOptions="Center" />
+                <Entry x:Name="WasteFactorEntry" WidthRequest="80" Keyboard="Numeric" Text="10" />
+                <Label Text="%" VerticalOptions="Center" />
+                <Button Text="Add Section" 
+                        Style="{StaticResource PrimaryButton}"
+                        Clicked="AddSectionButton_Clicked"
+                        Margin="20,0,0,0" />
+            </HorizontalStackLayout>
+
+            <!-- Sections List -->
+            <Label Text="Sections:" FontSize="14" FontAttributes="Bold" Margin="0,5,0,5" />
+            
+            <Frame BorderColor="Gray" Padding="10" CornerRadius="5" MinimumHeightRequest="150">
+                <CollectionView x:Name="SectionsCollectionView" 
+                                SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding}" FontFamily="Courier" FontSize="11" Padding="2" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+
+            <!-- Action Buttons -->
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Remove Selected" 
+                        Style="{StaticResource ActionButton}"
+                        Clicked="RemoveSectionButton_Clicked"
+                        HorizontalOptions="FillAndExpand" />
+                <Button Text="Clear All" 
+                        Style="{StaticResource ActionButton}"
+                        Clicked="ClearAllButton_Clicked"
+                        HorizontalOptions="FillAndExpand" />
+                <Button Text="Copy Results" 
+                        Style="{StaticResource ActionButton}"
+                        Clicked="CopyResultsButton_Clicked"
+                        HorizontalOptions="FillAndExpand" />
+            </HorizontalStackLayout>
+
+            <!-- Totals Display -->
+            <Frame BorderColor="Gray" Padding="15" BackgroundColor="#F5F5F5" CornerRadius="5">
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="TotalAreaLabel" Text="Total Area: 0.00 sq ft" 
+                           FontSize="16" FontAttributes="Bold" />
+                    <Label x:Name="MaterialNeededLabel" Text="Material Needed (with waste): 0.00 sq ft" 
+                           FontSize="14" />
+                    
+                    <HorizontalStackLayout Spacing="10" Margin="0,8,0,0">
+                        <Label Text="Cost per Unit ($):" WidthRequest="140" VerticalOptions="Center" />
+                        <Entry x:Name="CostPerUnitEntry" WidthRequest="100" Keyboard="Numeric" Text="0"
+                               TextChanged="CostPerUnitEntry_TextChanged" />
+                    </HorizontalStackLayout>
+                    
+                    <Label x:Name="TotalCostLabel" Text="Estimated Total Cost: $0.00" 
+                           FontSize="16" FontAttributes="Bold" TextColor="DarkGreen" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
