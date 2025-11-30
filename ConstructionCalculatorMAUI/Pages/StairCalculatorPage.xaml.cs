@@ -1,4 +1,4 @@
-using ConstructionCalculator.Core;
+using ConstructionCalculator;
 using System.Text;
 
 namespace ConstructionCalculatorMAUI.Pages;
