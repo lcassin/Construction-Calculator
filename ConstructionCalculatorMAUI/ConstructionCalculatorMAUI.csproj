@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Windows-only target framework -->
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
-	<MauiVersion>8.0.92</MauiVersion>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+	<MauiVersion>10.0.11</MauiVersion>
     <OutputType>Exe</OutputType>
     <RootNamespace>ConstructionCalculatorMAUI</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -17,8 +17,8 @@
     <ApplicationId>com.cassinfo.constructioncalculator</ApplicationId>
 
     <!-- Versions -->
-    <PackageVersion>2.0.0</PackageVersion>
-    <ApplicationDisplayVersion>2.0</ApplicationDisplayVersion>
+    <PackageVersion>2.0.6</PackageVersion>
+    <ApplicationDisplayVersion>2.0.6</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
 
     <!-- Windows platform versions -->
@@ -88,8 +88,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.11" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
   </ItemGroup>
 
