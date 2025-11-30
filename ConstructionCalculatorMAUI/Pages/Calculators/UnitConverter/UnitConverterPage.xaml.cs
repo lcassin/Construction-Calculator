@@ -295,16 +295,18 @@ public partial class UnitConverterPage : ContentPage
             int numerator = (int)Math.Round(fraction * denom);
             if (numerator > 0 && numerator < denom)
             {
-                while (numerator % 2 == 0 && denom % 2 == 0)
+                // Simplify the fraction by dividing both numerator and denominator by 2
+                int simplifiedDenom = denom;
+                while (numerator % 2 == 0 && simplifiedDenom % 2 == 0)
                 {
                     numerator /= 2;
-                    denom /= 2;
+                    simplifiedDenom /= 2;
                 }
                 
                 if (wholeInches > 0)
-                    return $"{feet}' {wholeInches} {numerator}/{denom}\"";
+                    return $"{feet}' {wholeInches} {numerator}/{simplifiedDenom}\"";
                 else
-                    return $"{feet}' {numerator}/{denom}\"";
+                    return $"{feet}' {numerator}/{simplifiedDenom}\"";
             }
         }
         

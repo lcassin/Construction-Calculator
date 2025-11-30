@@ -19,8 +19,8 @@
                    Margin="0,20,0,10">
                 <Image.Source>
                     <OnPlatform x:TypeArguments="ImageSource">
-                        <On Platform="WinUI">logo-main.png</On>
-                        <On Platform="Android,iOS,MacCatalyst">logo-main</On>
+                        <On Platform="WinUI">logo_main.png</On>
+                        <On Platform="Android,iOS,MacCatalyst">logo_main</On>
                     </OnPlatform>
                 </Image.Source>
             </Image>

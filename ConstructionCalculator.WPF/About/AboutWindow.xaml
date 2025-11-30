@@ -11,7 +11,7 @@
         <StackPanel Margin="40,30,40,30" HorizontalAlignment="Center">
             
             <!-- App Icon -->
-            <Image Source="pack://application:,,,/Assets/logo-main.png"
+            <Image Source="pack://application:,,,/Assets/logo_main.png"
                    Width="200" 
                    Height="200" 
                    Stretch="Uniform"
