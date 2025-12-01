@@ -3,7 +3,8 @@ using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages;
 
-public partial class MainPage : ContentPage
+[QueryProperty(nameof(FromRoute), "from")]
+public partial class MainPage : ContentPage, IQueryAttributable
 {
     private bool _isDecimalMode = false;
     private string _currentOperation = "";
@@ -21,6 +22,17 @@ public partial class MainPage : ContentPage
         {
             _previousRoute = value;
             System.Diagnostics.Debug.WriteLine($"[MainPage FromRoute] Set to '{_previousRoute}'");
+            UpdateBackButtonVisibility();
+        }
+    }
+
+    // IQueryAttributable implementation - more reliable for pages already in Shell hierarchy
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("from", out var value) && value is string s)
+        {
+            _previousRoute = s;
+            System.Diagnostics.Debug.WriteLine($"[MainPage ApplyQueryAttributes] from='{_previousRoute}'");
             UpdateBackButtonVisibility();
         }
     }
