@@ -34,7 +34,6 @@ public static class HelpContentProvider
         {
             Title = "Construction Calculator",
             IconGlyph = "🔢",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "A specialized calculator for construction measurements supporting feet, inches, and fractions. Perform calculations with measurements in feet/inches format or decimal mode.",
             ExpectedInputs = new List<string>
             {
@@ -103,7 +102,6 @@ public static class HelpContentProvider
         {
             Title = "Unit Converter",
             IconGlyph = "🔄",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Convert between different units of measurement commonly used in construction, including length, area, volume, weight, and temperature.",
             ExpectedInputs = new List<string>
             {
@@ -141,7 +139,6 @@ public static class HelpContentProvider
         {
             Title = "Concrete Calculator",
             IconGlyph = "🏗",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate the amount of concrete needed for slabs, footings, walls, and other concrete pours. Accounts for waste percentage and includes cost estimation.",
             ExpectedInputs = new List<string>
             {
@@ -182,7 +179,6 @@ public static class HelpContentProvider
         {
             Title = "Angle Calculator",
             IconGlyph = "📐",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate angles, rise, run, and pitch for roofs, ramps, and stairs.",
             ExpectedInputs = new List<string> { "Rise, Run, or Angle values" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -197,7 +193,6 @@ public static class HelpContentProvider
         {
             Title = "Stair Calculator",
             IconGlyph = "🪜",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate stair dimensions including rise, run, and number of steps. Supports complex configurations with landings and multiple stair types (straight, L-shaped, U-shaped).",
             ExpectedInputs = new List<string> 
             { 
@@ -253,7 +248,6 @@ public static class HelpContentProvider
         {
             Title = "Accessibility Ramp Calculator",
             IconGlyph = "♿",
-            IconFontFamily = "Segoe UI Symbol",
             Summary = "Calculate ADA-compliant accessibility ramp dimensions including slope, run length, and landing requirements. Supports complex configurations with landings for long runs.",
             ExpectedInputs = new List<string>
             {
@@ -306,7 +300,6 @@ public static class HelpContentProvider
         {
             Title = "Survey Calculator",
             IconGlyph = "🧭",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate distances, bearings, and coordinates for surveying and site layout.",
             ExpectedInputs = new List<string> { "Bearing: N 57° 00' E", "Distance in feet", "Northing/Easting coordinates" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -321,7 +314,6 @@ public static class HelpContentProvider
         {
             Title = "Seating Layout Calculator",
             IconGlyph = "💺",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate seating arrangements for events, classrooms, or meeting spaces.",
             ExpectedInputs = new List<string> { "Room dimensions", "Seat spacing" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -336,7 +328,6 @@ public static class HelpContentProvider
         {
             Title = "Area Calculator",
             IconGlyph = "📏",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate areas for rectangles, triangles, and circles.",
             ExpectedInputs = new List<string> { "Rectangle: length and width", "Triangle: base and height", "Circle: radius" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -351,7 +342,6 @@ public static class HelpContentProvider
         {
             Title = "Roofing Calculator",
             IconGlyph = "🏠",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate roofing materials needed including shingles and underlayment with cost estimation.",
             ExpectedInputs = new List<string> { "Roof length and width", "Roof pitch (e.g., 6:12)", "Waste percentage", "Cost per Bundle: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -366,7 +356,6 @@ public static class HelpContentProvider
         {
             Title = "Paint Calculator",
             IconGlyph = "🎨",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate paint needed for walls, ceilings, and trim with cost estimation.",
             ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Number of coats", "Coverage rate", "Cost per Gallon: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -381,7 +370,6 @@ public static class HelpContentProvider
         {
             Title = "Board Feet Calculator",
             IconGlyph = "🪵",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate board feet for lumber pricing and ordering.",
             ExpectedInputs = new List<string> { "Thickness (inches)", "Width (inches)", "Length (feet)", "Quantity" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -396,7 +384,6 @@ public static class HelpContentProvider
         {
             Title = "Drywall Calculator",
             IconGlyph = "🧱",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate drywall sheets needed for walls and ceilings with cost estimation.",
             ExpectedInputs = new List<string> { "Wall/ceiling dimensions", "Sheet size (4×8, 4×10, 4×12)", "Waste percentage", "Cost per Sheet: optional, for cost estimation" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -411,7 +398,6 @@ public static class HelpContentProvider
         {
             Title = "Grading Calculator",
             IconGlyph = "⛰",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate slope, grade percentage, and cut/fill volumes for site grading.",
             ExpectedInputs = new List<string> { "Horizontal distance (run)", "Vertical distance (rise)" },
             Shortcuts = new List<ShortcutItem> { new("F1", "Show this help") },
@@ -426,7 +412,6 @@ public static class HelpContentProvider
         {
             Title = "HVAC Multi-Zone Calculator",
             IconGlyph = "❄",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate heating and cooling requirements for multiple zones including BTU, tonnage, CFM, and duct sizing. Add multiple zones with different conditions to determine total system requirements with optional diversity factor.",
             ExpectedInputs = new List<string>
             {
@@ -486,7 +471,6 @@ public static class HelpContentProvider
         {
             Title = "Plumbing Calculator",
             IconGlyph = "🚰",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate pipe sizing, flow rates, pressure loss, and drain/vent sizing for plumbing systems. Includes three calculation modes: Pipe Sizing, DWV (Drain-Waste-Vent), and Flow Rate.",
             ExpectedInputs = new List<string>
             {
@@ -532,7 +516,6 @@ public static class HelpContentProvider
         {
             Title = "Electrical Load Calculator",
             IconGlyph = "⚡",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate electrical panel load, circuit requirements, wire sizing, and breaker sizing based on NEC 2023. Add multiple circuits to determine total load, apply demand factors, and get panel sizing recommendations.",
             ExpectedInputs = new List<string>
             {
@@ -586,7 +569,6 @@ public static class HelpContentProvider
         {
             Title = "Flooring & Counter Calculator",
             IconGlyph = "🔲",
-            IconFontFamily = "Segoe UI Emoji",
             Summary = "Calculate material quantities needed for flooring and countertop installations including waste/overage factors and cost estimation. Supports multiple sections and various material types.",
             ExpectedInputs = new List<string>
             {
