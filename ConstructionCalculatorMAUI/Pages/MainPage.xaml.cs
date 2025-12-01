@@ -1,4 +1,5 @@
 using ConstructionCalculator;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages;
 
