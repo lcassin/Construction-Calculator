@@ -188,9 +188,9 @@ public partial class CalculatorHubPage : ContentPage
         };
     }
 
-    private async void OnCalculatorTileClicked(object sender, EventArgs e)
+    private async void OnCalculatorTileTapped(object sender, EventArgs e)
     {
-        if (sender is Button button && button.BindingContext is CalculatorDescriptor descriptor)
+        if (sender is Border border && border.BindingContext is CalculatorDescriptor descriptor)
         {
             await Shell.Current.GoToAsync($"//{descriptor.Route}");
         }
@@ -200,8 +200,8 @@ public partial class CalculatorHubPage : ContentPage
     {
         if (sender is Button button && button.BindingContext is CalculatorDescriptor descriptor)
         {
-            // Navigate to help page with the calculator kind as a query parameter
-            await Shell.Current.GoToAsync($"//HelpPage?kind={descriptor.HelpKind}");
+            // Navigate to help page using Navigation.PushAsync (matching existing pattern in MainPage)
+            await Navigation.PushAsync(new HelpPage(descriptor.HelpKind));
         }
     }
 }
