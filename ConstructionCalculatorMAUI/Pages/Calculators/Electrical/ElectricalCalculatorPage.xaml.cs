@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages.Calculators.Electrical;
 
@@ -527,5 +528,10 @@ public partial class ElectricalCalculatorPage : ContentPage
         public string WireSize { get; set; } = "";
         public int BreakerSize { get; set; }
         public double DemandFactor { get; set; }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Electrical));
     }
 }

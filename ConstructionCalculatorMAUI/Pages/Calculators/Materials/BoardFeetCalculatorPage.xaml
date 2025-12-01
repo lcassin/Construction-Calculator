@@ -4,6 +4,10 @@
              x:Class="ConstructionCalculatorMAUI.Pages.Calculators.Materials.BoardFeetCalculatorPage"
              Title="Board Feet Calculator">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
     <Grid Padding="20" RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="15">
         
         <!-- Instructions -->

@@ -4,6 +4,10 @@
              x:Class="ConstructionCalculatorMAUI.Pages.StairCalculatorPage"
              Title="Stair Calculator">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
     <!-- 
     Stair Calculator Page
     Calculates riser height, tread depth, and total run from total rise and number of steps.

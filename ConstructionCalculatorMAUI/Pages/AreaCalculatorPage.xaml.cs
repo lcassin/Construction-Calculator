@@ -1,4 +1,5 @@
 using ConstructionCalculator;
+using ConstructionCalculatorMAUI.Shared.Help;
 using System.Collections.ObjectModel;
 
 namespace ConstructionCalculatorMAUI.Pages;
@@ -93,5 +94,10 @@ public partial class AreaCalculatorPage : ContentPage
     {
         double total = _sections.Sum(s => s.sqft);
         TotalAreaLabel.Text = $"Total Area: {total:F2} sq ft";
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Area));
     }
 }

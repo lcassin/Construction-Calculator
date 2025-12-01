@@ -1,4 +1,5 @@
 using ConstructionCalculator;
+using ConstructionCalculatorMAUI.Shared.Help;
 using System.Text;
 
 namespace ConstructionCalculatorMAUI.Pages;
@@ -334,5 +335,10 @@ public partial class StairCalculatorPage : ContentPage
             diagram.AppendLine();
             diagram.AppendLine($"(showing {stepsToShow} of {numberOfSteps} total steps)");
         }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Stair));
     }
 }

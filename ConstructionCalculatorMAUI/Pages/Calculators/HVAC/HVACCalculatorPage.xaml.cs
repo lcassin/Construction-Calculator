@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages.Calculators.HVAC;
 
@@ -317,5 +318,10 @@ public partial class HVACCalculatorPage : ContentPage
         public double HeatingBTU { get; set; }
         public double CoolingBTU { get; set; }
         public double CFM { get; set; }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.HVAC));
     }
 }

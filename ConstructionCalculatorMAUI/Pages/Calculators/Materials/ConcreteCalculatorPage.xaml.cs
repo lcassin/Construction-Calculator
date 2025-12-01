@@ -137,4 +137,9 @@ public partial class ConcreteCalculatorPage : ContentPage
             TotalCostLabel.Text = "Estimated Total Cost: $0.00";
         }
     }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Concrete));
+    }
 }
