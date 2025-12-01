@@ -35,7 +35,6 @@ public partial class CalculatorHubPage : ContentPage
                 Category = "Common Tools",
                 Description = "Calculate areas of multiple sections and sum totals",
                 Icon = "⬛",
-                IconFontFamily = "Segoe UI Symbol",
                 HelpKind = CalculatorKind.Area,
                 Route = "AreaCalculator"
             },
@@ -76,7 +75,6 @@ public partial class CalculatorHubPage : ContentPage
                 Category = "Building Elements & Layout",
                 Description = "Calculate stair dimensions, rise, run, and stringers",
                 Icon = "⇧",
-                IconFontFamily = "Segoe UI Symbol",
                 HelpKind = CalculatorKind.Stair,
                 Route = "StairCalculator"
             },
@@ -86,7 +84,6 @@ public partial class CalculatorHubPage : ContentPage
                 Category = "Building Elements & Layout",
                 Description = "Calculate ADA-compliant ramp dimensions and landings",
                 Icon = "♿",
-                IconFontFamily = "Segoe UI Symbol",
                 HelpKind = CalculatorKind.Ramp,
                 Route = "RampCalculator"
             },
@@ -152,7 +149,6 @@ public partial class CalculatorHubPage : ContentPage
                 Category = "Materials & Estimating",
                 Description = "Calculate board feet for lumber",
                 Icon = "📏",
-                IconFontFamily = "Segoe UI Emoji",
                 HelpKind = CalculatorKind.BoardFeet,
                 Route = "BoardFeetCalculator"
             },
