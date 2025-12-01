@@ -4,6 +4,10 @@
              x:Class="ConstructionCalculatorMAUI.Pages.MainPage"
              Title="Construction Calculator">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
     <!-- 
     Main Calculator Page
     Provides feet-inches-fractions arithmetic with decimal mode toggle.
