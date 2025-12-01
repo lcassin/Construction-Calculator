@@ -1,3 +1,5 @@
+using ConstructionCalculatorMAUI.Shared.Help;
+
 namespace ConstructionCalculatorMAUI.Pages.Calculators.UnitConverter;
 
 public partial class UnitConverterPage : ContentPage
