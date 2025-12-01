@@ -13,6 +13,18 @@ public partial class MainPage : ContentPage
     private Measurement? _memoryValue = null;
     private string? _previousRoute = null;
 
+    // QueryProperty for receiving the "from" parameter from navigation
+    public string? FromRoute
+    {
+        get => _previousRoute;
+        set
+        {
+            _previousRoute = value;
+            System.Diagnostics.Debug.WriteLine($"[MainPage FromRoute] Set to '{_previousRoute}'");
+            UpdateBackButtonVisibility();
+        }
+    }
+
     public MainPage()
     {
         InitializeComponent();
@@ -22,52 +34,10 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
         
-        // Parse query string to get ?from=...
-        // Note: Shell.Current.CurrentState.Location is a relative URI, so we can't use .Query property
-        // Instead, parse the OriginalString directly
-        var raw = Shell.Current.CurrentState?.Location?.OriginalString;
-        _previousRoute = null;
-
-        if (!string.IsNullOrEmpty(raw))
-        {
-            var qIndex = raw.IndexOf('?');
-            if (qIndex >= 0 && qIndex < raw.Length - 1)
-            {
-                var query = raw.Substring(qIndex + 1); // e.g. "from=StairCalculator"
-                foreach (var part in query.Split('&', StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var kv = part.Split('=', 2);
-                    if (kv.Length == 2 && kv[0] == "from")
-                    {
-                        _previousRoute = Uri.UnescapeDataString(kv[1]);
-                        break;
-                    }
-                }
-            }
-        }
-
-        // DEBUG: Log parsing results
-        System.Diagnostics.Debug.WriteLine($"[MainPage OnAppearing] raw='{raw}', previousRoute='{_previousRoute}', toolbarItems={ToolbarItems.Count}");
-
-        // Show/hide back button by manipulating ToolbarItems collection
-        if (!string.IsNullOrEmpty(_previousRoute))
-        {
-            // Show back button if we have a previous route
-            if (!ToolbarItems.Contains(BackToolbarItem))
-            {
-                ToolbarItems.Insert(0, BackToolbarItem);
-                System.Diagnostics.Debug.WriteLine($"[MainPage OnAppearing] Added back button, toolbarItems now={ToolbarItems.Count}");
-            }
-        }
-        else
-        {
-            // Hide back button if no previous route
-            if (ToolbarItems.Contains(BackToolbarItem))
-            {
-                ToolbarItems.Remove(BackToolbarItem);
-                System.Diagnostics.Debug.WriteLine($"[MainPage OnAppearing] Removed back button, toolbarItems now={ToolbarItems.Count}");
-            }
-        }
+        // The FromRoute property is set by Shell via [QueryProperty] before OnAppearing is called
+        // Just update the back button visibility in case it needs adjustment
+        System.Diagnostics.Debug.WriteLine($"[MainPage OnAppearing] previousRoute='{_previousRoute}', toolbarItems={ToolbarItems.Count}");
+        UpdateBackButtonVisibility();
         
 #if WINDOWS
         var window = this.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
@@ -807,6 +777,29 @@ public partial class MainPage : ContentPage
     private async void OnHelpClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new HelpPage(CalculatorKind.Main));
+    }
+
+    private void UpdateBackButtonVisibility()
+    {
+        // Show/hide back button by manipulating ToolbarItems collection
+        if (!string.IsNullOrEmpty(_previousRoute))
+        {
+            // Show back button if we have a previous route
+            if (!ToolbarItems.Contains(BackToolbarItem))
+            {
+                ToolbarItems.Insert(0, BackToolbarItem);
+                System.Diagnostics.Debug.WriteLine($"[MainPage UpdateBackButton] Added back button, toolbarItems now={ToolbarItems.Count}");
+            }
+        }
+        else
+        {
+            // Hide back button if no previous route
+            if (ToolbarItems.Contains(BackToolbarItem))
+            {
+                ToolbarItems.Remove(BackToolbarItem);
+                System.Diagnostics.Debug.WriteLine($"[MainPage UpdateBackButton] Removed back button, toolbarItems now={ToolbarItems.Count}");
+            }
+        }
     }
 
     private async void OnBackClicked(object sender, EventArgs e)
