@@ -2,8 +2,24 @@ using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages;
 
+[QueryProperty(nameof(KindParameter), "kind")]
 public partial class HelpPage : ContentPage
 {
+    private string? _kindParameter;
+    
+    public string? KindParameter
+    {
+        get => _kindParameter;
+        set
+        {
+            _kindParameter = value;
+            if (!string.IsNullOrEmpty(value) && Enum.TryParse<CalculatorKind>(value, out var kind))
+            {
+                LoadHelp(kind);
+            }
+        }
+    }
+
     public HelpPage()
     {
         InitializeComponent();
