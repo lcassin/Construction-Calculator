@@ -57,7 +57,10 @@
                    HorizontalTextAlignment="Center"
                    Margin="0,20,0,10" />
 
-            <VerticalStackLayout Spacing="3" Margin="20,0,20,0">
+            <VerticalStackLayout Spacing="3" 
+                                Margin="20,0,20,0"
+                                HorizontalOptions="Center"
+                                MaximumWidthRequest="600">
                 <!-- Main Calculator -->
                 <Label Text="• Basic calculations with chainable operations" FontSize="13" />
                 <Label Text="• Percentage, square root, and squared operations" FontSize="13" />
