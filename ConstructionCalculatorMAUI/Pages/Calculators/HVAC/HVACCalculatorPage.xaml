@@ -84,11 +84,11 @@
                     </HorizontalStackLayout>
 
                     <CheckBox x:Name="KitchenCheckBox">
-                        <CheckBox.Behaviors>
+                        <CheckBox.Triggers>
                             <DataTrigger TargetType="CheckBox" Binding="{Binding Source={x:Reference KitchenCheckBox}, Path=IsChecked}" Value="True">
                                 <Setter Property="Color" Value="{AppThemeBinding Light=#FF6B35, Dark=#FF6B35}" />
                             </DataTrigger>
-                        </CheckBox.Behaviors>
+                        </CheckBox.Triggers>
                     </CheckBox>
                     <Label Text="Has kitchen or heat-generating appliances" VerticalOptions="Center" Margin="0,-35,0,0" Padding="40,0,0,0" />
 
@@ -139,11 +139,11 @@
                     
                     <HorizontalStackLayout Spacing="10">
                         <CheckBox x:Name="DiversityFactorCheckBox" CheckedChanged="DiversityFactorCheckBox_CheckedChanged">
-                            <CheckBox.Behaviors>
+                            <CheckBox.Triggers>
                                 <DataTrigger TargetType="CheckBox" Binding="{Binding Source={x:Reference DiversityFactorCheckBox}, Path=IsChecked}" Value="True">
                                     <Setter Property="Color" Value="{AppThemeBinding Light=#FF6B35, Dark=#FF6B35}" />
                                 </DataTrigger>
-                            </CheckBox.Behaviors>
+                            </CheckBox.Triggers>
                         </CheckBox>
                         <Label Text="Apply Diversity Factor:" VerticalOptions="Center" Margin="-10,0,0,0" />
                         <Entry x:Name="DiversityFactorEntry" WidthRequest="60" Keyboard="Numeric" Text="85" 

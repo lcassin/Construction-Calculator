@@ -81,11 +81,11 @@
             <!-- Include Landings Checkbox -->
             <CheckBox x:Name="IncludeLandingsCheckBox" 
                       CheckedChanged="IncludeLandingsCheckBox_CheckedChanged">
-                <CheckBox.Behaviors>
+                <CheckBox.Triggers>
                     <DataTrigger TargetType="CheckBox" Binding="{Binding Source={x:Reference IncludeLandingsCheckBox}, Path=IsChecked}" Value="True">
                         <Setter Property="Color" Value="#00CED1" />
                     </DataTrigger>
-                </CheckBox.Behaviors>
+                </CheckBox.Triggers>
             </CheckBox>
             <Label Text="Configure Landings" FontSize="14" FontAttributes="Bold" Margin="0,-40,0,0" Padding="40,0,0,0" />
 
