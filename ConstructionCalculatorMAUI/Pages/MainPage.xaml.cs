@@ -46,18 +46,27 @@ public partial class MainPage : ContentPage
             }
         }
 
+        // DEBUG: Log parsing results
+        System.Diagnostics.Debug.WriteLine($"[MainPage OnAppearing] raw='{raw}', previousRoute='{_previousRoute}', toolbarItems={ToolbarItems.Count}");
+
         // Show/hide back button by manipulating ToolbarItems collection
         if (!string.IsNullOrEmpty(_previousRoute))
         {
             // Show back button if we have a previous route
             if (!ToolbarItems.Contains(BackToolbarItem))
+            {
                 ToolbarItems.Insert(0, BackToolbarItem);
+                System.Diagnostics.Debug.WriteLine($"[MainPage OnAppearing] Added back button, toolbarItems now={ToolbarItems.Count}");
+            }
         }
         else
         {
             // Hide back button if no previous route
             if (ToolbarItems.Contains(BackToolbarItem))
+            {
                 ToolbarItems.Remove(BackToolbarItem);
+                System.Diagnostics.Debug.WriteLine($"[MainPage OnAppearing] Removed back button, toolbarItems now={ToolbarItems.Count}");
+            }
         }
         
 #if WINDOWS

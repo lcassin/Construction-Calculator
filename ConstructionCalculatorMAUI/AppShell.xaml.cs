@@ -12,6 +12,9 @@ public partial class AppShell : Shell
 
     private void OnShellNavigating(object? sender, ShellNavigatingEventArgs e)
     {
+        // DEBUG: Log navigation details
+        System.Diagnostics.Debug.WriteLine($"[AppShell Navigating] Target={e.Target.Location.OriginalString}, Current={Shell.Current.CurrentState?.Location?.OriginalString}");
+        
         // If navigating to Main Calculator from another calculator, add the previous route
         // Guard against infinite loops: only intercept if target doesn't already have "from=" parameter
         if (e.Target.Location.OriginalString.Contains("MainPage") && 
@@ -31,6 +34,9 @@ public partial class AppShell : Shell
                 
                 if (!string.IsNullOrEmpty(routeName))
                 {
+                    // DEBUG: Log interception
+                    System.Diagnostics.Debug.WriteLine($"[AppShell Navigating] Intercepting to MainPage: currentRoute={currentRoute}, routeName={routeName}");
+                    
                     // Cancel this navigation and navigate with the query parameter
                     e.Cancel();
                     
