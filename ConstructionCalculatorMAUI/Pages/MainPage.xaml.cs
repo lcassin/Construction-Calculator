@@ -23,16 +23,18 @@ public partial class MainPage : ContentPage
         base.OnAppearing();
         
         // Parse query string to get ?from=...
-        var location = Shell.Current.CurrentState?.Location;
+        // Note: Shell.Current.CurrentState.Location is a relative URI, so we can't use .Query property
+        // Instead, parse the OriginalString directly
+        var raw = Shell.Current.CurrentState?.Location?.OriginalString;
         _previousRoute = null;
 
-        if (location != null)
+        if (!string.IsNullOrEmpty(raw))
         {
-            var query = location.Query; // e.g. "?from=StairCalculator"
-            if (!string.IsNullOrEmpty(query))
+            var qIndex = raw.IndexOf('?');
+            if (qIndex >= 0 && qIndex < raw.Length - 1)
             {
-                var trimmed = query.TrimStart('?');
-                foreach (var part in trimmed.Split('&', StringSplitOptions.RemoveEmptyEntries))
+                var query = raw.Substring(qIndex + 1); // e.g. "from=StairCalculator"
+                foreach (var part in query.Split('&', StringSplitOptions.RemoveEmptyEntries))
                 {
                     var kv = part.Split('=', 2);
                     if (kv.Length == 2 && kv[0] == "from")
