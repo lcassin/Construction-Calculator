@@ -11,6 +11,7 @@ public partial class MainPage : ContentPage
     private bool _shouldClearDisplay = false;
     private readonly List<string> _calculationChain = new();
     private Measurement? _memoryValue = null;
+    private string? _previousRoute = null;
 
     public MainPage()
     {
@@ -20,6 +21,17 @@ public partial class MainPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        
+        // Check if we have a previous route from query parameters
+        if (Shell.Current.CurrentState?.Location?.OriginalString != null)
+        {
+            var uri = new Uri(Shell.Current.CurrentState.Location.OriginalString);
+            var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+            _previousRoute = query["from"];
+            
+            // Show/hide back button based on whether we have a previous route
+            BackToolbarItem.IsVisible = !string.IsNullOrEmpty(_previousRoute);
+        }
         
 #if WINDOWS
         var window = this.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
@@ -753,6 +765,19 @@ public partial class MainPage : ContentPage
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"Toggle sign error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Main));
+    }
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(_previousRoute))
+        {
+            await Shell.Current.GoToAsync($"//{_previousRoute}");
         }
     }
 }

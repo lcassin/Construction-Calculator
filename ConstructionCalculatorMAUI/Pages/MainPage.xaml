@@ -5,6 +5,7 @@
              Title="Construction Calculator">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="BackToolbarItem" Text="Back" Clicked="OnBackClicked" IsVisible="False" Priority="-1" />
         <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
     </ContentPage.ToolbarItems>
 
