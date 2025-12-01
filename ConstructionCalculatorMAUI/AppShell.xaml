@@ -20,101 +20,126 @@
 
     <!-- 
     Shell provides a flyout menu for navigation between calculators.
-    This replaces the Windows Forms "Tools" menu with a mobile-friendly navigation pattern.
+    The hub page provides grouped navigation matching the WPF Tools menu structure.
     Shell chrome colors are theme-aware using AppThemeBinding.
     -->
 
-    <FlyoutItem Title="Calculators" Icon="calculator.png">
+    <!-- Main Calculator (always visible) -->
+    <FlyoutItem Title="Main Calculator" Route="MainPage">
         <ShellContent
             Title="Main Calculator"
-            ContentTemplate="{DataTemplate pages:MainPage}"
-            Route="MainPage" />
-        
-        <ShellContent
-            Title="Angle Calculator"
-            ContentTemplate="{DataTemplate pages:AngleCalculatorPage}"
-            Route="AngleCalculator" />
-        
-        <ShellContent
-            Title="Stair Calculator"
-            ContentTemplate="{DataTemplate pages:StairCalculatorPage}"
-            Route="StairCalculator" />
-        
-        <ShellContent
-            Title="Survey Calculator"
-            ContentTemplate="{DataTemplate pages:SurveyCalculatorPage}"
-            Route="SurveyCalculator" />
-        
-        <ShellContent
-            Title="Seating Layout"
-            ContentTemplate="{DataTemplate pages:SeatingLayoutCalculatorPage}"
-            Route="SeatingLayout" />
-        
-        <ShellContent
-            Title="Area Calculator"
-            ContentTemplate="{DataTemplate pages:AreaCalculatorPage}"
-            Route="AreaCalculator" />
-        
-        <ShellContent
-            Title="HVAC Multi-Zone Calculator"
-            ContentTemplate="{DataTemplate hvac:HVACCalculatorPage}"
-            Route="HVACCalculator" />
-        
-        <ShellContent
-            Title="Plumbing Calculator"
-            ContentTemplate="{DataTemplate plumbing:PlumbingCalculatorPage}"
-            Route="PlumbingCalculator" />
-        
-        <ShellContent
-            Title="Electrical Load Calculator"
-            ContentTemplate="{DataTemplate electrical:ElectricalCalculatorPage}"
-            Route="ElectricalCalculator" />
-        
-        <ShellContent
-            Title="Paint Calculator"
-            ContentTemplate="{DataTemplate materials:PaintCalculatorPage}"
-            Route="PaintCalculator" />
-        
-        <ShellContent
-            Title="Concrete Calculator"
-            ContentTemplate="{DataTemplate materials:ConcreteCalculatorPage}"
-            Route="ConcreteCalculator" />
-        
-        <ShellContent
-            Title="Drywall Calculator"
-            ContentTemplate="{DataTemplate materials:DrywallCalculatorPage}"
-            Route="DrywallCalculator" />
-        
-        <ShellContent
-            Title="Flooring Calculator"
-            ContentTemplate="{DataTemplate materials:FlooringCalculatorPage}"
-            Route="FlooringCalculator" />
-        
-        <ShellContent
-            Title="Board Feet Calculator"
-            ContentTemplate="{DataTemplate materials:BoardFeetCalculatorPage}"
-            Route="BoardFeetCalculator" />
-        
-        <ShellContent
-            Title="Roofing Calculator"
-            ContentTemplate="{DataTemplate materials:RoofingCalculatorPage}"
-            Route="RoofingCalculator" />
-        
-        <ShellContent
-            Title="Ramp Calculator"
-            ContentTemplate="{DataTemplate geometry:RampCalculatorPage}"
-            Route="RampCalculator" />
-        
-        <ShellContent
-            Title="Grading/Slope Calculator"
-            ContentTemplate="{DataTemplate geometry:GradingCalculatorPage}"
-            Route="GradingCalculator" />
-        
-        <ShellContent
-            Title="Unit Converter"
-            ContentTemplate="{DataTemplate unitconverter:UnitConverterPage}"
-            Route="UnitConverter" />
+            ContentTemplate="{DataTemplate pages:MainPage}" />
     </FlyoutItem>
+
+    <!-- Calculator Hub (grouped navigation) -->
+    <FlyoutItem Title="All Calculators" Route="CalculatorHub">
+        <ShellContent
+            Title="All Calculators"
+            ContentTemplate="{DataTemplate pages:CalculatorHubPage}" />
+    </FlyoutItem>
+
+    <!-- Individual calculator routes (hidden from flyout, accessible via hub) -->
+    <ShellContent
+        Title="Angle Calculator"
+        ContentTemplate="{DataTemplate pages:AngleCalculatorPage}"
+        Route="AngleCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Stair Calculator"
+        ContentTemplate="{DataTemplate pages:StairCalculatorPage}"
+        Route="StairCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Survey Calculator"
+        ContentTemplate="{DataTemplate pages:SurveyCalculatorPage}"
+        Route="SurveyCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Seating Layout"
+        ContentTemplate="{DataTemplate pages:SeatingLayoutCalculatorPage}"
+        Route="SeatingLayout"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Area Calculator"
+        ContentTemplate="{DataTemplate pages:AreaCalculatorPage}"
+        Route="AreaCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="HVAC Multi-Zone Calculator"
+        ContentTemplate="{DataTemplate hvac:HVACCalculatorPage}"
+        Route="HVACCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Plumbing Calculator"
+        ContentTemplate="{DataTemplate plumbing:PlumbingCalculatorPage}"
+        Route="PlumbingCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Electrical Load Calculator"
+        ContentTemplate="{DataTemplate electrical:ElectricalCalculatorPage}"
+        Route="ElectricalCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Paint Calculator"
+        ContentTemplate="{DataTemplate materials:PaintCalculatorPage}"
+        Route="PaintCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Concrete Calculator"
+        ContentTemplate="{DataTemplate materials:ConcreteCalculatorPage}"
+        Route="ConcreteCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Drywall Calculator"
+        ContentTemplate="{DataTemplate materials:DrywallCalculatorPage}"
+        Route="DrywallCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Flooring Calculator"
+        ContentTemplate="{DataTemplate materials:FlooringCalculatorPage}"
+        Route="FlooringCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Board Feet Calculator"
+        ContentTemplate="{DataTemplate materials:BoardFeetCalculatorPage}"
+        Route="BoardFeetCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Roofing Calculator"
+        ContentTemplate="{DataTemplate materials:RoofingCalculatorPage}"
+        Route="RoofingCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Ramp Calculator"
+        ContentTemplate="{DataTemplate geometry:RampCalculatorPage}"
+        Route="RampCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Grading/Slope Calculator"
+        ContentTemplate="{DataTemplate geometry:GradingCalculatorPage}"
+        Route="GradingCalculator"
+        FlyoutItemIsVisible="False" />
+    
+    <ShellContent
+        Title="Unit Converter"
+        ContentTemplate="{DataTemplate unitconverter:UnitConverterPage}"
+        Route="UnitConverter"
+        FlyoutItemIsVisible="False" />
 
     <FlyoutItem Title="Settings">
         <ShellContent
