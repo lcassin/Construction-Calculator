@@ -1,3 +1,5 @@
+using ConstructionCalculatorMAUI.Shared.Help;
+
 namespace ConstructionCalculatorMAUI.Pages.Calculators.Materials;
 
 public partial class RoofingCalculatorPage : ContentPage

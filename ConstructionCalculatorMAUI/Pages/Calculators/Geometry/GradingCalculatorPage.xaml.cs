@@ -1,3 +1,5 @@
+using ConstructionCalculatorMAUI.Shared.Help;
+
 namespace ConstructionCalculatorMAUI.Pages.Calculators.Geometry;
 
 public partial class GradingCalculatorPage : ContentPage
