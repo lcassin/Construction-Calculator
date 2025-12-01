@@ -97,6 +97,7 @@ public partial class PlumbingCalculatorPage : ContentPage
                 await DisplayAlert("High Velocity Warning", 
                     "Warning: Flow velocity exceeds 8 ft/s. Consider using larger pipe to reduce noise and wear.", 
                     "OK");
+using ConstructionCalculatorMAUI.Shared.Help;
             }
         }
         catch (Exception ex)
@@ -346,5 +347,10 @@ public partial class PlumbingCalculatorPage : ContentPage
         {
             await DisplayAlert("No Results", "No results to copy. Please perform a calculation first.", "OK");
         }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Plumbing));
     }
 }

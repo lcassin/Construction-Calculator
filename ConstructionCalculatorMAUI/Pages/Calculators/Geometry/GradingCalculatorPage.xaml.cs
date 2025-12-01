@@ -107,4 +107,9 @@ public partial class GradingCalculatorPage : ContentPage
         ResultLabel.Text = "";
         RiseEntry.Focus();
     }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Grading));
+    }
 }

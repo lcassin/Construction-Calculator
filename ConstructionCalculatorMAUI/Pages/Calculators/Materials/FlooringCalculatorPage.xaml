@@ -4,6 +4,10 @@
              x:Class="ConstructionCalculatorMAUI.Pages.Calculators.Materials.FlooringCalculatorPage"
              Title="Flooring &amp; Counter Calculator">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
             

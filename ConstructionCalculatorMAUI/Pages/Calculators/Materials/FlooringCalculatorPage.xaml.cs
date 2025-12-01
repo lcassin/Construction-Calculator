@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages.Calculators.Materials;
 
@@ -184,5 +185,10 @@ public partial class FlooringCalculatorPage : ContentPage
         public double WasteFactor { get; set; }
         public double AreaSqFt { get; set; }
         public double AreaWithWasteSqFt { get; set; }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Flooring));
     }
 }

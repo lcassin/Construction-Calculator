@@ -1,4 +1,5 @@
 using System.Text;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages.Calculators.Geometry;
 
@@ -386,5 +387,10 @@ public partial class RampCalculatorPage : ContentPage
         {
             SpaceFitFrame.IsVisible = false;
         }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Ramp));
     }
 }

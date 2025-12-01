@@ -4,6 +4,10 @@
              x:Class="ConstructionCalculatorMAUI.Pages.AreaCalculatorPage"
              Title="Area Calculator">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
     <!-- 
     Area Calculator Page
     Calculates total square footage by adding multiple rectangular sections.

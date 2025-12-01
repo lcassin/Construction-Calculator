@@ -1,4 +1,5 @@
 using System.Text;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages;
 
@@ -174,5 +175,10 @@ public partial class SeatingLayoutCalculatorPage : ContentPage
         {
             await DisplayAlert("Export Error", $"Error exporting file: {ex.Message}", "OK");
         }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.SeatingLayout));
     }
 }

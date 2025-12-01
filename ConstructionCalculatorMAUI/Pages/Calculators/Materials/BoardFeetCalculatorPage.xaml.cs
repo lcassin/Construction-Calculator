@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages.Calculators.Materials;
 
@@ -73,5 +74,10 @@ public partial class BoardFeetCalculatorPage : ContentPage
         public double BoardFeet { get; set; }
         
         public string DisplayText => $"{Thickness}\" × {Width}\" × {Length}' = {BoardFeet:F2} bd ft";
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.BoardFeet));
     }
 }

@@ -348,4 +348,9 @@ public partial class UnitConverterPage : ContentPage
         ToValueEntry.Text = "";
         FromValueEntry.Focus();
     }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.UnitConverter));
+    }
 }
