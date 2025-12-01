@@ -22,15 +22,40 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
         
-        // Check if we have a previous route from query parameters
-        if (Shell.Current.CurrentState?.Location?.OriginalString != null)
+        // Parse query string to get ?from=...
+        var location = Shell.Current.CurrentState?.Location;
+        _previousRoute = null;
+
+        if (location != null)
         {
-            var uri = new Uri(Shell.Current.CurrentState.Location.OriginalString);
-            var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
-            _previousRoute = query["from"];
-            
-            // Show/hide back button based on whether we have a previous route
-            BackToolbarItem.IsVisible = !string.IsNullOrEmpty(_previousRoute);
+            var query = location.Query; // e.g. "?from=StairCalculator"
+            if (!string.IsNullOrEmpty(query))
+            {
+                var trimmed = query.TrimStart('?');
+                foreach (var part in trimmed.Split('&', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var kv = part.Split('=', 2);
+                    if (kv.Length == 2 && kv[0] == "from")
+                    {
+                        _previousRoute = Uri.UnescapeDataString(kv[1]);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Show/hide back button by manipulating ToolbarItems collection
+        if (!string.IsNullOrEmpty(_previousRoute))
+        {
+            // Show back button if we have a previous route
+            if (!ToolbarItems.Contains(BackToolbarItem))
+                ToolbarItems.Insert(0, BackToolbarItem);
+        }
+        else
+        {
+            // Hide back button if no previous route
+            if (ToolbarItems.Contains(BackToolbarItem))
+                ToolbarItems.Remove(BackToolbarItem);
         }
         
 #if WINDOWS

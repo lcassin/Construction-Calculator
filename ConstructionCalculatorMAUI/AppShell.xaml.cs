@@ -13,7 +13,9 @@ public partial class AppShell : Shell
     private void OnShellNavigating(object? sender, ShellNavigatingEventArgs e)
     {
         // If navigating to Main Calculator from another calculator, add the previous route
-        if (e.Target.Location.OriginalString.Contains("MainPage"))
+        // Guard against infinite loops: only intercept if target doesn't already have "from=" parameter
+        if (e.Target.Location.OriginalString.Contains("MainPage") && 
+            !e.Target.Location.OriginalString.Contains("from="))
         {
             var currentRoute = Shell.Current.CurrentState?.Location?.OriginalString;
             
