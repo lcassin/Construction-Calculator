@@ -170,8 +170,11 @@ public partial class StairCalculatorWindow : Window
                                     break;
                                     
                                 case LandingType.FullReturn:
-                                    overallLength = Math.Max(flightARun, flightBRun);
-                                    overallWidth = (2 * stairWidthInches) + landingDepthInches;
+                                    // For U-shape: landing depth is in line of travel (length dimension)
+                                    // Width spans both parallel flights + landing between them
+                                    double halfRun = Math.Max(flightARun, flightBRun);
+                                    overallWidth = halfRun + stairWidthInches;
+                                    overallLength = landingDepthInches;
                                     break;
                                     
                                 default:
