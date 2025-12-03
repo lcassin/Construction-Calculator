@@ -224,7 +224,33 @@ public partial class HVACCalculatorPage : ContentPage
         }
     }
 
-    private async void CalculateDuctButton_Clicked(object sender, EventArgs e)
+    // Duct calculator state
+    private double calculatedDiameter = 0;
+    private double calculatedVelocity = 0;
+
+    private void DuctTypePicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DuctTypePicker == null || RoundDuctPanel == null || RectangularDuctPanel == null)
+            return;
+
+        bool isRound = DuctTypePicker.SelectedIndex == 0;
+        RoundDuctPanel.IsVisible = isRound;
+        RectangularDuctPanel.IsVisible = !isRound;
+    }
+
+    private async void UseTotalCFMButton_Clicked(object sender, EventArgs e)
+    {
+        if (zones.Count == 0)
+        {
+            await DisplayAlert("No Zones", "Please add zones first to calculate total CFM.", "OK");
+            return;
+        }
+
+        double totalCFM = zones.Sum(z => z.CFM);
+        DuctCFMEntry.Text = totalCFM.ToString("F0");
+    }
+
+    private async void CalculateDuctSizeButton_Clicked(object sender, EventArgs e)
     {
         try
         {
@@ -234,29 +260,176 @@ public partial class HVACCalculatorPage : ContentPage
                 return;
             }
 
-            if (!double.TryParse(VelocityEntry.Text, out double velocity) || velocity <= 0)
+            if (!double.TryParse(DuctVelocityEntry.Text, out double velocity) || velocity <= 0)
             {
-                await DisplayAlert("Invalid Input", "Please enter a valid velocity (typical: 600-900 FPM).", "OK");
+                await DisplayAlert("Invalid Input", "Please enter a valid velocity (typical: 600-1200 FPM).", "OK");
                 return;
             }
 
-            double requiredArea = (cfm / velocity) * 144;
+            bool isRound = DuctTypePicker.SelectedIndex == 0;
 
-            double aspectRatio = 2.0;
-            double height = Math.Sqrt(requiredArea / aspectRatio);
-            double width = height * aspectRatio;
+            if (isRound)
+            {
+                CalculateRoundDuct(cfm, velocity);
+            }
+            else
+            {
+                await CalculateRectangularDuct(cfm, velocity);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Calculation Error: {ex.Message}", "OK");
+        }
+    }
 
-            int heightInches = (int)Math.Ceiling(height);
-            int widthInches = (int)Math.Ceiling(width);
+    private void CalculateRoundDuct(double cfm, double targetVelocity)
+    {
+        // Calculate required area in square feet
+        double areaFt2 = cfm / targetVelocity;
 
-            int[] standardSizes = { 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 30, 36 };
-            heightInches = standardSizes.FirstOrDefault(s => s >= heightInches, heightInches);
-            widthInches = standardSizes.FirstOrDefault(s => s >= widthInches, widthInches);
+        // Calculate diameter in feet, then convert to inches
+        double diameterFt = Math.Sqrt(4 * areaFt2 / Math.PI);
+        double diameterIn = diameterFt * 12;
 
-            double actualArea = (heightInches * widthInches) / 144.0;
-            double actualVelocity = cfm / actualArea;
+        // Round to nearest standard size
+        int[] standardSizes = { 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36 };
+        int standardDiameter = standardSizes.FirstOrDefault(s => s >= diameterIn, (int)Math.Ceiling(diameterIn));
 
-            DuctSizeLabel.Text = $"Duct Size: {heightInches}\" × {widthInches}\" (actual velocity: {actualVelocity:F0} FPM)";
+        // Calculate actual velocity with standard size
+        double actualAreaFt2 = Math.PI * Math.Pow(standardDiameter / 12.0, 2) / 4;
+        double actualVelocity = cfm / actualAreaFt2;
+
+        calculatedDiameter = standardDiameter;
+        calculatedVelocity = actualVelocity;
+
+        RoundDiameterLabel.Text = $"Diameter: {standardDiameter}\" (standard size)";
+        RoundActualVelocityLabel.Text = $"Actual Velocity: {actualVelocity:F0} FPM";
+
+        // Add velocity warning if needed
+        if (actualVelocity > 1200)
+        {
+            RoundActualVelocityLabel.Text += " ⚠ High velocity - may cause noise";
+        }
+        else if (actualVelocity < 400)
+        {
+            RoundActualVelocityLabel.Text += " ⚠ Low velocity - may be oversized";
+        }
+    }
+
+    private async Task CalculateRectangularDuct(double cfm, double targetVelocity)
+    {
+        if (!double.TryParse(AspectRatioEntry.Text, out double aspectRatio) || aspectRatio <= 0)
+        {
+            await DisplayAlert("Invalid Input", "Please enter a valid aspect ratio (typical: 1.5-3.0).", "OK");
+            return;
+        }
+
+        // Calculate required area in square feet
+        double areaFt2 = cfm / targetVelocity;
+
+        // Calculate dimensions based on aspect ratio
+        // Area = W * H, AspectRatio = W / H
+        // So: H = sqrt(Area / AspectRatio), W = AspectRatio * H
+        double heightFt = Math.Sqrt(areaFt2 / aspectRatio);
+        double widthFt = aspectRatio * heightFt;
+
+        // Convert to inches
+        double heightIn = heightFt * 12;
+        double widthIn = widthFt * 12;
+
+        // Round to nearest standard size
+        int[] standardSizes = { 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 30, 36, 42, 48 };
+        int standardHeight = standardSizes.FirstOrDefault(s => s >= heightIn, (int)Math.Ceiling(heightIn));
+        int standardWidth = standardSizes.FirstOrDefault(s => s >= widthIn, (int)Math.Ceiling(widthIn));
+
+        // Calculate actual velocity with standard sizes
+        double actualAreaFt2 = (standardWidth * standardHeight) / 144.0;
+        double actualVelocity = cfm / actualAreaFt2;
+
+        // Calculate equivalent diameter using ASHRAE formula
+        double equivalentDiameter = 1.30 * Math.Pow(standardWidth * standardHeight, 0.625) / Math.Pow(standardWidth + standardHeight, 0.25);
+
+        calculatedDiameter = equivalentDiameter;
+        calculatedVelocity = actualVelocity;
+
+        RectangularSizeLabel.Text = $"Size: {standardWidth}\" × {standardHeight}\" (standard sizes)";
+        RectangularActualVelocityLabel.Text = $"Actual Velocity: {actualVelocity:F0} FPM";
+        EquivalentDiameterLabel.Text = $"Equivalent Diameter: {equivalentDiameter:F1}\" (for friction calculations)";
+
+        // Add velocity warning if needed
+        if (actualVelocity > 1200)
+        {
+            RectangularActualVelocityLabel.Text += " ⚠ High velocity - may cause noise";
+        }
+        else if (actualVelocity < 400)
+        {
+            RectangularActualVelocityLabel.Text += " ⚠ Low velocity - may be oversized";
+        }
+    }
+
+    private async void CalculateFrictionButton_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            if (calculatedDiameter == 0 || calculatedVelocity == 0)
+            {
+                await DisplayAlert("Duct Size Required", "Please calculate duct size first.", "OK");
+                return;
+            }
+
+            if (!double.TryParse(StraightLengthEntry.Text, out double straightLength) || straightLength < 0)
+            {
+                await DisplayAlert("Invalid Input", "Please enter a valid straight length.", "OK");
+                return;
+            }
+
+            if (!double.TryParse(FrictionRateEntry.Text, out double frictionRate) || frictionRate <= 0)
+            {
+                await DisplayAlert("Invalid Input", "Please enter a valid friction rate (typical: 0.05-0.15 in. w.g./100 ft).", "OK");
+                return;
+            }
+
+            // Parse fitting counts
+            int.TryParse(Elbow90Entry.Text, out int elbow90Count);
+            int.TryParse(Elbow45Entry.Text, out int elbow45Count);
+            int.TryParse(TransitionsEntry.Text, out int transitionsCount);
+            int.TryParse(BranchesEntry.Text, out int branchesCount);
+            int.TryParse(DampersEntry.Text, out int dampersCount);
+
+            // Calculate equivalent lengths for fittings (in feet)
+            // These are typical values - actual values vary by duct size and construction
+            double equiv90 = elbow90Count * 35;  // ~35 ft per 90° elbow
+            double equiv45 = elbow45Count * 20;  // ~20 ft per 45° elbow
+            double equivTransitions = transitionsCount * 15;  // ~15 ft per transition
+            double equivBranches = branchesCount * 25;  // ~25 ft per branch takeoff
+            double equivDampers = dampersCount * 10;  // ~10 ft per damper
+
+            double totalEquivLength = equiv90 + equiv45 + equivTransitions + equivBranches + equivDampers;
+            double effectiveLength = straightLength + totalEquivLength;
+
+            // Calculate friction loss
+            double frictionLoss = frictionRate * (effectiveLength / 100.0);
+
+            // Calculate velocity pressure (in. w.g.)
+            // Pv = (V/4005)^2 where V is in FPM
+            double velocityPressure = Math.Pow(calculatedVelocity / 4005.0, 2);
+
+            // Total pressure drop is friction loss (we're using equivalent length method, so fittings are already included)
+            double totalPressure = frictionLoss;
+
+            // Update labels
+            TotalEquivalentLengthLabel.Text = $"Total Equivalent Length: {totalEquivLength:F1} ft";
+            EffectiveLengthLabel.Text = $"Effective Length (straight + fittings): {effectiveLength:F1} ft";
+            FrictionLossLabel.Text = $"Friction Loss: {frictionLoss:F3} in. w.g.";
+            VelocityPressureLabel.Text = $"Velocity Pressure: {velocityPressure:F3} in. w.g.";
+            TotalPressureLabel.Text = $"Total Pressure Drop: {totalPressure:F3} in. w.g.";
+
+            // Add pressure warning if needed
+            if (totalPressure > 0.5)
+            {
+                TotalPressureLabel.Text += " ⚠ High pressure drop";
+            }
         }
         catch (Exception ex)
         {
@@ -298,10 +471,6 @@ public partial class HVACCalculatorPage : ContentPage
             results += $"{DiversityTonnageLabel.Text}\n";
         }
 
-        if (DuctSizeLabel.Text != "Duct Size: Not calculated")
-        {
-            results += $"\n{DuctSizeLabel.Text}";
-        }
 
         await Clipboard.SetTextAsync(results);
         await DisplayAlert("Copied", "Results copied to clipboard!", "OK");
