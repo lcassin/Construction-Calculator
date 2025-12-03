@@ -201,11 +201,11 @@ public partial class StairCalculatorPage : ContentPage
                                     break;
                                     
                                 case LandingType.FullReturn:
-                                    // For U-shape: landing depth is in line of travel (length dimension)
-                                    // Width spans both parallel flights + landing between them
+                                    // For U-shape: landing depth is the cross dimension (width)
+                                    // Length is the run dimension (longer dimension)
                                     double halfRun = Math.Max(flightARun, flightBRun);
-                                    overallWidth = halfRun + stairWidthInches;
-                                    overallLength = landingDepthInches;
+                                    overallLength = halfRun + stairWidthInches;
+                                    overallWidth = landingDepthInches;
                                     break;
                                     
                                 default:
