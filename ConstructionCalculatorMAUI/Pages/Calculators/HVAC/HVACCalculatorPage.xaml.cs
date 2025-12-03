@@ -493,4 +493,13 @@ public partial class HVACCalculatorPage : ContentPage
     {
         await Navigation.PushAsync(new HelpPage(CalculatorKind.HVAC));
     }
+
+    private void FittingEntry_Focused(object sender, FocusEventArgs e)
+    {
+        if (sender is Entry entry)
+        {
+            entry.CursorPosition = 0;
+            entry.SelectionLength = entry.Text?.Length ?? 0;
+        }
+    }
 }
