@@ -115,6 +115,18 @@
             <VerticalStackLayout x:Name="LandingSection"
                                  Spacing="10"
                                  IsVisible="False">
+                <Label Text="Landing Type:" FontSize="14" />
+                <Picker x:Name="LandingTypePicker"
+                        FontSize="14"
+                        SelectedIndexChanged="OnLandingTypeChanged" />
+                
+                <Label Text="Stair Width:" FontSize="14" />
+                <Entry x:Name="StairWidthEntry"
+                       Placeholder="e.g., 36&quot; (typical)"
+                       Text="36&quot;"
+                       FontSize="14"
+                       TextChanged="OnStairWidthChanged" />
+                
                 <Label Text="Landing Depth:" FontSize="14" />
                 <Entry x:Name="LandingDepthEntry"
                        Placeholder="e.g., 3' or 36&quot; (min 36&quot;)"
@@ -148,7 +160,7 @@
                         BackgroundColor="{DynamicResource DisplayBackgroundColor}"
                         Padding="10">
                     <Label x:Name="TotalRunWithLandingLabel"
-                           Text="Total Run with Landing: --"
+                           Text="Overall Dimensions: --"
                            FontSize="16"
                            FontAttributes="Bold"
                            HorizontalTextAlignment="Center" />
