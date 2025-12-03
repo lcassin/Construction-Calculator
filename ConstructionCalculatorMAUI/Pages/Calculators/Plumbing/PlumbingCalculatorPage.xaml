@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.Calculators.Plumbing.PlumbingCalculatorPage"
+             Title="Plumbing Calculator">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Description -->
+            <Label Text="Calculate pipe sizing, flow rates, and drainage requirements.&#x0a;Select calculation type and enter parameters for plumbing system design."
+                   FontSize="12"
+                   FontAttributes="Italic"
+                   TextColor="Gray" />
+
+            <!-- Tab-like sections using Frames -->
+            
+            <!-- Pipe Sizing (Water Supply) Section -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Pipe Sizing (Water Supply)" FontSize="16" FontAttributes="Bold" />
+                    <Label Text="Calculate required pipe size based on fixture units and flow requirements."
+                           FontSize="12" TextColor="Gray" />
+                    
+                    <!-- Fixture Units -->
+                    <Label Text="Fixture Units" FontSize="14" FontAttributes="Bold" Margin="0,10,0,5" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Total Fixture Units:" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="FixtureUnitsEntry" WidthRequest="100" Keyboard="Numeric" Text="10" />
+                    </HorizontalStackLayout>
+                    <Label Text="Common fixture units: Toilet (3), Sink (1), Shower (2), Bathtub (2), Washing Machine (2)"
+                           FontSize="11" TextColor="Gray" />
+                    
+                    <!-- System Parameters -->
+                    <Label Text="System Parameters" FontSize="14" FontAttributes="Bold" Margin="0,10,0,5" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Pipe Length:" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="PipeLengthEntry" WidthRequest="100" Keyboard="Numeric" Text="50" />
+                        <Label Text="ft" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Pipe Material:" WidthRequest="150" VerticalOptions="Center" />
+                        <Picker x:Name="PipeMaterialPicker" WidthRequest="200" SelectedIndex="0">
+                            <Picker.Items>
+                                <x:String>Copper (Type L)</x:String>
+                                <x:String>PEX</x:String>
+                                <x:String>CPVC</x:String>
+                                <x:String>Galvanized Steel</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Water Pressure:" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="WaterPressureEntry" WidthRequest="100" Keyboard="Numeric" Text="60" />
+                        <Label Text="PSI" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    
+                    <Button Text="Calculate Pipe Size" 
+                            Style="{StaticResource PrimaryButton}"
+                            Clicked="CalculatePipeSizeButton_Clicked"
+                            Margin="0,10,0,10" />
+                    
+                    <!-- Results -->
+                    <Frame BorderColor="Gray" Padding="15" BackgroundColor="#F5F5F5" CornerRadius="5">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Results:" FontSize="14" FontAttributes="Bold" />
+                            <Label x:Name="FlowRateLabel" Text="Required Flow Rate: 0 GPM" FontSize="13" />
+                            <Label x:Name="RecommendedPipeSizeLabel" Text="Recommended Pipe Size: Not calculated" 
+                                   FontSize="14" FontAttributes="Bold" TextColor="DarkGreen" />
+                            <Label x:Name="VelocityLabel" Text="Flow Velocity: 0 ft/s" FontSize="13" />
+                            <Label x:Name="PressureLossLabel" Text="Estimated Pressure Loss: 0 PSI" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Drain/Waste/Vent (DWV) Section -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Drain/Waste/Vent (DWV)" FontSize="16" FontAttributes="Bold" />
+                    <Label Text="Calculate drain pipe sizing based on drainage fixture units (DFU)."
+                           FontSize="12" TextColor="Gray" />
+                    
+                    <!-- Drainage Fixture Units -->
+                    <Label Text="Drainage Fixture Units" FontSize="14" FontAttributes="Bold" Margin="0,10,0,5" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Total DFU:" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="DFUEntry" WidthRequest="100" Keyboard="Numeric" Text="6" />
+                    </HorizontalStackLayout>
+                    <Label Text="Common DFU values: Toilet (3), Sink (1), Shower (2), Bathtub (2), Washing Machine (2)"
+                           FontSize="11" TextColor="Gray" />
+                    
+                    <!-- Drain Configuration -->
+                    <Label Text="Drain Configuration" FontSize="14" FontAttributes="Bold" Margin="0,10,0,5" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Drain Type:" WidthRequest="150" VerticalOptions="Center" />
+                        <Picker x:Name="DrainTypePicker" WidthRequest="200" SelectedIndex="0">
+                            <Picker.Items>
+                                <x:String>Horizontal Branch</x:String>
+                                <x:String>Vertical Stack</x:String>
+                                <x:String>Building Drain</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Slope:" WidthRequest="150" VerticalOptions="Center" />
+                        <Picker x:Name="SlopePicker" WidthRequest="200" SelectedIndex="1">
+                            <Picker.Items>
+                                <x:String>1/8" per foot</x:String>
+                                <x:String>1/4" per foot (standard)</x:String>
+                                <x:String>1/2" per foot</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+                    
+                    <Button Text="Calculate Drain Size" 
+                            Style="{StaticResource PrimaryButton}"
+                            Clicked="CalculateDrainSizeButton_Clicked"
+                            Margin="0,10,0,10" />
+                    
+                    <!-- Results -->
+                    <Frame BorderColor="Gray" Padding="15" BackgroundColor="#F5F5F5" CornerRadius="5">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Results:" FontSize="14" FontAttributes="Bold" />
+                            <Label x:Name="DrainSizeLabel" Text="Recommended Drain Size: Not calculated" 
+                                   FontSize="14" FontAttributes="Bold" TextColor="DarkGreen" />
+                            <Label x:Name="VentSizeLabel" Text="Recommended Vent Size: Not calculated" FontSize="13" />
+                            <Label x:Name="DrainCapacityLabel" Text="Drain Capacity: 0 DFU" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Flow Rate Calculator Section -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Flow Rate Calculator" FontSize="16" FontAttributes="Bold" />
+                    <Label Text="Calculate flow rate through pipes based on size and pressure."
+                           FontSize="12" TextColor="Gray" />
+                    
+                    <!-- Pipe Parameters -->
+                    <Label Text="Pipe Parameters" FontSize="14" FontAttributes="Bold" Margin="0,10,0,5" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Pipe Diameter:" WidthRequest="150" VerticalOptions="Center" />
+                        <Picker x:Name="FlowPipeDiameterPicker" WidthRequest="150" SelectedIndex="2">
+                            <Picker.Items>
+                                <x:String>1/2"</x:String>
+                                <x:String>3/4"</x:String>
+                                <x:String>1"</x:String>
+                                <x:String>1-1/4"</x:String>
+                                <x:String>1-1/2"</x:String>
+                                <x:String>2"</x:String>
+                                <x:String>3"</x:String>
+                                <x:String>4"</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Pressure:" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="FlowPressureEntry" WidthRequest="100" Keyboard="Numeric" Text="50" />
+                        <Label Text="PSI" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Pipe Length:" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="FlowPipeLengthEntry" WidthRequest="100" Keyboard="Numeric" Text="100" />
+                        <Label Text="ft" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    
+                    <Button Text="Calculate Flow Rate" 
+                            Style="{StaticResource PrimaryButton}"
+                            Clicked="CalculateFlowRateButton_Clicked"
+                            Margin="0,10,0,10" />
+                    
+                    <!-- Results -->
+                    <Frame BorderColor="Gray" Padding="15" BackgroundColor="#F5F5F5" CornerRadius="5">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Results:" FontSize="14" FontAttributes="Bold" />
+                            <Label x:Name="CalculatedFlowRateLabel" Text="Flow Rate: 0 GPM" 
+                                   FontSize="14" FontAttributes="Bold" TextColor="DarkGreen" />
+                            <Label x:Name="FlowVelocityLabel" Text="Flow Velocity: 0 ft/s" FontSize="13" />
+                            <Label x:Name="FlowPressureLossLabel" Text="Pressure Loss: 0 PSI" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Copy Results Button -->
+            <Button Text="Copy Results" 
+                    Style="{StaticResource ActionButton}"
+                    Clicked="CopyResultsButton_Clicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

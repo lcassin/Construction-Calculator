@@ -5,15 +5,15 @@
         Height="650" Width="500"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        Icon="pack://application:,,,/Assets/app.ico">
+        Icon="pack://application:,,,/Assets/app-new.ico">
     
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="40,30,40,30" HorizontalAlignment="Center">
             
             <!-- App Icon -->
-            <Image Source="pack://application:,,,/Assets/splash.png"
-                   Width="150" 
-                   Height="150" 
+            <Image Source="pack://application:,,,/Assets/logo_main.png"
+                   Width="200" 
+                   Height="200" 
                    Stretch="Uniform"
                    HorizontalAlignment="Center"
                    SnapsToDevicePixels="True"
@@ -30,7 +30,7 @@
                        Margin="0,0,0,10"/>
             
             <!-- Version -->
-            <TextBlock Text="Version 2.0.5 (WPF with Fluent Theme)"
+            <TextBlock Text="Version 2.0.6 (WPF with Fluent Theme)"
                        FontSize="16"
                        HorizontalAlignment="Center"
                        Foreground="Gray"

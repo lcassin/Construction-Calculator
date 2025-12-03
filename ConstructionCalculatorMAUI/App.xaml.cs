@@ -11,19 +11,50 @@ public partial class App : Application
 
         RequestedThemeChanged += (s, e) => ApplyThemeResources(e.RequestedTheme);
 
-        MainPage = new Pages.SplashPage();
-        
-        Dispatcher.Dispatch(async () =>
+        // Remove MainPage assignment here to avoid CS0618
+        // MainPage = new Pages.SplashPage();
+
+        // Fix AsyncFixer03: Use a non-async lambda and call a local async Task method, handling exceptions
+        Dispatcher.Dispatch(() =>
+        {
+            _ = ShowMainPageAfterDelayAsync();
+        });
+    }
+
+    private async Task ShowMainPageAfterDelayAsync()
+    {
+        try
         {
             await Task.Delay(1200); // Show splash for 1.2 seconds
-            MainPage = new AppShell();
-        });
+            // Use Windows[0].Page to set the root page at runtime
+            if (Windows.Count > 0)
+            {
+                Windows[0].Page = new AppShell();
+            }
+        }
+        catch (Exception ex)
+        {
+            // Optionally log or handle the exception
+        }
+    }
+
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        // Create a new Window
+        var window = new Window
+        {
+            Width = 472,
+            Height = 750,
+            Page = new Pages.SplashPage() // Set the initial page here
+        };
+
+        return window;
     }
 
     private void LoadThemePreference()
     {
         string? theme = Preferences.Get("AppTheme", "System");
-        
+
         switch (theme)
         {
             case "Light":
@@ -41,7 +72,7 @@ public partial class App : Application
     public static void SetTheme(string theme)
     {
         Preferences.Set("AppTheme", theme);
-        
+
         switch (theme)
         {
             case "Light":
@@ -59,7 +90,7 @@ public partial class App : Application
     private static void ApplyThemeResources(AppTheme theme)
     {
         var rd = Current!.Resources;
-        
+
         if (theme == AppTheme.Dark)
         {
             rd["DisplayBackgroundColor"] = Color.FromArgb("#1E1E1E");

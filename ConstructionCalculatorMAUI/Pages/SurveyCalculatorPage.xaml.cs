@@ -1,4 +1,5 @@
-using ConstructionCalculator.Core;
+using ConstructionCalculator;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages;
 
@@ -263,4 +264,9 @@ public partial class SurveyCalculatorPage : ContentPage
     }
 
     #endregion
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Survey));
+    }
 }

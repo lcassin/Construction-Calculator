@@ -4,6 +4,10 @@
              x:Class="ConstructionCalculatorMAUI.Pages.AngleCalculatorPage"
              Title="Angle Calculator">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
     <!-- 
     Angle Calculator Page
     Calculates angles from rise/run measurements and vice versa.

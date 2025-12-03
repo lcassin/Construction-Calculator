@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.Calculators.Materials.ConcreteCalculatorPage"
+             Title="Concrete Calculator">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Calculation Type -->
+            <Label Text="Calculation Type:" FontSize="14" FontAttributes="Bold" />
+            <Picker x:Name="CalculationTypePicker" SelectedIndexChanged="CalculationType_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Slab</x:String>
+                    <x:String>Footing</x:String>
+                    <x:String>Column</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Slab Inputs -->
+            <VerticalStackLayout x:Name="SlabInputs" Spacing="10" IsVisible="True">
+                <Label Text="Slab Dimensions" FontSize="14" FontAttributes="Bold" />
+                
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Length (ft):" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="SlabLengthEntry" WidthRequest="200" Keyboard="Numeric" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Width (ft):" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="SlabWidthEntry" WidthRequest="200" Keyboard="Numeric" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Thickness (in):" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="SlabThicknessEntry" WidthRequest="200" Keyboard="Numeric" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Footing Inputs -->
+            <VerticalStackLayout x:Name="FootingInputs" Spacing="10" IsVisible="False">
+                <Label Text="Footing Dimensions" FontSize="14" FontAttributes="Bold" />
+                
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Perimeter (ft):" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="FootingPerimeterEntry" WidthRequest="200" Keyboard="Numeric" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Width (in):" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="FootingWidthEntry" WidthRequest="200" Keyboard="Numeric" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Depth (in):" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="FootingDepthEntry" WidthRequest="200" Keyboard="Numeric" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Column Inputs -->
+            <VerticalStackLayout x:Name="ColumnInputs" Spacing="10" IsVisible="False">
+                <Label Text="Column Dimensions" FontSize="14" FontAttributes="Bold" />
+                
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Diameter (in):" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="ColumnDiameterEntry" WidthRequest="200" Keyboard="Numeric" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Height (ft):" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="ColumnHeightEntry" WidthRequest="200" Keyboard="Numeric" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Quantity:" WidthRequest="120" VerticalOptions="Center" />
+                    <Entry x:Name="ColumnQuantityEntry" WidthRequest="200" Keyboard="Numeric" Text="1" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Waste Percentage -->
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Waste %:" WidthRequest="120" VerticalOptions="Center" />
+                <Entry x:Name="WastePercentEntry" WidthRequest="200" Keyboard="Numeric" Text="10" />
+            </HorizontalStackLayout>
+
+            <!-- Calculate Button -->
+            <Button Text="Calculate" 
+                    Style="{StaticResource PrimaryButton}"
+                    Clicked="Calculate_Clicked"
+                    Margin="0,10,0,10" />
+
+            <!-- Result Display -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="ResultLabel" 
+                           Text="" 
+                           FontSize="14" 
+                           FontAttributes="Bold" />
+                    
+                    <HorizontalStackLayout Spacing="10" Margin="0,15,0,0">
+                        <Label Text="Cost per Cubic Yard ($):" WidthRequest="160" VerticalOptions="Center" />
+                        <Entry x:Name="CostPerYardEntry" WidthRequest="100" Keyboard="Numeric" Text="0"
+                               TextChanged="CostPerYardEntry_TextChanged" />
+                    </HorizontalStackLayout>
+                    
+                    <Label x:Name="TotalCostLabel" Text="Estimated Total Cost: $0.00" 
+                           FontSize="16" FontAttributes="Bold" TextColor="DarkGreen" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Instructions -->
+            <Label FontSize="11" TextColor="Gray">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Tip: Results are rounded up to the nearest yard for ordering." />
+                        <Span Text="&#x0a;Standard waste allowance is 10% but can be adjusted." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

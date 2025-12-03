@@ -1,13 +1,25 @@
-using ConstructionCalculator.Core;
+using ConstructionCalculator;
+using ConstructionCalculatorMAUI.Shared.Help;
 using System.Text;
 
 namespace ConstructionCalculatorMAUI.Pages;
+
+public enum LandingType
+{
+    Straight,
+    RightAngle,
+    FullReturn
+}
 
 public partial class StairCalculatorPage : ContentPage
 {
     public StairCalculatorPage()
     {
         InitializeComponent();
+        
+        // Initialize landing type picker
+        LandingTypePicker.ItemsSource = new List<string> { "Straight", "Right Angle (L-Shape)", "Full Return (U-Shape)" };
+        LandingTypePicker.SelectedIndex = 0;
     }
 
     private void OnTotalRiseCompleted(object sender, EventArgs e)
@@ -50,6 +62,22 @@ public partial class StairCalculatorPage : ContentPage
     private void OnLandingDepthChanged(object sender, TextChangedEventArgs e)
     {
         if (IncludeLandingCheckBox.IsChecked)
+        {
+            OnCalculateClicked(sender, e);
+        }
+    }
+    
+    private void OnStairWidthChanged(object sender, TextChangedEventArgs e)
+    {
+        if (IncludeLandingCheckBox.IsChecked)
+        {
+            OnCalculateClicked(sender, e);
+        }
+    }
+    
+    private void OnLandingTypeChanged(object sender, EventArgs e)
+    {
+        if (IncludeLandingCheckBox.IsChecked && !string.IsNullOrWhiteSpace(TotalRiseEntry.Text))
         {
             OnCalculateClicked(sender, e);
         }
@@ -139,13 +167,57 @@ public partial class StairCalculatorPage : ContentPage
                         else
                         {
                             int stepsAfterLanding = numberOfSteps - stepsBeforeLanding;
-                            double runBeforeLanding = (stepsBeforeLanding - 1) * treadDepthInches;
-                            double runAfterLanding = (stepsAfterLanding - 1) * treadDepthInches;
-                            double totalRunWithLanding = runBeforeLanding + landingDepthInches + runAfterLanding;
+                            double flightARun = (stepsBeforeLanding - 1) * treadDepthInches;
+                            double flightBRun = (stepsAfterLanding - 1) * treadDepthInches;
 
                             StepsAfterLandingLabel.Text = $"Steps After Landing: {stepsAfterLanding}";
-                            Measurement totalRunWithLandingMeasurement = Measurement.FromDecimalInches(totalRunWithLanding);
-                            TotalRunWithLandingLabel.Text = $"Total Run with Landing: {totalRunWithLandingMeasurement.ToFractionString()}";
+                            
+                            // Get stair width for overall dimensions
+                            double stairWidthInches = 36.0; // Default
+                            if (!string.IsNullOrWhiteSpace(StairWidthEntry.Text))
+                            {
+                                try
+                                {
+                                    Measurement stairWidth = Measurement.Parse(StairWidthEntry.Text);
+                                    stairWidthInches = stairWidth.ToTotalInches();
+                                }
+                                catch { }
+                            }
+                            
+                            // Calculate overall dimensions based on landing type
+                            LandingType landingType = (LandingType)LandingTypePicker.SelectedIndex;
+                            double overallLength, overallWidth;
+                            
+                            switch (landingType)
+                            {
+                                case LandingType.Straight:
+                                    overallLength = flightARun + landingDepthInches + flightBRun;
+                                    overallWidth = stairWidthInches;
+                                    break;
+                                    
+                                case LandingType.RightAngle:
+                                    overallLength = flightARun + stairWidthInches;
+                                    overallWidth = Math.Max(landingDepthInches, stairWidthInches) + flightBRun;
+                                    break;
+                                    
+                                case LandingType.FullReturn:
+                                    // For U-shape: landing depth is the cross dimension (width)
+                                    // Length is the run dimension (longer dimension)
+                                    double halfRun = Math.Max(flightARun, flightBRun);
+                                    overallLength = halfRun + stairWidthInches;
+                                    overallWidth = landingDepthInches;
+                                    break;
+                                    
+                                default:
+                                    overallLength = flightARun + landingDepthInches + flightBRun;
+                                    overallWidth = stairWidthInches;
+                                    break;
+                            }
+                            
+                            Measurement overallLengthMeasurement = Measurement.FromDecimalInches(overallLength);
+                            Measurement overallWidthMeasurement = Measurement.FromDecimalInches(overallWidth);
+                            
+                            TotalRunWithLandingLabel.Text = $"Overall Length: {overallLengthMeasurement.ToFractionString()}\nOverall Width: {overallWidthMeasurement.ToFractionString()}";
                         }
                     }
                 }
@@ -334,5 +406,10 @@ public partial class StairCalculatorPage : ContentPage
             diagram.AppendLine();
             diagram.AppendLine($"(showing {stepsToShow} of {numberOfSteps} total steps)");
         }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Stair));
     }
 }

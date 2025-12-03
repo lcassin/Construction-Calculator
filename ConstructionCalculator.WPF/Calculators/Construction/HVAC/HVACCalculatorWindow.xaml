@@ -3,13 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ConstructionCalculator.WPF.Calculators.Construction.HVAC"
         xmlns:help="clr-namespace:ConstructionCalculator.WPF.Shared.HelpSystem"
-        Title="HVAC Multi-Zone Calculator" Height="750" Width="650"
+        Title="HVAC Multi-Zone Calculator" Height="750" Width="700"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         Icon="pack://application:,,,/Assets/app.ico"
         help:HelpBehavior.CalculatorKind="HVAC">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid Margin="20">
+    <TabControl Margin="10">
+        <TabItem Header="Load Calculation">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -142,32 +144,174 @@
             </StackPanel>
         </Border>
 
-        <GroupBox Grid.Row="4" Header="Duct Sizing (Rectangular)" Padding="10" Margin="0,0,0,10">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Label Content="Required CFM:" Width="120" VerticalAlignment="Center" FontSize="13"/>
-                    <TextBox x:Name="DuctCFMTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
-                             Text="0" ToolTip="Airflow in cubic feet per minute (auto-filled from totals)"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Label Content="Velocity (FPM):" Width="120" VerticalAlignment="Center" FontSize="13"/>
-                    <TextBox x:Name="VelocityTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
-                             Text="800" ToolTip="Air velocity in feet per minute (typical: 600-900)"/>
-                </StackPanel>
-                <Button Content="Calculate Duct Size" 
-                        Style="{StaticResource ActionButtonStyle}"
-                        Height="30" Click="CalculateDuctButton_Click"/>
-                <TextBlock x:Name="DuctSizeLabel" Text="Duct Size: Not calculated" 
-                           FontSize="13" FontWeight="SemiBold" Margin="0,10,0,0"/>
-            </StackPanel>
-        </GroupBox>
-
-        <Button Grid.Row="5" Content="Copy Results" 
+        <Button Grid.Row="4" Content="Copy Results"
                 Style="{StaticResource ActionButtonStyle}"
                 Height="32" Margin="0,0,0,10" Click="CopyResultsButton_Click"/>
 
-        <TextBlock Grid.Row="6" Text="Note: These are estimates for multi-zone systems. Consult with an HVAC professional for final sizing and installation." 
+        <TextBlock Grid.Row="5" Text="Note: These are estimates for multi-zone systems. Consult with an HVAC professional for final sizing and installation." 
                    FontSize="11" FontStyle="Italic" Foreground="Gray" TextWrapping="Wrap"/>
-        </Grid>
-    </ScrollViewer>
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+        
+        <TabItem Header="Duct Sizing">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Calculate duct dimensions, friction loss, and pressure drop for HVAC systems.&#x0a;Supports round and rectangular ducts with fitting losses." 
+                               FontSize="12" FontStyle="Italic" Foreground="Gray" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                    <!-- Basic Duct Sizing -->
+                    <GroupBox Grid.Row="1" Header="Basic Duct Sizing" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Duct Type:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                                <ComboBox x:Name="DuctTypeComboBox" Width="200" Height="28" FontSize="13" SelectedIndex="0"
+                                          SelectionChanged="DuctTypeComboBox_SelectionChanged">
+                                    <ComboBoxItem Content="Round"/>
+                                    <ComboBoxItem Content="Rectangular"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Airflow (CFM):" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="DuctCFMTextBox" Width="120" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="0" ToolTip="Cubic feet per minute"/>
+                                <Button Content="Use Total CFM" Width="110" Height="26" Margin="10,0,0,0" FontSize="11"
+                                        Style="{StaticResource ActionButtonStyle}" Click="UseTotalCFMButton_Click"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Target Velocity:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="DuctVelocityTextBox" Width="120" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="800" ToolTip="Feet per minute (typical: 600-1200)"/>
+                                <Label Content="FPM" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            
+                            <!-- Round Duct Results -->
+                            <StackPanel x:Name="RoundDuctPanel" Visibility="Visible">
+                                <Separator Margin="0,10,0,10"/>
+                                <TextBlock x:Name="RoundDiameterLabel" Text="Diameter: --" 
+                                           FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                <TextBlock x:Name="RoundActualVelocityLabel" Text="Actual Velocity: --" 
+                                           FontSize="12" Margin="0,0,0,0"/>
+                            </StackPanel>
+                            
+                            <!-- Rectangular Duct Results -->
+                            <StackPanel x:Name="RectangularDuctPanel" Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,8">
+                                    <Label Content="Aspect Ratio:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                                    <TextBox x:Name="AspectRatioTextBox" Width="80" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                             Text="2.0" ToolTip="Width to height ratio (typical: 1.5-3.0)"/>
+                                    <Label Content="(W:H)" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+                                </StackPanel>
+                                <Separator Margin="0,0,0,10"/>
+                                <TextBlock x:Name="RectangularSizeLabel" Text="Size: --" 
+                                           FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                <TextBlock x:Name="RectangularActualVelocityLabel" Text="Actual Velocity: --" 
+                                           FontSize="12" Margin="0,0,0,5"/>
+                                <TextBlock x:Name="EquivalentDiameterLabel" Text="Equivalent Diameter: --" 
+                                           FontSize="12" Margin="0,0,0,0"/>
+                            </StackPanel>
+                            
+                            <Button Content="Calculate Duct Size" 
+                                    Style="{StaticResource PrimaryActionButtonStyle}"
+                                    Height="32" Margin="0,15,0,0" Click="CalculateDuctSizeButton_Click"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Run Length and Fittings -->
+                    <GroupBox Grid.Row="2" Header="Run Length and Fittings" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Straight Length:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="StraightLengthTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="0" ToolTip="Length of straight duct run in feet"/>
+                                <Label Content="ft" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            
+                            <Label Content="Fittings (equivalent length added):" FontSize="12" FontWeight="SemiBold" Margin="0,10,0,5"/>
+                            
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Label Content="90° Elbows:" Width="120" VerticalAlignment="Center" FontSize="12"/>
+                                <TextBox x:Name="Elbow90TextBox" Width="60" Height="24" FontSize="12" VerticalContentAlignment="Center"
+                                         Text="0" ToolTip="Number of 90-degree elbows (~35 ft equiv. each)"/>
+                                <Label Content="(~35 ft ea)" VerticalAlignment="Center" FontSize="11" Foreground="Gray" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Label Content="45° Elbows:" Width="120" VerticalAlignment="Center" FontSize="12"/>
+                                <TextBox x:Name="Elbow45TextBox" Width="60" Height="24" FontSize="12" VerticalContentAlignment="Center"
+                                         Text="0" ToolTip="Number of 45-degree elbows (~20 ft equiv. each)"/>
+                                <Label Content="(~20 ft ea)" VerticalAlignment="Center" FontSize="11" Foreground="Gray" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Label Content="Transitions:" Width="120" VerticalAlignment="Center" FontSize="12"/>
+                                <TextBox x:Name="TransitionsTextBox" Width="60" Height="24" FontSize="12" VerticalContentAlignment="Center"
+                                         Text="0" ToolTip="Number of size transitions (~15 ft equiv. each)"/>
+                                <Label Content="(~15 ft ea)" VerticalAlignment="Center" FontSize="11" Foreground="Gray" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Label Content="Branch Takeoffs:" Width="120" VerticalAlignment="Center" FontSize="12"/>
+                                <TextBox x:Name="BranchesTextBox" Width="60" Height="24" FontSize="12" VerticalContentAlignment="Center"
+                                         Text="0" ToolTip="Number of branch takeoffs (~25 ft equiv. each)"/>
+                                <Label Content="(~25 ft ea)" VerticalAlignment="Center" FontSize="11" Foreground="Gray" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Label Content="Dampers:" Width="120" VerticalAlignment="Center" FontSize="12"/>
+                                <TextBox x:Name="DampersTextBox" Width="60" Height="24" FontSize="12" VerticalContentAlignment="Center"
+                                         Text="0" ToolTip="Number of dampers (~10 ft equiv. each)"/>
+                                <Label Content="(~10 ft ea)" VerticalAlignment="Center" FontSize="11" Foreground="Gray" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            
+                            <Separator Margin="0,10,0,10"/>
+                            <TextBlock x:Name="TotalEquivalentLengthLabel" Text="Total Equivalent Length: 0 ft" 
+                                       FontSize="12" FontWeight="SemiBold"/>
+                            <TextBlock x:Name="EffectiveLengthLabel" Text="Effective Length (straight + fittings): 0 ft" 
+                                       FontSize="12" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Friction Loss Results -->
+                    <GroupBox Grid.Row="3" Header="Friction Loss and Pressure Drop" Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <Label Content="Friction Rate:" Width="120" VerticalAlignment="Center" FontSize="13"/>
+                                <TextBox x:Name="FrictionRateTextBox" Width="100" Height="28" FontSize="13" VerticalContentAlignment="Center"
+                                         Text="0.08" ToolTip="Inches of water per 100 feet (typical: 0.05-0.15)"/>
+                                <Label Content="in. w.g./100 ft" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            
+                            <Button Content="Calculate Friction Loss" 
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Height="30" Margin="0,5,0,10" Click="CalculateFrictionButton_Click"/>
+                            
+                            <Border BorderBrush="Gray" BorderThickness="2" Padding="15" Background="#F5F5F5">
+                                <StackPanel>
+                                    <TextBlock Text="Results:" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+                                    <TextBlock x:Name="FrictionLossLabel" Text="Friction Loss: --" 
+                                               FontSize="13" Margin="0,0,0,5"/>
+                                    <TextBlock x:Name="VelocityPressureLabel" Text="Velocity Pressure: --" 
+                                               FontSize="13" Margin="0,0,0,5"/>
+                                    <TextBlock x:Name="TotalPressureLabel" Text="Total Pressure Drop: --" 
+                                               FontSize="14" FontWeight="SemiBold" Margin="0,5,0,0" Foreground="DarkBlue"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <TextBlock Grid.Row="4" Text="Note: Friction rates and equivalent lengths are typical values. Actual values may vary based on duct material, construction, and specific fittings used. Consult ASHRAE or SMACNA standards for precise calculations." 
+                               FontSize="11" FontStyle="Italic" Foreground="Gray" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+    </TabControl>
 </Window>

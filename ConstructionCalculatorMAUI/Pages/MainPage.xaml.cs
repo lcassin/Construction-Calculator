@@ -1,14 +1,41 @@
-using ConstructionCalculator.Core;
+using ConstructionCalculator;
+using ConstructionCalculatorMAUI.Shared.Help;
 
 namespace ConstructionCalculatorMAUI.Pages;
 
-public partial class MainPage : ContentPage
+[QueryProperty(nameof(FromRoute), "from")]
+public partial class MainPage : ContentPage, IQueryAttributable
 {
     private bool _isDecimalMode = false;
     private string _currentOperation = "";
     private Measurement? _storedValue = null;
     private bool _shouldClearDisplay = false;
     private readonly List<string> _calculationChain = new();
+    private Measurement? _memoryValue = null;
+    private string? _previousRoute = null;
+
+    // QueryProperty for receiving the "from" parameter from navigation
+    public string? FromRoute
+    {
+        get => _previousRoute;
+        set
+        {
+            _previousRoute = value;
+            System.Diagnostics.Debug.WriteLine($"[MainPage FromRoute] Set to '{_previousRoute}'");
+            UpdateBackButtonVisibility();
+        }
+    }
+
+    // IQueryAttributable implementation - more reliable for pages already in Shell hierarchy
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("from", out var value) && value is string s)
+        {
+            _previousRoute = s;
+            System.Diagnostics.Debug.WriteLine($"[MainPage ApplyQueryAttributes] from='{_previousRoute}'");
+            UpdateBackButtonVisibility();
+        }
+    }
 
     public MainPage()
     {
@@ -18,6 +45,11 @@ public partial class MainPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        
+        // The FromRoute property is set by Shell via [QueryProperty] before OnAppearing is called
+        // Just update the back button visibility in case it needs adjustment
+        System.Diagnostics.Debug.WriteLine($"[MainPage OnAppearing] previousRoute='{_previousRoute}', toolbarItems={ToolbarItems.Count}");
+        UpdateBackButtonVisibility();
         
 #if WINDOWS
         var window = this.Window?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
@@ -505,5 +537,288 @@ public partial class MainPage : ContentPage
     private void UpdateDisplay(Measurement measurement)
     {
         DisplayEntry.Text = _isDecimalMode ? measurement.ToDecimalString() : measurement.ToFractionString();
+    }
+
+    private void OnMemoryClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            string buttonText = button.Text;
+            
+            switch (buttonText)
+            {
+                case "MC":
+                    MemoryClear();
+                    break;
+                case "MR":
+                    MemoryRecall();
+                    break;
+                case "M+":
+                    MemoryAdd();
+                    break;
+                case "M-":
+                    MemorySubtract();
+                    break;
+            }
+        }
+    }
+
+    private void OnMathFunctionClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            string buttonText = button.Text;
+            
+            switch (buttonText)
+            {
+                case "√":
+                    PerformSquareRoot();
+                    break;
+                case "x²":
+                    PerformSquared();
+                    break;
+                case "%":
+                    PerformPercent();
+                    break;
+                case "+/-":
+                    ToggleSign();
+                    break;
+            }
+        }
+    }
+
+    private void MemoryClear()
+    {
+        _memoryValue = null;
+        UpdateMemoryIndicator();
+    }
+
+    private void MemoryRecall()
+    {
+        if (_memoryValue != null)
+        {
+            UpdateDisplay(_memoryValue);
+            _shouldClearDisplay = true;
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+    }
+
+    private async void MemoryAdd()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            if (_memoryValue == null)
+            {
+                _memoryValue = current;
+            }
+            else
+            {
+                _memoryValue = _memoryValue + current;
+            }
+            UpdateMemoryIndicator();
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Memory add error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void MemorySubtract()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            if (_memoryValue == null)
+            {
+                _memoryValue = Measurement.FromDecimalInches(-current.ToTotalInches());
+            }
+            else
+            {
+                _memoryValue = _memoryValue - current;
+            }
+            UpdateMemoryIndicator();
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Memory subtract error: {ex.Message}", "OK");
+        }
+    }
+
+    private void UpdateMemoryIndicator()
+    {
+        if (_memoryValue != null)
+        {
+            MemoryLabel.IsVisible = true;
+            MemoryLabel.Text = "Memory: " + (_isDecimalMode ? _memoryValue.ToDecimalString() : _memoryValue.ToFractionString());
+        }
+        else
+        {
+            MemoryLabel.IsVisible = false;
+            MemoryLabel.Text = "";
+        }
+    }
+
+    private async void PerformSquareRoot()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            
+            if (totalInches < 0)
+            {
+                await DisplayAlert("Error", "Cannot take square root of negative number", "OK");
+                return;
+            }
+            
+            double result = Math.Sqrt(totalInches);
+            Measurement resultMeasurement = Measurement.FromDecimalInches(result);
+            UpdateDisplay(resultMeasurement);
+            _shouldClearDisplay = true;
+            
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Square root error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void PerformSquared()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            double result = totalInches * totalInches;
+            
+            Measurement resultMeasurement = Measurement.FromDecimalInches(result);
+            UpdateDisplay(resultMeasurement);
+            _shouldClearDisplay = true;
+            
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Squared error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void PerformPercent()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            
+            if (_storedValue != null && !string.IsNullOrEmpty(_currentOperation))
+            {
+                double baseValue = _storedValue.ToTotalInches();
+                double percentValue = current.ToTotalInches();
+                double result;
+                
+                switch (_currentOperation)
+                {
+                    case "+":
+                    case "-":
+                        result = baseValue * (percentValue / 100.0);
+                        break;
+                    case "*":
+                    case "/":
+                        result = percentValue / 100.0;
+                        break;
+                    default:
+                        result = percentValue / 100.0;
+                        break;
+                }
+                
+                Measurement resultMeasurement = Measurement.FromDecimalInches(result);
+                UpdateDisplay(resultMeasurement);
+                _shouldClearDisplay = true;
+            }
+            else
+            {
+                double totalInches = current.ToTotalInches();
+                double result = totalInches / 100.0;
+                Measurement resultMeasurement = Measurement.FromDecimalInches(result);
+                UpdateDisplay(resultMeasurement);
+                _shouldClearDisplay = true;
+            }
+            
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Percent error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void ToggleSign()
+    {
+        try
+        {
+            Measurement current = ParseCurrentDisplay();
+            double totalInches = current.ToTotalInches();
+            Measurement result = Measurement.FromDecimalInches(-totalInches);
+            UpdateDisplay(result);
+            
+            DisplayEntry.Focus();
+            DisplayEntry.CursorPosition = 0;
+            DisplayEntry.SelectionLength = DisplayEntry.Text?.Length ?? 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Toggle sign error: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage(CalculatorKind.Main));
+    }
+
+    private void UpdateBackButtonVisibility()
+    {
+        // Show/hide back button by manipulating ToolbarItems collection
+        if (!string.IsNullOrEmpty(_previousRoute))
+        {
+            // Show back button if we have a previous route
+            if (!ToolbarItems.Contains(BackToolbarItem))
+            {
+                ToolbarItems.Insert(0, BackToolbarItem);
+                System.Diagnostics.Debug.WriteLine($"[MainPage UpdateBackButton] Added back button, toolbarItems now={ToolbarItems.Count}");
+            }
+        }
+        else
+        {
+            // Hide back button if no previous route
+            if (ToolbarItems.Contains(BackToolbarItem))
+            {
+                ToolbarItems.Remove(BackToolbarItem);
+                System.Diagnostics.Debug.WriteLine($"[MainPage UpdateBackButton] Removed back button, toolbarItems now={ToolbarItems.Count}");
+            }
+        }
+    }
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(_previousRoute))
+        {
+            await Shell.Current.GoToAsync($"//{_previousRoute}");
+        }
     }
 }

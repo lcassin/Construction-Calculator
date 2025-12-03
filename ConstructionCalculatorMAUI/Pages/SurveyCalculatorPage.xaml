@@ -4,6 +4,10 @@
              x:Class="ConstructionCalculatorMAUI.Pages.SurveyCalculatorPage"
              Title="Survey Calculator">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
     <!-- 
     Survey Calculator Page
     Converts between bearing and azimuth formats.

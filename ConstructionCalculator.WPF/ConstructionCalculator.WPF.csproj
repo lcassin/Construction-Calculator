@@ -12,7 +12,7 @@
     <UseWPF>true</UseWPF>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <NoWarn>$(NoWarn);WPF0001</NoWarn>
-    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\app-new.ico</ApplicationIcon>
     <AssemblyVersion>2.0.6.0</AssemblyVersion>
     <FileVersion>2.0.6.0</FileVersion>
     <Version>2.0.6</Version>
@@ -29,14 +29,29 @@
   <ItemGroup>
     <SplashScreen Include="Assets\splash.png" />
     <Resource Include="Assets\app.ico" />
+    <Resource Include="Assets\app-new.ico" />
+    <Resource Include="Assets\appicon_new.png" />
+    <Resource Include="Assets\logo_main.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

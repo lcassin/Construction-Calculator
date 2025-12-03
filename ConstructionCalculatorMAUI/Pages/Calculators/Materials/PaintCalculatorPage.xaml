@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConstructionCalculatorMAUI.Pages.Calculators.Materials.PaintCalculatorPage"
+             Title="Paint/Coverage Calculator">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <!-- Room Dimensions -->
+            <Label Text="Room Dimensions" FontSize="14" FontAttributes="Bold" />
+            
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Length (ft):" WidthRequest="140" VerticalOptions="Center" />
+                <Entry x:Name="LengthEntry" WidthRequest="200" Keyboard="Numeric" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Width (ft):" WidthRequest="140" VerticalOptions="Center" />
+                <Entry x:Name="WidthEntry" WidthRequest="200" Keyboard="Numeric" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Height (ft):" WidthRequest="140" VerticalOptions="Center" />
+                <Entry x:Name="HeightEntry" WidthRequest="200" Keyboard="Numeric" />
+            </HorizontalStackLayout>
+
+            <!-- Paint Options -->
+            <Label Text="Paint Options" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" />
+            
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Include Ceiling:" WidthRequest="140" VerticalOptions="Center" />
+                <CheckBox x:Name="IncludeCeilingCheckBox" IsChecked="True" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Coats:" WidthRequest="140" VerticalOptions="Center" />
+                <Entry x:Name="CoatsEntry" WidthRequest="200" Keyboard="Numeric" Text="2" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Coverage (sq ft/gal):" WidthRequest="140" VerticalOptions="Center" />
+                <Entry x:Name="CoverageEntry" WidthRequest="200" Keyboard="Numeric" Text="350" />
+            </HorizontalStackLayout>
+
+            <!-- Openings -->
+            <Label Text="Openings (Optional)" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" />
+            
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Doors (20 sq ft ea):" WidthRequest="140" VerticalOptions="Center" />
+                <Entry x:Name="DoorsEntry" WidthRequest="200" Keyboard="Numeric" Text="0" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Windows (15 sq ft ea):" WidthRequest="140" VerticalOptions="Center" />
+                <Entry x:Name="WindowsEntry" WidthRequest="200" Keyboard="Numeric" Text="0" />
+            </HorizontalStackLayout>
+
+            <!-- Calculate Button -->
+            <Button Text="Calculate" 
+                    Style="{StaticResource PrimaryButton}"
+                    Clicked="Calculate_Clicked"
+                    Margin="0,10,0,10" />
+
+            <!-- Result Display -->
+            <Frame BorderColor="Gray" Padding="15" CornerRadius="5">
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="ResultLabel" 
+                           Text="" 
+                           FontSize="14" 
+                           FontAttributes="Bold" />
+                    
+                    <HorizontalStackLayout Spacing="10" Margin="0,15,0,0">
+                        <Label Text="Cost per Gallon ($):" WidthRequest="140" VerticalOptions="Center" />
+                        <Entry x:Name="CostPerGallonEntry" WidthRequest="100" Keyboard="Numeric" Text="0"
+                               TextChanged="CostPerGallonEntry_TextChanged" />
+                    </HorizontalStackLayout>
+                    
+                    <Label x:Name="TotalCostLabel" Text="Estimated Total Cost: $0.00" 
+                           FontSize="16" FontAttributes="Bold" TextColor="DarkGreen" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Instructions -->
+            <Label FontSize="11" TextColor="Gray">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Standard coverage: 350 sq ft per gallon (adjust for texture)" />
+                        <Span Text="&#x0a;Openings are subtracted from total area" />
+                        <Span Text="&#x0a;Results rounded up to nearest gallon" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
